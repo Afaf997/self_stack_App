@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:self_stack/LogIn_Screens/Screens/HomeScreen.dart';
-import 'package:self_stack/LogIn_Screens/widgets/colors.dart';
+import 'package:self_stack/AuthenticationScreen/HomeScreen/screen.dart/HomeScreen.dart';
+import 'package:self_stack/AuthenticationScreen/LogIn_Screens/widgets/colors.dart';
 
 
 class SplashScreen extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:self_stack/LogIn_Screens/Screens/login.dart';
-import 'package:self_stack/LogIn_Screens/widgets/colors.dart';
+import 'package:self_stack/AuthenticationScreen/LogIn_Screens/Screens/login.dart';
+import 'package:self_stack/AuthenticationScreen/LogIn_Screens/widgets/colors.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key});
