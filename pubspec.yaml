@@ -73,6 +73,11 @@ flutter:
     - assets/image/star2.png
     - assets/image/star3.png
     - assets/image/lock.png
+    - assets/image/background.jpg
+    - assets/image/images1.png
+    - assets/image/for2.webp
+    - assets/image/otp.png
+    - assets/image/otp1.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

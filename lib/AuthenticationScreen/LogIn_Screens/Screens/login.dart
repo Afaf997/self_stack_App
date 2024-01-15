@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:self_stack/AuthenticationScreen/Forgot/screens/for.dart';
 import 'package:self_stack/AuthenticationScreen/Forgot/screens/forgotScreen.dart';
+import 'package:self_stack/AuthenticationScreen/Forgot/screens/otpScreen.dart';
 import 'package:self_stack/AuthenticationScreen/LogIn_Screens/bloc/auth_bloc.dart';
 import 'package:self_stack/AuthenticationScreen/LogIn_Screens/widgets/colors.dart';
 import 'package:self_stack/AuthenticationScreen/LogIn_Screens/widgets/reusable.dart';
@@ -47,7 +49,7 @@ class LoginPage extends StatelessWidget {
       buildWhen: (previous, current)=> current is !AuthActionState,
       listener: (context, state) {
         if(state is ForgotActionState){
-          Navigator.push(context,MaterialPageRoute(builder:(context)=>ForgotScreen()));
+          Navigator.push(context,MaterialPageRoute(builder:(context)=>OtpScreen ()));
         }
         else if(state is SignScreenActionState){
           Navigator.push(context,MaterialPageRoute(builder:(context)=> SignUp()));
