@@ -11,14 +11,9 @@ sealed class AuthState {
 
 final class AuthInitial extends AuthState {}
 
-class AuthLoadingstate extends AuthState{}
-
 class AuthErrorstate extends  AuthActionState{}
 
-class AuthLoadedstate extends AuthState{}
-
 class LoginSuccessState extends AuthActionState{}
-
 
 class SignScreenActionState extends AuthActionState{}
 

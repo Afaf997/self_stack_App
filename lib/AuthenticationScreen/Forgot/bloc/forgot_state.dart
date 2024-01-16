@@ -1,7 +1,11 @@
 part of 'forgot_bloc.dart';
 
 @immutable
-sealed class ForgotState {}
+sealed class ForgotState {
+   static error(String ?e){
+    log(e??"gfd");
+  }
+}
 
 final class ForgotInitial extends ForgotState {}
 
@@ -11,3 +15,5 @@ final class ForgotInitial extends ForgotState {}
 class ForgotScreenState extends ForgotState{}
 
 class SuccessForgot extends SignUpActionState{}
+
+class BackToSignUpState extends SignUpActionState{}

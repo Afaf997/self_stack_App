@@ -6,6 +6,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 import 'package:self_stack/AuthenticationScreen/LogIn_Screens/bloc/auth_bloc.dart';
+import 'package:self_stack/Core/links.dart';
 
 part 'sign_up_event.dart';
 part 'sign_up_state.dart';
@@ -27,7 +28,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     log(data1.toString());
       try {
     final response = await dio.post(
-      "https://flutter-self-stack-api.vercel.app/api/users?apiKey=flutterbyafaf",
+      "$loginApi/users$apikey",
       data: jsonEncode(data1),
       options: Options(
         headers: {'Content-Type': 'application/json'},

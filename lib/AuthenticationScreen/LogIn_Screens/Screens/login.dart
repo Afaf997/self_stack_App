@@ -49,7 +49,7 @@ class LoginPage extends StatelessWidget {
       buildWhen: (previous, current)=> current is !AuthActionState,
       listener: (context, state) {
         if(state is ForgotActionState){
-          Navigator.push(context,MaterialPageRoute(builder:(context)=>OtpScreen ()));
+          Navigator.push(context,MaterialPageRoute(builder:(context)=>BackgroundImageScreen()));
         }
         else if(state is SignScreenActionState){
           Navigator.push(context,MaterialPageRoute(builder:(context)=> SignUp()));

@@ -13,3 +13,4 @@ class ForgotScreenevent extends ForgotEvent{
 
   ForgotScreenevent({required this.email});
 }
+ class BackTosignUp extends ForgotEvent{}

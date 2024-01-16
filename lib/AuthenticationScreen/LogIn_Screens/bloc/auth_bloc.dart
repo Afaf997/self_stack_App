@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 // ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 import 'package:self_stack/AuthenticationScreen/LogIn_Screens/bloc/auth_bloc.dart';
+import 'package:self_stack/Core/links.dart';
 
 
 part 'auth_event.dart';
@@ -31,7 +32,7 @@ FutureOr<void> loginevent(Loginevent event, Emitter<AuthState> emit) async {
   };
   try {
     final response = await dio.post(
-      "https://flutter-self-stack-api.vercel.app/api/users/signin?apiKey=flutterbyafaf",
+      "$loginApi/users/signin$apikey",
       data: jsonEncode(data),
       options: Options(
         headers: {'Content-Type': 'application/json'},

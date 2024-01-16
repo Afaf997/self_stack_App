@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+// import 'package:pinput/pinput.dart';
 import 'package:self_stack/AuthenticationScreen/LogIn_Screens/widgets/colors.dart';
 
 class OtpScreen extends StatelessWidget {
@@ -58,16 +59,14 @@ class OtpScreen extends StatelessWidget {
               child: OtpTextField(
                 mainAxisAlignment: MainAxisAlignment.center,
                 numberOfFields: 6,
-                fillColor: Colors.white.withOpacity(0.4),
+                fillColor: Colors.white.withOpacity(0.3),
                 filled: true,
                 keyboardType: TextInputType.number,
                 textStyle: TextStyle(color:whiteModel,fontWeight: FontWeight.bold),
               ),
             ),
-            const SizedBox(
-              height: 30,
-            ),
-            Container(
+            const SizedBox(height: 30),
+         Container(
               width: 280,
               height: 50,
               decoration: BoxDecoration(
@@ -88,7 +87,7 @@ class OtpScreen extends StatelessWidget {
               height: 30,
             ),
             const Padding(
-              padding: EdgeInsets.only(right: 230),
+              padding: EdgeInsets.only(right: 200),
               child: Text(
                 "Back to sign up",
                 style:
