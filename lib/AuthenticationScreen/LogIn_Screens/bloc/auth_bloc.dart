@@ -5,7 +5,6 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 // ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
-import 'package:self_stack/AuthenticationScreen/LogIn_Screens/bloc/auth_bloc.dart';
 import 'package:self_stack/Core/links.dart';
 
 
@@ -25,7 +24,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
 FutureOr<void> loginevent(Loginevent event, Emitter<AuthState> emit) async {
   Dio dio = Dio();
-  print("ryhthtbht");
   var data = {
     "email": event.email,
     "password": event.password,
@@ -52,21 +50,12 @@ FutureOr<void> loginevent(Loginevent event, Emitter<AuthState> emit) async {
         emit(AuthState.error("Login failed. Check your credentials."));
       }
     }
-
-    // } else if (response.statusCode == 404) {
-    //   emit(ServerErrorState("User not found. Please register."));
-    // } else if (response.statusCode == 500) {
-    //   emit(ServerErrorState("Server error. Please try again later."));
-    // } else {
-    //   emit(ServerErrorState("Unexpected error. Please try again."));
-    // }
   }on DioException {
     emit(AuthState.error("An error occurred. Please try again later."));
   }
 }
 
   FutureOr<void> forgotEvent(ForgotEvent event, Emitter<AuthState> emit) {
-    // print("forgot clicked");
     emit(ForgotActionState());
   }
 
@@ -75,8 +64,6 @@ FutureOr<void> loginevent(Loginevent event, Emitter<AuthState> emit) async {
   }
 
   FutureOr<void> signUpNavigationEvent(SignUpNavigationEvent event, Emitter<AuthState> emit) {
-  // print("sign clicked");
-  // signup.add(event);
   emit(SignScreenActionState());
   }
 

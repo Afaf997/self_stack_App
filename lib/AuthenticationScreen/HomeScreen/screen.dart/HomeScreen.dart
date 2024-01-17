@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:self_stack/AuthenticationScreen/LogIn_Screens/Screens/login.dart';
 import 'package:self_stack/AuthenticationScreen/LogIn_Screens/widgets/colors.dart';
+import 'package:self_stack/AuthenticationScreen/signUp/screens/signUp.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key});
@@ -66,17 +67,25 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Container(
-                    width: 350,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: selfstackGreen,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "Sign Up",
-                        style: TextStyle(color:whiteModel, fontSize: 18,),
+                  GestureDetector(
+                    onTap: (){
+                       Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignUp()),
+                      );
+                    },
+                    child: Container(
+                      width: 350,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: selfstackGreen,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          "Sign Up",
+                          style: TextStyle(color:whiteModel, fontSize: 18,),
+                        ),
                       ),
                     ),
                   ),

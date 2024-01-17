@@ -6,7 +6,7 @@ import 'package:self_stack/AuthenticationScreen/LogIn_Screens/widgets/snackbar.d
 import 'package:self_stack/AuthenticationScreen/signUp/bloc/sign_up_bloc.dart';
 
 class SignUp extends StatelessWidget {
-  SignUp({super.key});
+      SignUp({super.key});
   final SignUpBloc signUpbloc = SignUpBloc();
   final TextEditingController _namecontroller= TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -16,8 +16,8 @@ class SignUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<SignUpBloc, SignUpState>(
       bloc: signUpbloc,
-      listenWhen: (previous, current) =>current is SignUpActionState ,
-      buildWhen: (previous, current) =>current is !SignUpActionState  ,
+      listenWhen: (previous, current) =>current is SignUpActionState,
+      buildWhen: (previous, current) =>current is !SignUpActionState,
       listener: (context, state) {
        if(state is LoginActionState ){
           Navigator.push(context,MaterialPageRoute(builder:(context)=> LoginPage()));
@@ -25,9 +25,7 @@ class SignUp extends StatelessWidget {
         else if(state is  SignScreenActionState){
           Navigator.push(context,MaterialPageRoute(builder:(context)=> SignUp()));
         }else if(state is SuccessState){
-          // log("message");
           Navigator.push(context,MaterialPageRoute(builder:(context)=>LoginPage()));
-          // SnackbarUtils.showSuccessSnackbar(context, 'Login successful!',subMessages: 'You have successfully signed into your account ');
         }
       },
       builder: (context, state) {
