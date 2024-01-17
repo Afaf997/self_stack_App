@@ -1,28 +1,7 @@
-// import 'package:flutter/material.dart';
-// import 'package:self_stack/AuthenticationScreen/LogIn_Screens/widgets/colors.dart';
 
-// class SnackbarUtils {
-//   static void showSuccessSnackbar(BuildContext context, String message) {
-//     ScaffoldMessenger.of(context).showSnackBar(
-//       SnackBar(
-//         content: Text(message),     
-//         backgroundColor: selfstackGreen,
-//       ),
-//     );
-//   }
-
-//   static void showErrorSnackbar(BuildContext context, String message) {
-//     ScaffoldMessenger.of(context).showSnackBar(
-//       SnackBar(
-//         content: Text(message),
-//         backgroundColor:redtheme,
-//       ),
-//     );
-//   }
-// }
 
 import 'package:flutter/material.dart';
-import 'package:self_stack/AuthenticationScreen/LogIn_Screens/widgets/colors.dart';
+import 'package:self_stack/utils/constans.dart';
 
 class SnackbarUtils {
   static void showSuccessSnackbar(BuildContext context, String mainMessage, {String? subMessages}) {

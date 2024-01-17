@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/AuthenticationScreen/Forgot/bloc/forgot_bloc.dart';
 import 'package:self_stack/AuthenticationScreen/Forgot/screens/otpScreen.dart';
-import 'package:self_stack/AuthenticationScreen/LogIn_Screens/widgets/colors.dart';
 import 'package:self_stack/AuthenticationScreen/signUp/screens/signUp.dart';
+import 'package:self_stack/utils/constans.dart';
 
 class ForgotScreen extends StatelessWidget {
       ForgotScreen({Key? key}) : super(key: key);
@@ -45,7 +45,7 @@ class ForgotScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.only(right: 90),
+                    padding: const EdgeInsets.only(left: 20),
                     child: Text(
                       'Please enter the email address you did like your password reset information sent to',
                       style: TextStyle(

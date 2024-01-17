@@ -1,7 +1,7 @@
 part of 'auth_bloc.dart';
 
 @immutable
-sealed class AuthEvent {}
+abstract class AuthEvent {}
 
 // ignore: must_be_immutable
 class Loginevent extends AuthEvent{

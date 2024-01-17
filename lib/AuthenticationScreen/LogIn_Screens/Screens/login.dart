@@ -3,13 +3,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/AuthenticationScreen/Forgot/screens/forgot.dart';
-import 'package:self_stack/AuthenticationScreen/Forgot/screens/otpScreen.dart';
 import 'package:self_stack/AuthenticationScreen/LogIn_Screens/bloc/auth_bloc.dart';
-import 'package:self_stack/AuthenticationScreen/LogIn_Screens/widgets/colors.dart';
 import 'package:self_stack/AuthenticationScreen/LogIn_Screens/widgets/reusable.dart';
 import 'package:self_stack/AuthenticationScreen/LogIn_Screens/widgets/snackbar.dart';
 import 'package:self_stack/AuthenticationScreen/signUp/screens/signUp.dart';
 import 'package:self_stack/FirstScreen/mainScreen.dart';
+import 'package:self_stack/utils/constans.dart';
 
 class LoginPage extends StatelessWidget {
    LoginPage({Key? key}) : super(key: key);
@@ -95,15 +94,12 @@ class LoginPage extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Email',
+                      child: Text('Email',
                         style: TextStyle(color: whiteModel),
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
+                  const SizedBox(height: 5,),
                   ReusableTextField(
                     label: 'Email',
                     controller: _emailController,
@@ -114,8 +110,7 @@ class LoginPage extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        'password',
+                      child: Text('password',
                         style: TextStyle(color: whiteModel),
                       ),
                     ),
@@ -131,15 +126,12 @@ class LoginPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   GestureDetector(
-                    onTap: () {
-                        authbloc.add(ForgotEvent());
-                    },
+                    onTap: () {authbloc.add(ForgotEvent());},
                     child: const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Align(
                         alignment: Alignment.centerRight,
-                        child: Text(
-                          'Forgot Password?',
+                        child: Text('Forgot Password?',
                           style: TextStyle(color: whiteModel),
                         ),
                       ),
@@ -155,14 +147,12 @@ class LoginPage extends StatelessWidget {
                       side: BorderSide(color: whiteModel, width: 1),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(7),
-                      ),
-                    ),
+                      ),),
                     child: Container(
                       width: 300,
                       height: 61,
                       child: const Center(
-                        child: Text(
-                          "Log In",
+                        child: Text("Log In",
                           style: TextStyle(
                             color: whiteModel,
                             fontSize: 18,
@@ -209,9 +199,7 @@ class LoginPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 40,
-                  ),
+                  const SizedBox(height: 40),
                   GestureDetector(
                     onTap: (){
                       authbloc.add(GoogleConnectEvent());

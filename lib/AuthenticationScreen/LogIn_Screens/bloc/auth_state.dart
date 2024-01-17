@@ -1,7 +1,7 @@
 part of 'auth_bloc.dart';
 
 @immutable
-sealed class AuthState {
+abstract class AuthState {
   static error(String ?e){
     log(e??"gfd");
   }

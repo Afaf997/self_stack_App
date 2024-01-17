@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:self_stack/AuthenticationScreen/LogIn_Screens/widgets/colors.dart';
+import 'package:self_stack/utils/constans.dart';
 
 class Newpassword extends StatelessWidget {
   const Newpassword({super.key});
