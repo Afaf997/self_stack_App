@@ -2,12 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:self_stack/AuthenticationScreen/Forgot/screens/forgot.dart';
-import 'package:self_stack/AuthenticationScreen/LogIn_Screens/bloc/auth_bloc.dart';
-import 'package:self_stack/AuthenticationScreen/LogIn_Screens/widgets/reusable.dart';
-import 'package:self_stack/AuthenticationScreen/LogIn_Screens/widgets/snackbar.dart';
-import 'package:self_stack/AuthenticationScreen/signUp/screens/signUp.dart';
-import 'package:self_stack/FirstScreen/mainScreen.dart';
+import 'package:self_stack/pages/AuthenticationScreen/Forgot/screens/forgot.dart';
+import 'package:self_stack/pages/AuthenticationScreen/LogIn_Screens/bloc/auth_bloc.dart';
+import 'package:self_stack/pages/AuthenticationScreen/LogIn_Screens/widgets/reusable.dart';
+import 'package:self_stack/pages/AuthenticationScreen/LogIn_Screens/widgets/snackbar.dart';
+import 'package:self_stack/pages/AuthenticationScreen/signUp/screens/signUp.dart';
+import 'package:self_stack/pages/FirstScreen/mainScreen.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class LoginPage extends StatelessWidget {

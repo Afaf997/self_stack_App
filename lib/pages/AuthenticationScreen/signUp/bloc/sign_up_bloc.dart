@@ -1,12 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
-import 'package:self_stack/AuthenticationScreen/LogIn_Screens/bloc/auth_bloc.dart';
 import 'package:self_stack/Core/links.dart';
+import 'package:self_stack/pages/AuthenticationScreen/LogIn_Screens/bloc/auth_bloc.dart';
 
 part 'sign_up_event.dart';
 part 'sign_up_state.dart';
@@ -59,4 +58,3 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   FutureOr<void> loginScreenNavigationevent(LoginScreenNavigationevent event, Emitter<SignUpState> emit) {
   emit(LoginActionState());
   }
-

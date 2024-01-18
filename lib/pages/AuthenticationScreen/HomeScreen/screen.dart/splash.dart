@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:self_stack/AuthenticationScreen/HomeScreen/screen.dart/HomeScreen.dart';
+import 'package:self_stack/pages/AuthenticationScreen/HomeScreen/screen.dart/HomeScreen.dart';
 import 'package:self_stack/utils/constans.dart';
 
 

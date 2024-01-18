@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:self_stack/AuthenticationScreen/LogIn_Screens/Screens/login.dart';
-import 'package:self_stack/AuthenticationScreen/signUp/screens/signUp.dart';
+import 'package:self_stack/pages/AuthenticationScreen/LogIn_Screens/Screens/login.dart';
+import 'package:self_stack/pages/AuthenticationScreen/signUp/screens/signUp.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -16,8 +16,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               const Padding(
                 padding: EdgeInsets.only(right: 140, top: 50),
-                child: Text(
-                  "Welcome",
+                child: Text("Welcome",
                   style: TextStyle(color: whiteModel, fontSize: 42,
                   ),
                 ),

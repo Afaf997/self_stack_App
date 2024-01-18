@@ -19,4 +19,5 @@ class SignScreenActionState extends SignUpActionState{}
 class LoginActionState  extends SignUpActionState{}
 
 class SuccessState extends SignUpActionState {}
-class AuthErrorstate extends  AuthActionState{}
+
+// class AuthErrorstate extends  AuthActionState{}

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:self_stack/AuthenticationScreen/Forgot/bloc/forgot_bloc.dart';
-import 'package:self_stack/AuthenticationScreen/Forgot/screens/otpScreen.dart';
-import 'package:self_stack/AuthenticationScreen/signUp/screens/signUp.dart';
+import 'package:self_stack/pages/AuthenticationScreen/Forgot/bloc/forgot_bloc.dart';
+import 'package:self_stack/pages/AuthenticationScreen/Forgot/screens/otpScreen.dart';
+import 'package:self_stack/pages/AuthenticationScreen/signUp/screens/signUp.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class ForgotScreen extends StatelessWidget {

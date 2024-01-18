@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:self_stack/AuthenticationScreen/LogIn_Screens/Screens/login.dart';
-import 'package:self_stack/AuthenticationScreen/signUp/bloc/sign_up_bloc.dart';
+import 'package:self_stack/pages/AuthenticationScreen/LogIn_Screens/Screens/login.dart';
+import 'package:self_stack/pages/AuthenticationScreen/signUp/bloc/sign_up_bloc.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class SignUp extends StatelessWidget {
@@ -194,7 +194,7 @@ class SignUp extends StatelessWidget {
                       }
                     },
                     child: Container(
-                      width: 347,
+                      width: 353,
                       height: 61,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
