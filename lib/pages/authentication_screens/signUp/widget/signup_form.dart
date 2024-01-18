@@ -23,41 +23,44 @@ class SignUpForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Form(
       key: formKey,
       child: Column(
         children: [
-          SizedBox(height: 20),
+          SizedBox(height: screenHeight * 0.04),
           Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 20),
+                padding: EdgeInsets.only(left: screenWidth * 0.04),
                 child: Text(
                   'Create Account',
                   style: TextStyle(
                     color: whiteModel,
-                    fontSize: 26,
+                    fontSize: screenWidth * 0.08,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
               Image.asset(
                 "assets/image/star2.png",
-                width: 150,
-                height: 150,
+                width: screenWidth * 0.3,
+                height: screenHeight * 0.2,
                 color: whiteModel,
                 fit: BoxFit.cover,
               ),
             ],
           ),
-          sizedbox,
+          SizedBox(height: screenHeight * 0.02),
           SignUpTextField(label: 'User name', controller: nameController, validator: (value) {
             if (value == null || value.isEmpty) {
               return 'Please enter your name';
             }
             return null;
           }),
-               sizedboxB,
+          SizedBox(height: screenHeight * 0.02),
           SignUpTextField(
             label: 'Email',
             controller: emailController,
@@ -69,8 +72,8 @@ class SignUpForm extends StatelessWidget {
               }
               return null;
             },
-          ),  
-             sizedboxB,
+          ),
+          SizedBox(height: screenHeight * 0.02),
           SignUpTextField(
             label: 'Password',
             controller: passwordController,
@@ -84,20 +87,20 @@ class SignUpForm extends StatelessWidget {
               return null;
             },
           ),
-               sizedboxX,
+          SizedBox(height: screenHeight * 0.06),
           SignUpButton(onPressed: onSignUpPressed),
-              sizedboxD,
+          SizedBox(height: screenHeight * 0.02),
           GestureDetector(
             onTap: onLoginPressed,
             child: Text.rich(
               TextSpan(
                 text: "Already have an account? ",
-                style: TextStyle(fontSize: 14, color: whiteModel),
+                style: TextStyle(fontSize: screenWidth * 0.035, color: whiteModel),
                 children: [
                   TextSpan(
                     text: "Log In",
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: screenWidth * 0.04,
                       color: selfstackGreen,
                       decoration: TextDecoration.underline,
                     ),

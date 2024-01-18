@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
+                  sizedboxA,
               Center(
                 child: Image.asset(
                   "assets/image/homepage.png",
@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
                   width: double.infinity,
                 ),
               ),   
-               const SizedBox(height: 50),
+              sizedboxX,
               const Padding(
                 padding: EdgeInsets.only(left: 20),
                 child: Column(
@@ -65,7 +65,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                 sizedboxC,
                   GestureDetector(
                     onTap: (){
                        Navigator.push(
