@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 // ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
-import 'package:self_stack/pages/AuthenticationScreen/LogIn_Screens/dio_services.dart';
+import 'package:self_stack/pages/authentication_screen/LogIn_Screens/dio_services.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
@@ -29,11 +29,9 @@ FutureOr<void> loginevent(Loginevent event, Emitter<AuthState> emit) async {
         // emit(FailureState());
       }
     } on Exception catch(e){
+      // ignore: unused_local_variable
       String errormessage=(e).toString();
       emit(AuthState.error("An error occurred. Please try again later."));
-
-      // handleException()
-      // emit(FailureState());
     }
 }
 

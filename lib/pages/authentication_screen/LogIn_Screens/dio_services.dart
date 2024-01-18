@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:self_stack/Core/links.dart';
@@ -22,7 +23,8 @@ var data = {
       ),
     );
 
-    // log(response.statusCode.toString());
+    log(response.statusCode.toString());
+    log(response.data.toString());
     print(response.statusCode);
 
    if(response.statusCode==401){

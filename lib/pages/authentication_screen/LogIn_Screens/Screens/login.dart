@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:self_stack/pages/AuthenticationScreen/Forgot/screens/forgot.dart';
-import 'package:self_stack/pages/AuthenticationScreen/LogIn_Screens/bloc/auth_bloc.dart';
-import 'package:self_stack/pages/AuthenticationScreen/LogIn_Screens/widgets/reusable.dart';
-import 'package:self_stack/pages/AuthenticationScreen/LogIn_Screens/widgets/snackbar.dart';
-import 'package:self_stack/pages/AuthenticationScreen/signUp/screens/signUp.dart';
+import 'package:self_stack/blocs/login_bloc/bloc/auth_bloc.dart';
+import 'package:self_stack/pages/authentication_screen/Forgot/screens/forgot.dart';
+import 'package:self_stack/pages/authentication_screen/LogIn_Screens/widgets/reusable.dart';
+import 'package:self_stack/pages/authentication_screen/LogIn_Screens/widgets/snackbar.dart';
+import 'package:self_stack/pages/authentication_screen/signUp/screens/signUp.dart';
 import 'package:self_stack/pages/FirstScreen/mainScreen.dart';
 import 'package:self_stack/utils/constans.dart';
 

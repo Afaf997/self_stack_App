@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:self_stack/pages/AuthenticationScreen/LogIn_Screens/Screens/login.dart';
-import 'package:self_stack/pages/AuthenticationScreen/signUp/bloc/sign_up_bloc.dart';
+import 'package:self_stack/blocs/signup_bloc/bloc/sign_up_bloc.dart';
+import 'package:self_stack/pages/authentication_screen/LogIn_Screens/Screens/login.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class SignUp extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:self_stack/pages/AuthenticationScreen/LogIn_Screens/Screens/login.dart';
-import 'package:self_stack/pages/AuthenticationScreen/signUp/screens/signUp.dart';
+import 'package:self_stack/pages/authentication_screen/LogIn_Screens/Screens/login.dart';
+import 'package:self_stack/pages/authentication_screen/signUp/screens/signUp.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class HomeScreen extends StatelessWidget {
