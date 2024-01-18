@@ -5,7 +5,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
-import 'package:self_stack/Core/links.dart';
+import 'package:self_stack/core/links.dart';
 
 part 'forgot_event.dart';
 part 'forgot_state.dart';

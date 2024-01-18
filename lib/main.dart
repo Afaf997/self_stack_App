@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:self_stack/pages/authentication_screen/home_screen/splash.dart';
+import 'package:self_stack/pages/authentication_screens/home_screen/splash.dart';
 
 
 void main() {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(fontFamily: "Poppins",),darkTheme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Self Stack',
       
       home: SplashScreen(),
   

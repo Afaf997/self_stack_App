@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
-import 'package:self_stack/Core/links.dart';
+import 'package:self_stack/core/links.dart';
 import 'package:self_stack/blocs/login_bloc/bloc/auth_bloc.dart';
 
 part 'sign_up_event.dart';

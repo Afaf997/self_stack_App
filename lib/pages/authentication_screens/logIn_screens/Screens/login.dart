@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/blocs/login_bloc/bloc/auth_bloc.dart';
-import 'package:self_stack/pages/authentication_screen/Forgot/screens/forgot.dart';
-import 'package:self_stack/pages/authentication_screen/LogIn_Screens/widgets/reusable.dart';
-import 'package:self_stack/pages/authentication_screen/LogIn_Screens/widgets/snackbar.dart';
-import 'package:self_stack/pages/authentication_screen/signUp/screens/signUp.dart';
-import 'package:self_stack/pages/FirstScreen/mainScreen.dart';
+import 'package:self_stack/pages/authentication_screens/Forgot/screens/forgot.dart';
+import 'package:self_stack/pages/authentication_screens/logIn_screens/widgets/reusable.dart';
+import 'package:self_stack/pages/authentication_screens/logIn_screens/widgets/snackbar.dart';
+import 'package:self_stack/pages/authentication_screens/signUp/screens/signUp.dart';
+import 'package:self_stack/pages/first_screen/mainScreen.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class LoginPage extends StatelessWidget {
@@ -58,8 +58,7 @@ class LoginPage extends StatelessWidget {
         }
         else if(state is AuthErrorstate){
            SnackbarUtils.showErrorSnackbar(context, 'Login failed. Please check your credentials.', subMessage: 'Ensure your username and password are correct.');
-        }
-      },
+        }},
       builder: (context, state) {
         return Scaffold(
           backgroundColor: backgroundmodel,

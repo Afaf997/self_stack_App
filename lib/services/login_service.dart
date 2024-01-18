@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:self_stack/Core/links.dart';
+import 'package:self_stack/core/links.dart';
 
-class Dioservices {
+class Loginservices {
   Dio dio = Dio();
   
 
@@ -38,18 +38,6 @@ var data = {
 
     }
     return response.statusCode==200;
-
-
-    // if (response.statusCode == 200) {
-      
-    //   // emit(LoginSuccessState());
-    // } else if (response.statusCode == 401) {
-    //   if (response.data != null && response.data['error'] == 'Invalid username or password') {
-    //     // emit(AuthState.error("Invalid username or password. Please try again."));
-    //   } else {
-    //     // emit(AuthState.error("Login failed. Check your credentials."));
-    //   }
-    // }
   }on DioException {
      rethrow;
   }
