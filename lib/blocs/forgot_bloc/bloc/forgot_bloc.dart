@@ -39,7 +39,7 @@ class ForgotBloc extends Bloc<ForgotEvent, ForgotState> {
       emit(SuccessForgot());
     } else if (response.statusCode == 401) {
       if (response.data != null && response.data['error'] == 'Invalid username or password') {
-        // emit(ForgotState .error("Invalid username or password. Please try again."));
+        emit(ForgotState .error("Invalid username or password. Please try again."));
       } 
     }
   }on DioException catch (e){

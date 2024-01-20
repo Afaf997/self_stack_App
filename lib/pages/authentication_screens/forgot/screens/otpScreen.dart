@@ -9,6 +9,7 @@ import 'package:self_stack/utils/constans.dart';
 class OtpScreen extends StatelessWidget {
   OtpScreen({Key? key}) : super(key: key);
   final OtpBloc otpbloc =OtpBloc();
+    TextEditingController _otpcontroller =TextEditingController();
     TextEditingController _emailcontroller= TextEditingController();
 
   @override
@@ -18,7 +19,7 @@ class OtpScreen extends StatelessWidget {
       listenWhen: (previous, current) => current is OtpActionstate,
       buildWhen: (previous, current) => current is !OtpActionstate,
       listener: (context, state) {
-        if(state is forgotOtpteState){
+        if(state is SuccessOtpState){
          Navigator.push(context,MaterialPageRoute(builder:(context)=>ForgotScreen()));
         }
        
@@ -85,7 +86,7 @@ class OtpScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
                 GestureDetector(
-                  onTap: () => otpbloc.add(OtpVerifyevent( )),
+                  onTap: () => otpbloc.add(OtpVerifyevent(email: _emailcontroller.text,otp:_otpcontroller.text )),
                   child: Container(
                     width: 280,
                     height: 50,
