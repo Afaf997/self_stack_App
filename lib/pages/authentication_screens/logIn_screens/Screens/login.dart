@@ -223,8 +223,7 @@ class LoginPage extends StatelessWidget {
                               "Continue With Google",
                               style: TextStyle(
                                 fontSize: 16,
-                              ),
-                            )
+                              ),)
                           ],
                         ),
                       ),
@@ -251,12 +250,10 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                         ],
-                      ),
-                    ),
+                      ),),
                   ),
                 ],
-              ),
-            ),
+              )),
           ),
         );
       },

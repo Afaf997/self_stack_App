@@ -19,12 +19,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   FutureOr<void> loginevent(Loginevent event, Emitter<AuthState> emit) async {
     try {
-      bool authenticated =
-          await dioservices.authenticationModel(event.email, event.password);
+      bool authenticated =await dioservices.authenticationModel(event.email, event.password);
       if (authenticated) {
         emit(LoginSuccessState());
       } else {
-        // emit(FailureState());
+        emit(AuthErrorstate());  
       }
     } on Exception catch (e) {
       // ignore: unused_local_variable

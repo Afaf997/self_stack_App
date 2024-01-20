@@ -38,7 +38,7 @@ class Newpassword extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Email',
+                        'New password',
                         style: TextStyle(color: whiteModel),
                       ),
                     ),
@@ -49,7 +49,36 @@ class Newpassword extends StatelessWidget {
                     child: TextFormField(
                       style: const TextStyle(color: whiteModel),
                       decoration: const InputDecoration(
-                        labelText: 'Enter your Email',
+                        // labelText: 'Enter your Email',
+                        labelStyle: TextStyle(color: greymodel),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(7)),
+                          borderSide: BorderSide(color: whiteModel),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(7)),
+                          borderSide: BorderSide(color: greymodel),
+                        ),
+                      ),
+                    ),
+                  ),
+                    Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Confirm password',
+                        style: TextStyle(color: whiteModel),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: TextFormField(
+                      style: const TextStyle(color: whiteModel),
+                      decoration: const InputDecoration(
+                        // labelText: 'Enter your Email',
                         labelStyle: TextStyle(color: greymodel),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(7)),
@@ -65,8 +94,7 @@ class Newpassword extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  GestureDetector(
-                   
+                  GestureDetector( 
                     child: Container(
                       width: 350,
                       height: 50,
@@ -76,7 +104,7 @@ class Newpassword extends StatelessWidget {
                       ),
                       child: const Center(
                         child: Text(
-                          "GET OTP",
+                          "Submit",
                           style: TextStyle(
                             color: whiteModel,
                             fontSize: 18,

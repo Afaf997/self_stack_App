@@ -7,24 +7,24 @@ import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 import 'package:self_stack/core/links.dart';
 
-part 'forgot_event.dart';
-part 'forgot_state.dart';
+part 'otp_event.dart';
+part 'otp_state.dart';
 
-class ForgotBloc extends Bloc<ForgotEvent, ForgotState> {
-  ForgotBloc() : super(ForgotInitial()) {
-   on<ForgotScreenevent>(forgotevent);
-   on<ForgotinitialEvent>(forgotinitialEvent);
-   on<BackTosignUp>(backTosignUp);
+class OtpBloc extends Bloc<OtpEvent, OtpState> {
+  OtpBloc() : super(OtpInitial()) {
+   on<OtpVerifyevent>(otpVerifyevent);
+   on<Backforgotevent >(backforgotevent);
   }
 
-  FutureOr<void> forgotevent(ForgotScreenevent event, Emitter<ForgotState> emit)async {
+  FutureOr<void> otpVerifyevent(OtpVerifyevent event, Emitter<OtpState> emit) async{
      Dio dio= Dio();
     var data2={  
     "email": event.email,
+    "otp":event.otp,
     };
        try {
     final response = await dio.post(
-      "$loginApi/users/forgot-password$apikey",
+      "$loginApi/verifyOTP$apikey",
       data: jsonEncode(data2),
       options: Options(
         headers: {'Content-Type': 'application/json'},
@@ -35,8 +35,7 @@ class ForgotBloc extends Bloc<ForgotEvent, ForgotState> {
     print(response.statusCode);
 
     if (response.statusCode == 200) {
-      
-      emit(SuccessForgot());
+     
     } else if (response.statusCode == 401) {
       if (response.data != null && response.data['error'] == 'Invalid username or password') {
         // emit(ForgotState .error("Invalid username or password. Please try again."));
@@ -49,12 +48,8 @@ class ForgotBloc extends Bloc<ForgotEvent, ForgotState> {
     // emit(AuthState.error("An error occurred. Please try again later."));
   }
   }
-
-  FutureOr<void> forgotinitialEvent(ForgotinitialEvent event, Emitter<ForgotState> emit) {
-    emit(ForgotInitial());
   }
 
-  FutureOr<void> backTosignUp(BackTosignUp event, Emitter<ForgotState> emit) {
-    emit(BackToSignUpState());
+  FutureOr<void> backforgotevent(Backforgotevent event, Emitter<OtpState> emit) {
   }
-}
+
