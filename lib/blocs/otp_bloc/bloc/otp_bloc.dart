@@ -18,14 +18,14 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
 
   FutureOr<void> otpVerifyevent(OtpVerifyevent event, Emitter<OtpState> emit) async{
      Dio dio= Dio();
-    var data2={  
+    var data3={  
     "email": event.email,
     "otp":event.otp,
     };
        try {
     final response = await dio.post(
       "$loginApi/verifyOTP$apikey",
-      data: jsonEncode(data2),
+      data: jsonEncode(data3),
       options: Options(
         headers: {'Content-Type': 'application/json'},
       ),

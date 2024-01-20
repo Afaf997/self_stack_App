@@ -9,7 +9,6 @@ import 'package:self_stack/utils/constans.dart';
 class OtpScreen extends StatelessWidget {
   OtpScreen({Key? key}) : super(key: key);
   final OtpBloc otpbloc =OtpBloc();
-    TextEditingController _otpcontroller =TextEditingController();
     TextEditingController _emailcontroller= TextEditingController();
 
   @override
