@@ -42,11 +42,6 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
       emit (SuccessOtpState());
     }
      
-    // } else if (response.statusCode == 401) {
-    //   if (response.data != null && response.data['error'] == 'Invalid username or password') {
-    //     emit(OtpState.error("Invalid username or password. Please try again."));
-    //   } 
-    // }
   }on DioException catch (e){
     if (e.response!=null) {
       log(e.response!.statusCode.toString());
@@ -57,6 +52,6 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
   }
 
   FutureOr<void> backforgotevent(Backforgotevent event, Emitter<OtpState> emit) {
-    emit(OtpInitial());
+    emit(NavigateState());
   }
 

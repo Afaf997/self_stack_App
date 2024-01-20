@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:self_stack/blocs/otp_bloc/bloc/otp_bloc.dart';
 import 'package:self_stack/pages/authentication_screens/Forgot/screens/forgot.dart';
-// import 'package:pinput/pinput.dart';
+import 'package:self_stack/pages/authentication_screens/forgot/screens/newpassword.dart';
 import 'package:self_stack/utils/constans.dart';
 
+// ignore: must_be_immutable
 class OtpScreen extends StatelessWidget {
   OtpScreen({Key? key}) : super(key: key);
   final OtpBloc otpbloc =OtpBloc();
@@ -20,7 +21,10 @@ class OtpScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is !OtpActionstate,
       listener: (context, state) {
         if(state is SuccessOtpState){
-         Navigator.push(context,MaterialPageRoute(builder:(context)=>ForgotScreen()));
+         Navigator.push(context,MaterialPageRoute(builder:(context)=>Newpassword()));
+        }
+        else if(state is  NavigateState ){
+           Navigator.push(context,MaterialPageRoute(builder:(context)=>ForgotScreen()));
         }
        
       },
@@ -108,12 +112,15 @@ class OtpScreen extends StatelessWidget {
                 const SizedBox(
                   height: 30,
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(right: 200),
-                  child: Text(
-                    "Back to sign up",
-                    style: TextStyle(
-                        color: whiteModel, fontWeight: FontWeight.w700),
+                InkWell(
+                 onTap: () =>otpbloc.add(Backforgotevent()) ,
+                  child: const Padding(
+                    padding: EdgeInsets.only(right: 200),
+                    child: Text(
+                      "Back to forgot",
+                      style: TextStyle(
+                          color: whiteModel, fontWeight: FontWeight.w700),
+                    ),
                   ),
                 )
               ],

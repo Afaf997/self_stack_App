@@ -17,3 +17,7 @@ class verifyState extends OtpState{}
 
 class SuccessOtpState extends  OtpActionstate{}
 
+class NavigateState extends OtpActionstate{}
+
+
+
