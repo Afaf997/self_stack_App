@@ -41,12 +41,16 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
     if (response.statusCode == 200) {
       emit (SuccessOtpState());
     }
+    else if (response.statusCode == 401) {
+      if (response.data != null && response.data['error']) {
+        emit(OtpState.error("Invalid otp Please try again."));
+      } 
+    }
      
   }on DioException catch (e){
     if (e.response!=null) {
       log(e.response!.statusCode.toString());
     }
-    // emit(OtpState.error("An error occurred. Please try again later."));
   }
   }
   }

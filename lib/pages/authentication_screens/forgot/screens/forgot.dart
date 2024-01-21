@@ -21,7 +21,7 @@ class ForgotScreen extends StatelessWidget {
            Navigator.push(context,MaterialPageRoute(builder:(context)=>SignUp()));
         }
         else if(state is SuccessForgot){
-          Navigator.push(context,MaterialPageRoute(builder:(context)=> OtpScreen()));
+          Navigator.push(context,MaterialPageRoute(builder:(context)=> OtpScreen(emailController: _emailcontroller,)));
         }
       },
       builder: (context, state) {
