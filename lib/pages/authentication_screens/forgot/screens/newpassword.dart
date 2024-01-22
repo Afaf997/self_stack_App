@@ -16,7 +16,7 @@ class Newpassword extends StatelessWidget {
                  const Padding(
                     padding: EdgeInsets.only(right: 110),
                     child: Text(
-                      'CR',
+                      'Reset Password',
                       style: TextStyle(
                         fontSize: 27,
                         fontWeight: FontWeight.bold,
@@ -24,15 +24,17 @@ class Newpassword extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 50),
+                  SizedBox(height: 30),
                   Container(
                     alignment: Alignment.center,
                     child: Image.asset(
-                      'assets/image/images1.png',
+                      'assets/image/lock.png',
+                      height: 270,
+                      width: 270,
                       fit: BoxFit.cover,
                     ),
                   ),
-                  SizedBox(height: 50),
+                  // sizedboxC,
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Align(
@@ -43,7 +45,7 @@ class Newpassword extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 5),
+                 sizedboxA,
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
@@ -62,6 +64,7 @@ class Newpassword extends StatelessWidget {
                       ),
                     ),
                   ),
+                  sizedboxD,
                     Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Align(
@@ -72,6 +75,7 @@ class Newpassword extends StatelessWidget {
                       ),
                     ),
                   ),
+                  sizedbox,
                   const SizedBox(height: 5),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),

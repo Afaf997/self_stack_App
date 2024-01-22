@@ -78,6 +78,7 @@ flutter:
     - assets/image/for2.webp
     - assets/image/otp.png
     - assets/image/otp1.png
+    - assets/image/lock1.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
