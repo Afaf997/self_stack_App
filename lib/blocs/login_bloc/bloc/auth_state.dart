@@ -1,10 +1,12 @@
 part of 'auth_bloc.dart';
 
+
 @immutable
 abstract class AuthState {
   static error(String ?e){
     log(e??"gfd");
   }
+  
 }
  
  abstract class AuthActionState extends AuthState{} 
@@ -13,7 +15,11 @@ final class AuthInitial extends AuthState {}
 
 class AuthErrorstate extends  AuthActionState{}
 
-class LoginSuccessState extends AuthActionState{}
+class LoginSuccessState extends AuthActionState{
+  // final String userId;
+
+  // LoginSuccessState({required this.userId});
+}
 
 class SignScreenActionState extends AuthActionState{}
 

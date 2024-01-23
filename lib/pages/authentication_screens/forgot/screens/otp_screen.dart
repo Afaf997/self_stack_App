@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/blocs/otp_bloc/bloc/otp_bloc.dart';
 import 'package:self_stack/pages/authentication_screens/Forgot/screens/forgot.dart';
-import 'package:self_stack/pages/authentication_screens/forgot/screens/newpassword.dart';
+import 'package:self_stack/pages/authentication_screens/forgot/screens/new_password.dart';
 import 'package:self_stack/utils/constans.dart';
 
 // ignore: must_be_immutable
@@ -11,7 +11,7 @@ class OtpScreen extends StatelessWidget {
   final OtpBloc otpbloc =OtpBloc();
   
   final TextEditingController emailController;
-  final TextEditingController otpController = TextEditingController();
+  // final TextEditingController otpController = TextEditingController();
   final List<TextEditingController> otpControllers = List.generate(6, (index) => TextEditingController());
 
   @override
@@ -22,7 +22,7 @@ class OtpScreen extends StatelessWidget {
       buildWhen: (previous, current) => current is !OtpActionstate,
       listener: (context, state) {
         if(state is SuccessOtpState){
-          Navigator.push(context, MaterialPageRoute(builder:(context)=>Newpassword()));
+          Navigator.push(context, MaterialPageRoute(builder:(context)=>Newpassword(emailController: emailController,)));
         }
         else if(state is  NavigateState ){
           Navigator.push(context, MaterialPageRoute(builder:(context)=>ForgotScreen()));

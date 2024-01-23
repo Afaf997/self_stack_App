@@ -1,19 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:self_stack/blocs/reset_bloc.dart/bloc/reset_password_bloc.dart';
+import 'package:self_stack/pages/authentication_screens/forgot/screens/otp_Screen.dart';
+import 'package:self_stack/pages/authentication_screens/logIn_screens/Screens/login.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class Newpassword extends StatelessWidget {
-  const Newpassword({super.key});
+  Newpassword({super.key, required this.emailController,});
+  final ResetPasswordBloc resetbloc =ResetPasswordBloc();
+    final TextEditingController emailController;
+    final TextEditingController resetpassword =TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
+    return BlocConsumer<ResetPasswordBloc,ResetPasswordState>(
+      bloc: resetbloc,
+      listenWhen: (previous, current) =>current is ResetActionstate  ,
+      buildWhen: (previous, current) =>current is !ResetActionstate   ,
+      listener: (context, state) {
+        if(state is ResetNavigateState){
+          Navigator.push(context,MaterialPageRoute(builder: (context)=>OtpScreen(emailController: emailController,)));
+        }
+         else if(state is SuccessResetState ){
+          Navigator.push(context,MaterialPageRoute(builder:(context)=>LoginPage()));
+         }
+      },
+      builder: (context, state) {
+        return Scaffold(
           backgroundColor: Colors.black,
           body: SingleChildScrollView(
             child: Container(
               child: Column(
                 children: [
-                 const SizedBox(height: 80),
-                 const Padding(
+                  const SizedBox(height: 80),
+                  const Padding(
                     padding: EdgeInsets.only(right: 110),
                     child: Text(
                       'Reset Password',
@@ -24,7 +44,7 @@ class Newpassword extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 30),
+                  // SizedBox(height: 30),
                   Container(
                     alignment: Alignment.center,
                     child: Image.asset(
@@ -45,10 +65,11 @@ class Newpassword extends StatelessWidget {
                       ),
                     ),
                   ),
-                 sizedboxA,
+                  sizedboxA,
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
+                      controller:resetpassword,
                       style: const TextStyle(color: whiteModel),
                       decoration: const InputDecoration(
                         // labelText: 'Enter your Email',
@@ -65,7 +86,7 @@ class Newpassword extends StatelessWidget {
                     ),
                   ),
                   sizedboxD,
-                    Padding(
+                  Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Align(
                       alignment: Alignment.centerLeft,
@@ -80,9 +101,9 @@ class Newpassword extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
+                      // controller:resetpassword,
                       style: const TextStyle(color: whiteModel),
                       decoration: const InputDecoration(
-                        // labelText: 'Enter your Email',
                         labelStyle: TextStyle(color: greymodel),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(7)),
@@ -98,7 +119,8 @@ class Newpassword extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  GestureDetector( 
+                  GestureDetector(
+                    onTap: () => resetbloc.add(Submitevent(email: emailController.text,newpassword:resetpassword.text )),
                     child: Container(
                       width: 350,
                       height: 50,
@@ -121,11 +143,10 @@ class Newpassword extends StatelessWidget {
                     height: 30,
                   ),
                   GestureDetector(
-               
                     child: const Padding(
                       padding: EdgeInsets.only(right: 230),
                       child: Text(
-                        "Back to sign up",
+                        "Back to varification",
                         style: TextStyle(
                             color: whiteModel, fontWeight: FontWeight.w400),
                       ),
@@ -136,5 +157,7 @@ class Newpassword extends StatelessWidget {
             ),
           ),
         );
+      },
+    );
   }
 }

@@ -15,6 +15,8 @@ abstract class OtpActionstate extends OtpState{}
 
 class verifyState extends OtpState{}
 
+class fklad extends OtpState{}
+
 class SuccessOtpState extends  OtpActionstate{}
 
 class NavigateState extends OtpActionstate{}

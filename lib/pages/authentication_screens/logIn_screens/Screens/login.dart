@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/blocs/login_bloc/bloc/auth_bloc.dart';
@@ -7,7 +6,7 @@ import 'package:self_stack/pages/authentication_screens/Forgot/screens/forgot.da
 import 'package:self_stack/pages/authentication_screens/logIn_screens/widgets/reusable.dart';
 import 'package:self_stack/pages/authentication_screens/logIn_screens/widgets/snackbar.dart';
 import 'package:self_stack/pages/authentication_screens/signUp/screens/signUp.dart';
-import 'package:self_stack/pages/dashboard_screen/mainScreen.dart';
+import 'package:self_stack/pages/dashboard_screen/main_Screen.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class LoginPage extends StatelessWidget {
@@ -17,6 +16,7 @@ class LoginPage extends StatelessWidget {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  
 
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
@@ -53,7 +53,7 @@ class LoginPage extends StatelessWidget {
           Navigator.push(context,MaterialPageRoute(builder:(context)=> SignUp()));
         }else if(state is LoginSuccessState){
           log("message");
-          Navigator.push(context,MaterialPageRoute(builder:(context)=>const StartScreen()));
+          Navigator.push(context,MaterialPageRoute(builder:(context)=> StartScreen()));
           SnackbarUtils.showSuccessSnackbar(context, 'Login successful!',subMessages: 'You have successfully signed into your account ');
         }
         else if(state is AuthErrorstate){

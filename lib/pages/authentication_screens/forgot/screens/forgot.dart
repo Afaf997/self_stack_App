@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/blocs/forgot_bloc/bloc/forgot_bloc.dart';
-import 'package:self_stack/pages/authentication_screens/Forgot/screens/otpScreen.dart';
+import 'package:self_stack/pages/authentication_screens/forgot/screens/otp_screen.dart';
 import 'package:self_stack/pages/authentication_screens/signUp/screens/signUp.dart';
 import 'package:self_stack/utils/constans.dart';
 
