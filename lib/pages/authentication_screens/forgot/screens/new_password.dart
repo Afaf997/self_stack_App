@@ -143,6 +143,7 @@ class Newpassword extends StatelessWidget {
                     height: 30,
                   ),
                   GestureDetector(
+                    onTap: () => resetbloc.add(BackToOtp()),
                     child: const Padding(
                       padding: EdgeInsets.only(right: 230),
                       child: Text(

@@ -12,7 +12,20 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     on<NavigateToTaskEvent>(navigateToTaskEvent);
     on<NavigateToScheduleEvent>(navigateToScheduleEvent);
     on<NavigateToProfileEvent>(navigateToProfileEvent );
+    on<LogoutEvent>(logoutEvent);
   
+  }
+   @override
+  Stream<NavigationState> mapEventToState(NavigationEvent event) async* {
+    if (event is NavigateToHomeEvent) {
+      yield HomeScreenState();
+    } else if (event is NavigateToTaskEvent) {
+      yield TaskScreenState();
+    } else if (event is NavigateToScheduleEvent) {
+      yield ScheduleScreenState();
+    } else if (event is NavigateToProfileEvent) {
+      yield ProfileScreenState();
+    }
   }
 
   FutureOr<void> navigateToHomeEvent(NavigateToHomeEvent event, Emitter<NavigationState> emit) {
@@ -30,4 +43,13 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
   FutureOr<void> navigateToProfileEvent(NavigateToProfileEvent event, Emitter<NavigationState> emit) {
     emit(ProfileScreenState());
   }
+
+  FutureOr<void> logoutEvent(LogoutEvent event, Emitter<NavigationState> emit) {
+    emit(LogoutState());
+  }
+
+    FutureOr<void> logoutState(LogoutState event, Emitter<NavigationState> emit) {
+    emit(NavigationInitial());
+  }
+
 }

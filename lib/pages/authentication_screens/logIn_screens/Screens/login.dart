@@ -6,7 +6,7 @@ import 'package:self_stack/pages/authentication_screens/Forgot/screens/forgot.da
 import 'package:self_stack/pages/authentication_screens/logIn_screens/widgets/reusable.dart';
 import 'package:self_stack/pages/authentication_screens/logIn_screens/widgets/snackbar.dart';
 import 'package:self_stack/pages/authentication_screens/signUp/screens/signUp.dart';
-import 'package:self_stack/pages/dashboard_screen/main_Screen.dart';
+import 'package:self_stack/pages/dashboard_screen/home/dashboard.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class LoginPage extends StatelessWidget {
