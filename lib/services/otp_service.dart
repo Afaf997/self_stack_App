@@ -4,17 +4,18 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:self_stack/core/links.dart';
 
-class ForgotService {
+class OtpService {
   final Dio dio = Dio();
 
-  Future<bool> forgotPassword(String email) async {
+  Future<bool> verifyOTP(String email, String otp) async {
     var data = {
       "email": email,
+      "otp": otp,
     };
 
     try {
       final response = await dio.post(
-        "$loginApi/users/forgot-password$apikey",
+        "$loginApi/users/verifyOTP$apikey",
         data: jsonEncode(data),
         options: Options(
           headers: {'Content-Type': 'application/json'},
@@ -27,8 +28,8 @@ class ForgotService {
       if (response.statusCode == 200) {
         return true;
       } else if (response.statusCode == 401) {
-        if (response.data != null && response.data['error'] == 'Invalid password') {
-          throw Exception("Invalid email. Please try again.");
+        if (response.data != null && response.data['error']) {
+          throw Exception("Invalid OTP. Please try again.");
         }
       }
       return false;

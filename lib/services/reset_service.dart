@@ -4,17 +4,18 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:self_stack/core/links.dart';
 
-class ForgotService {
-  final Dio dio = Dio();
+class ResetPasswordService {
+  final Dio _dio = Dio();
 
-  Future<bool> forgotPassword(String email) async {
+  Future<void> submitResetRequest(String email, String newPassword) async {
     var data = {
       "email": email,
+      "newPassword": newPassword,
     };
 
     try {
-      final response = await dio.post(
-        "$loginApi/users/forgot-password$apikey",
+      final response = await _dio.post(
+        "$loginApi/users/updatePassword$apikey",
         data: jsonEncode(data),
         options: Options(
           headers: {'Content-Type': 'application/json'},
@@ -25,18 +26,16 @@ class ForgotService {
       print(response.statusCode);
 
       if (response.statusCode == 200) {
-        return true;
+        // Handle success
       } else if (response.statusCode == 401) {
-        if (response.data != null && response.data['error'] == 'Invalid password') {
-          throw Exception("Invalid email. Please try again.");
+        if (response.data != null && response.data['error']) {
+          // Handle error
         }
       }
-      return false;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (e.response != null) {
         log(e.response!.statusCode.toString());
       }
-      throw Exception("An error occurred. Please try again later.");
     }
   }
 }

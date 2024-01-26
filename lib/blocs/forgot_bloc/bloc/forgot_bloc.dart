@@ -1,53 +1,37 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
-import 'package:self_stack/core/links.dart';
+import 'package:self_stack/services/forgot_service.dart';
 
 part 'forgot_event.dart';
 part 'forgot_state.dart';
 
 class ForgotBloc extends Bloc<ForgotEvent, ForgotState> {
+  final ForgotService forgotService = ForgotService();
+
   ForgotBloc() : super(ForgotInitial()) {
-   on<ForgotScreenevent>(forgotevent);
-   on<ForgotinitialEvent>(forgotinitialEvent);
-   on<BackTosignUp>(backTosignUp);
+    on<ForgotScreenevent>(forgotevent);
+    on<ForgotinitialEvent>(forgotinitialEvent);
+    on<BackTosignUp>(backTosignUp);
   }
 
-  FutureOr<void> forgotevent(ForgotScreenevent event, Emitter<ForgotState> emit)async {
-     Dio dio= Dio();
-    var data2={  
-    "email": event.email,
-    };
-       try {
-    final response = await dio.post(
-      "$loginApi/users/forgot-password$apikey",
-      data: jsonEncode(data2),
-      options: Options(
-        headers: {'Content-Type': 'application/json'},
-      ),
-    );
+  FutureOr<void> forgotevent(ForgotScreenevent event, Emitter<ForgotState> emit) async {
 
-    log(response.statusCode.toString());
-    print(response.statusCode);
+    try {
+      final success = await forgotService.forgotPassword(event.email);
 
-    if (response.statusCode == 200) {
-      
-      emit(SuccessForgot());
-    } else if (response.statusCode == 401) {
-      if (response.data != null && response.data['error'] == 'Invalid username or password') {
-        emit(ForgotState .error("Invalid username or password. Please try again."));
-      } 
+      if (success) {
+        emit(SuccessForgot());
+      } else {
+         emit(ForgotState .error("Invalid username or password. Please try again."));
+      }
+    } on Exception catch (e) {
+      // ignore: unused_local_variable
+      String errormessage = (e).toString();
+      emit(ForgotState.error("An error occurred. Please try again later."));
     }
-  }on DioException catch (e){
-    if (e.response!=null) {
-      log(e.response!.statusCode.toString());
-    }
-    // emit(AuthState.error("An error occurred. Please try again later."));
-  }
   }
 
   FutureOr<void> forgotinitialEvent(ForgotinitialEvent event, Emitter<ForgotState> emit) {
@@ -58,3 +42,5 @@ class ForgotBloc extends Bloc<ForgotEvent, ForgotState> {
     emit(BackToSignUpState());
   }
 }
+
+
