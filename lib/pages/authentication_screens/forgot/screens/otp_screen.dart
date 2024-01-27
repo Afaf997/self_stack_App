@@ -7,29 +7,38 @@ import 'package:self_stack/utils/constans.dart';
 
 // ignore: must_be_immutable
 class OtpScreen extends StatelessWidget {
-  OtpScreen({Key? key, required this.emailController}) : super(key: key);
-  final OtpBloc otpbloc =OtpBloc();
-  
+  OtpScreen({Key? key, required this.emailController}) : super(key: key) {
+    focusNodes = List.generate(6, (index) => FocusNode());
+  }
+
+  final OtpBloc otpbloc = OtpBloc();
   final TextEditingController emailController;
-  // final TextEditingController otpController = TextEditingController();
-  final List<TextEditingController> otpControllers = List.generate(6, (index) => TextEditingController());
+  late List<FocusNode> focusNodes;
+  final List<TextEditingController> otpControllers =
+      List.generate(6, (index) => TextEditingController());
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<OtpBloc, OtpState>(
       bloc: otpbloc,
       listenWhen: (previous, current) => current is OtpActionstate,
-      buildWhen: (previous, current) => current is !OtpActionstate,
+      buildWhen: (previous, current) => current is! OtpActionstate,
       listener: (context, state) {
-        if(state is SuccessOtpState){
-          Navigator.push(context, MaterialPageRoute(builder:(context)=>Newpassword(emailController: emailController,)));
-        }
-        else if(state is  NavigateState ){
-          Navigator.push(context, MaterialPageRoute(builder:(context)=>ForgotScreen()));
+        if (state is SuccessOtpState) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Newpassword(
+                        emailController: emailController,
+                      )));
+        } else if (state is NavigateState) {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => ForgotScreen()));
         }
       },
       builder: (context, state) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           body: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -79,13 +88,16 @@ class OtpScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 30),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(6,(index) => Padding(
+                      children: List.generate(
+                        6,
+                        (index) => Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: SizedBox(
                             width: 40,
                             height: 60,
                             child: TextFormField(
                               controller: otpControllers[index],
+                              focusNode: focusNodes[index],
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: whiteModel,
@@ -106,7 +118,18 @@ class OtpScreen extends StatelessWidget {
                                 ),
                               ),
                               onChanged: (value) {
-                                // You can add custom logic for each field
+                                if (value.length == 1) {
+                                  if (index < 5) {
+                                    // Move focus to the next field
+                                    FocusScope.of(context).requestFocus(focusNodes[index + 1]);
+                                  } else {
+                                    // If the last field is reached, submit the OTP
+                                    otpbloc.add(OtpVerifyevent(
+                                      email: emailController.text,
+                                      otp: otpControllers.map((controller) => controller.text).join(),
+                                    ));
+                                  }
+                                }
                               },
                             ),
                           ),
@@ -143,7 +166,7 @@ class OtpScreen extends StatelessWidget {
                   height: 30,
                 ),
                 InkWell(
-                  onTap: () =>otpbloc.add(Backforgotevent()) ,
+                  onTap: () => otpbloc.add(Backforgotevent()),
                   child: const Padding(
                     padding: EdgeInsets.only(right: 200),
                     child: Text(

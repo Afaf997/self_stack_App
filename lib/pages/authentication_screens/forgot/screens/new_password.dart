@@ -54,7 +54,6 @@ class Newpassword extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  // sizedboxC,
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Align(
@@ -69,10 +68,10 @@ class Newpassword extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
+                      obscureText: true,
                       controller:resetpassword,
                       style: const TextStyle(color: whiteModel),
                       decoration: const InputDecoration(
-                        // labelText: 'Enter your Email',
                         labelStyle: TextStyle(color: greymodel),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(7)),
@@ -101,7 +100,7 @@ class Newpassword extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
-                      // controller:resetpassword,
+                       obscureText: true,
                       style: const TextStyle(color: whiteModel),
                       decoration: const InputDecoration(
                         labelStyle: TextStyle(color: greymodel),
@@ -116,9 +115,7 @@ class Newpassword extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   GestureDetector(
                     onTap: () => resetbloc.add(Submitevent(email: emailController.text,newpassword:resetpassword.text )),
                     child: Container(
@@ -129,10 +126,8 @@ class Newpassword extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Center(
-                        child: Text(
-                          "Submit",
-                          style: TextStyle(
-                            color: whiteModel,
+                        child: Text("Submit",
+                          style: TextStyle(color: whiteModel,
                             fontSize: 18,
                           ),
                         ),

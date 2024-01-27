@@ -32,7 +32,7 @@ class ForgotService {
         }
       }
       return false;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (e.response != null) {
         log(e.response!.statusCode.toString());
       }

@@ -1,3 +1,5 @@
+// ignore_for_file: override_on_non_overriding_member
+
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
@@ -13,7 +15,6 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     on<NavigateToScheduleEvent>(navigateToScheduleEvent);
     on<NavigateToProfileEvent>(navigateToProfileEvent );
     on<LogoutEvent>(logoutEvent);
-  
   }
    @override
   Stream<NavigationState> mapEventToState(NavigationEvent event) async* {

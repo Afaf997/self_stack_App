@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:self_stack/core/links.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class SignupService {
   Dio dio = Dio();
