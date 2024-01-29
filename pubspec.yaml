@@ -42,6 +42,10 @@ dependencies:
   flutter_otp_text_field: ^1.1.1
   pinput: ^3.0.1
   shared_preferences: ^2.2.2
+  firebase_auth: ^4.16.0
+  firebase_core: ^2.24.2
+  sign_in_button: ^3.2.0
+  google_sign_in: ^6.2.1
 
 dev_dependencies:
   flutter_test:

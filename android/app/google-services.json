@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "569932012172",
+    "project_id": "self-stack-project",
+    "storage_bucket": "self-stack-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569932012172:android:04f61e6cbaf593e39639a9",
+        "android_client_info": {
+          "package_name": "com.example.self_stack"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYXY8GjaX54ZemAUMuXSQRw2DddSk-X9k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

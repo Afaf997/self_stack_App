@@ -1,6 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/blocs/bottom_navigation/bloc/navigation_bloc.dart';
+import 'package:self_stack/firebase_options.dart';
 import 'package:self_stack/pages/authentication_screens/home_screen/splash.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,6 +10,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main()async {
    WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferences.getInstance();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(const MyApp());
 }
 

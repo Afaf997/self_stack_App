@@ -18,7 +18,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   }
 
   Future<void> signUpButtonEvent(
-      SignUpButtonEvent event, Emitter<SignUpState> emit) async {
+    SignUpButtonEvent event,
+    Emitter<SignUpState> emit,
+  ) async {
     try {
       bool success = await signupService.signUpModel(
         event.name,
@@ -41,7 +43,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     }
   }
 
-  FutureOr<void> loginScreenNavigationevent(LoginScreenNavigationevent event, Emitter<SignUpState> emit) {
-  emit(LoginActionState());
+  FutureOr<void> loginScreenNavigationevent(
+      LoginScreenNavigationevent event, Emitter<SignUpState> emit) {
+    emit(LoginActionState());
   }
 }

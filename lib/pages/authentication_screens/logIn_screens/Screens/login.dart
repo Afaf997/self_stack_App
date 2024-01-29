@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/blocs/login_bloc/bloc/auth_bloc.dart';
@@ -7,12 +8,12 @@ import 'package:self_stack/pages/authentication_screens/logIn_screens/widgets/re
 import 'package:self_stack/pages/authentication_screens/logIn_screens/widgets/snackbar.dart';
 import 'package:self_stack/pages/authentication_screens/signUp/screens/signUp.dart';
 import 'package:self_stack/pages/dashboard_screen/home/dashboard.dart';
+import 'package:self_stack/repository/firebase_auth_repository.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class LoginPage extends StatelessWidget {
    LoginPage({Key? key}) : super(key: key);
-
-  final AuthBloc authbloc = AuthBloc();
+   final AuthBloc authbloc = AuthBloc();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -201,7 +202,7 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(height: 40),
                   GestureDetector(
                     onTap: (){
-                      authbloc.add(GoogleConnectEvent());
+                      FirebaseAuthMethods(FirebaseAuth.instance).signInWithGoogle(context);
                     },
                     child: Container(
                       width: 347,

@@ -15,7 +15,7 @@ class ProfileScreen extends StatelessWidget {
           onTap: () async {
             SharedPreferences prefs = await SharedPreferences.getInstance();
             await prefs.clear();
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage()));
           },
           child: Text(
             "Logout",

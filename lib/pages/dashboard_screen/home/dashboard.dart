@@ -46,13 +46,6 @@ class StartScreen extends StatelessWidget {
             builder: (context, state) {
               return Scaffold(
                 backgroundColor: backgroundmodel,
-                appBar: AppBar(
-                  backgroundColor: selfstackGreen,
-                  title: Text(
-                    'App Title',
-                    style: TextStyle(color: whiteModel),
-                  ),
-                ),
                 body: Center(
                   child: Text(
                     'User ID: $userId',
