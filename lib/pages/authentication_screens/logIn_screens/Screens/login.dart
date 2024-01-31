@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -214,7 +216,7 @@ class LoginPage extends StatelessWidget {
                   GestureDetector(
                     onTap: () async {
   UserCredential userCredential = await FirebaseServices().signInWithGoogle();
-log(userCredential.toString());
+  // ignore: unnecessary_null_comparison
   if (userCredential != null) {
     // Extract user data
     Map<String, dynamic> googleUserData = {
@@ -225,7 +227,6 @@ log(userCredential.toString());
 
    try{
    var ok = await postGoogleDataToAPI(googleUserData);
-   log("ok ok ok");
    }catch(e){
 log(e.toString());
    }

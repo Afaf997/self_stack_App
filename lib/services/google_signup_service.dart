@@ -1,9 +1,7 @@
-
 import 'dart:convert';
-import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:self_stack/core/links.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<bool> postGoogleDataToAPI(Map<String, dynamic> googleUserData) async {
   try {
@@ -11,15 +9,21 @@ Future<bool> postGoogleDataToAPI(Map<String, dynamic> googleUserData) async {
 
     Dio dio = Dio();
 
-    
     print("object");
     print(googleUserData.toString());
-    Response response = await dio.post(apiUrl, data: jsonEncode(googleUserData),options: Options(
+
+    Response response = await dio.post(
+      apiUrl,
+      data: jsonEncode(googleUserData),
+      options: Options(
         headers: {'Content-Type': 'application/json'},
-      ));
+      ),
+    );
 
     if (response.statusCode == 200) {
-        log(response.data['name'.toString()]);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('userId', response.data['_id']);
+
       return true;
     } else {
       return false;
@@ -29,4 +33,3 @@ Future<bool> postGoogleDataToAPI(Map<String, dynamic> googleUserData) async {
     return false;
   }
 }
-

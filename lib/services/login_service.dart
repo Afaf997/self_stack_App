@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:self_stack/core/links.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,8 +22,6 @@ var data = {
       ),
     );
 
-    // log(response.statusCode.toString());
-    // log(response.data.toString());
     print(response.statusCode);
 
     log(response.data['userId'.toString()]);
@@ -32,6 +29,7 @@ var data = {
     if(response.statusCode ==200){
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('userId', response.data['userId'.toString()]); 
+
     }
     
      
