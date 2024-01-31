@@ -15,15 +15,13 @@ final class AuthInitial extends AuthState {}
 
 class AuthErrorstate extends  AuthActionState{}
 
-class LoginSuccessState extends AuthActionState{
-  // final String userId;
-
-  // LoginSuccessState({required this.userId});
-}
+class LoginSuccessState extends AuthActionState{}
 
 class SignScreenActionState extends AuthActionState{}
 
 class ForgotActionState  extends AuthActionState{}
+
+class googleAuthState extends AuthActionState{}
 
 class EmailValidationErrorState extends AuthState {
   final String errorMessage;

@@ -40,6 +40,7 @@ class OtpScreen extends StatelessWidget {
         return Scaffold(
           resizeToAvoidBottomInset: false,
           body: Container(
+             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/image/background.jpg'),
@@ -66,7 +67,7 @@ class OtpScreen extends StatelessWidget {
                   child: Text(
                     'Please enter the 6-digit verification code that was sent your phone number.',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: Colors.white,
                     ),
                   ),
@@ -120,10 +121,9 @@ class OtpScreen extends StatelessWidget {
                               onChanged: (value) {
                                 if (value.length == 1) {
                                   if (index < 5) {
-                                    // Move focus to the next field
                                     FocusScope.of(context).requestFocus(focusNodes[index + 1]);
                                   } else {
-                                    // If the last field is reached, submit the OTP
+                          
                                     otpbloc.add(OtpVerifyevent(
                                       email: emailController.text,
                                       otp: otpControllers.map((controller) => controller.text).join(),
@@ -184,3 +184,5 @@ class OtpScreen extends StatelessWidget {
     );
   }
 }
+
+

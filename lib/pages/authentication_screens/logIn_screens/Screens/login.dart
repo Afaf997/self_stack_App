@@ -59,6 +59,9 @@ class LoginPage extends StatelessWidget {
         }
         else if(state is AuthErrorstate){
            SnackbarUtils.showErrorSnackbar(context, 'Login failed. Please check your credentials.', subMessage: 'Ensure your username and password are correct.');
+        }
+        else if(state is googleAuthState){
+           Navigator.push(context,MaterialPageRoute(builder:(context)=> StartScreen()));
         }},
       builder: (context, state) {
         return Scaffold(
@@ -201,8 +204,10 @@ class LoginPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 40),
                   GestureDetector(
-                    onTap: (){
-                      FirebaseAuthMethods(FirebaseAuth.instance).signInWithGoogle(context);
+                    onTap: ()async{
+                      // authbloc.add(GoogleConnectEvent());
+                      // await FirebaseServices().signInWithGoogle();
+                        // Navigator.pop(context);
                     },
                     child: Container(
                       width: 347,

@@ -39,6 +39,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   FutureOr<void> googleConnectEvent(
       GoogleConnectEvent event, Emitter<AuthState> emit) {
     // print("google clicked");
+    emit( googleAuthState());
   }
 
   FutureOr<void> signUpNavigationEvent(
@@ -46,3 +47,5 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(SignScreenActionState());
   }
 }
+
+
