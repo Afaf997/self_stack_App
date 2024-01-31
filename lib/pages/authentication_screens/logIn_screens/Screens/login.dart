@@ -9,6 +9,7 @@ import 'package:self_stack/pages/authentication_screens/logIn_screens/widgets/sn
 import 'package:self_stack/pages/authentication_screens/signUp/screens/signUp.dart';
 import 'package:self_stack/pages/dashboard_screen/home/dashboard.dart';
 import 'package:self_stack/repository/firebase_auth_repository.dart';
+import 'package:self_stack/services/google_signup_service.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class LoginPage extends StatelessWidget {
@@ -17,6 +18,13 @@ class LoginPage extends StatelessWidget {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  final TextEditingController emailgooglecontroller =TextEditingController();
+    final TextEditingController displaynameController = TextEditingController();
+      final TextEditingController uidController = TextEditingController();
+        final TextEditingController urlController = TextEditingController();
+
+
   
 
   String? _validateEmail(String? value) {
@@ -204,11 +212,31 @@ class LoginPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 40),
                   GestureDetector(
-                    onTap: ()async{
-                      // authbloc.add(GoogleConnectEvent());
-                      // await FirebaseServices().signInWithGoogle();
-                        // Navigator.pop(context);
-                    },
+                    onTap: () async {
+  UserCredential userCredential = await FirebaseServices().signInWithGoogle();
+log(userCredential.toString());
+  if (userCredential != null) {
+    // Extract user data
+    Map<String, dynamic> googleUserData = {
+      'googleId': userCredential.user?.uid,
+      'email': userCredential.user?.email,
+      'name':userCredential.user?.displayName,
+    };
+
+   try{
+   var ok = await postGoogleDataToAPI(googleUserData);
+   log("ok ok ok");
+   }catch(e){
+log(e.toString());
+   }
+   
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) => StartScreen()));
+  } else {
+    // Handle sign-in failure
+
+  }
+},
                     child: Container(
                       width: 347,
                       height: 61,

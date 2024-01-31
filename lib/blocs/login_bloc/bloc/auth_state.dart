@@ -23,6 +23,10 @@ class ForgotActionState  extends AuthActionState{}
 
 class googleAuthState extends AuthActionState{}
 
+class GoogleSuccessState extends AuthActionState{}
+
+class GoogleErrorstate extends  AuthActionState{}
+
 class EmailValidationErrorState extends AuthState {
   final String errorMessage;
   EmailValidationErrorState(this.errorMessage);

@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/blocs/bottom_navigation/bloc/navigation_bloc.dart';
+import 'package:self_stack/blocs/login_bloc/bloc/auth_bloc.dart';
+import 'package:self_stack/pages/authentication_screens/logIn_screens/widgets/snackbar.dart';
 import 'package:self_stack/pages/dashboard_screen/profile/profile_screen.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/schedule_screen.dart';
 import 'package:self_stack/pages/dashboard_screen/task/task_screen.dart';
@@ -40,16 +43,30 @@ class StartScreen extends StatelessWidget {
               }else if(state is ProfileScreenState){
                  Navigator.push(context,MaterialPageRoute(builder:(context)=>ProfileScreen()));
 
-              }
+              } else if(state is GoogleSuccessState){
+           Navigator.push(context,MaterialPageRoute(builder:(context)=> StartScreen()));
+        } else if(state is GoogleErrorstate){
+           SnackbarUtils.showErrorSnackbar(context, 'Google failed. Please check your credentials.', subMessage: 'Ensure your username and password are correct.');
+        }
                
             },
             builder: (context, state) {
               return Scaffold(
                 backgroundColor: backgroundmodel,
                 body: Center(
-                  child: Text(
-                    'User ID: $userId',
-                    style: TextStyle(color: whiteModel),
+                
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 90),
+                    child: Column(
+                      children: [
+                        Text(
+                          FirebaseAuth.instance.currentUser!.displayName!,
+                        style: TextStyle(color: whiteModel),),
+                          Text(
+                          FirebaseAuth.instance.currentUser!.uid,
+                        style: TextStyle(color: whiteModel),),
+                      ],
+                    ),
                   ),
                 ),
                 bottomNavigationBar: BottomNavigationBar(
