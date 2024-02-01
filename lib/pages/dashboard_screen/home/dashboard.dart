@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/blocs/bottom_navigation/bloc/navigation_bloc.dart';
+import 'package:self_stack/pages/dashboard_screen/home/widgets/bottom_navigation.dart';
 import 'package:self_stack/pages/dashboard_screen/profile/profile_screen.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/schedule_screen.dart';
 import 'package:self_stack/pages/dashboard_screen/task/task_screen.dart';
 import 'package:self_stack/services/auth_get_service.dart';
 import 'package:self_stack/utils/constans.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../blocs/bottom_navigation/bloc/navigation_event.dart';
 
 class StartScreen extends StatelessWidget {
   StartScreen({Key? key}) : super(key: key);
@@ -69,51 +69,18 @@ class StartScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text('Display Name: ${userDetails['name']}',style: TextStyle(color: whiteModel),),
-                            Text('URI: ${userDetails['uri']}',style: TextStyle(color: whiteModel),),
+                            Text('URI: ${userDetails['email']}',style: TextStyle(color: whiteModel),),
                             Text('URL: ${userDetails['url']}',style: TextStyle(color: whiteModel),),
                             Text('Profile: ${userDetails['profile']}',style: TextStyle(color: whiteModel),),
                           ],
                         ),
                       ),
-                      bottomNavigationBar: BottomNavigationBar(
-                        items: [
-                          BottomNavigationBarItem(
-                            icon: Icon(Icons.home),
-                            label: 'Home',
-                          ),
-                          BottomNavigationBarItem(
-                            icon: Icon(Icons.task),
-                            label: 'Task',
-                          ),
-                          BottomNavigationBarItem(
-                            icon: Icon(Icons.schedule),
-                            label: 'Schedule',
-                          ),
-                          BottomNavigationBarItem(
-                            icon: Icon(Icons.person),
-                            label: 'Profile',
-                          ),
-                        ],
-                        currentIndex: 0,
-                        selectedItemColor: selfstackGreen,
-                        unselectedItemColor: Colors.grey,
-                        backgroundColor: Colors.black,
-                        onTap: (index) {
-                          if (index == 0) {
-                            navigationBloc.add(NavigateToHomeEvent());
-                          } else if (index == 1) {
-                            navigationBloc.add(NavigateToTaskEvent());
-                          } else if (index == 2) {
-                            navigationBloc.add(NavigateToScheduleEvent());
-                          } else if (index == 3) {
-                            navigationBloc.add(NavigateToProfileEvent());
-                          }
-                        },
-                      ),
-                    );
+                     bottomNavigationBar: CustomBottomNavigationBar(navigationBloc: navigationBloc),
+                   );
                   },
                 );
-              } else {
+              } 
+              else {
                 return Scaffold(
                   body: Container(
                     color: backgroundmodel,

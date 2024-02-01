@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:self_stack/blocs/bottom_navigation/bloc/navigation_bloc.dart';
 import 'package:self_stack/pages/authentication_screens/LogIn_Screens/Screens/login.dart';
+import 'package:self_stack/pages/dashboard_screen/home/widgets/bottom_navigation.dart';
 import 'package:self_stack/utils/constans.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+ ProfileScreen({super.key});
+ final NavigationBloc navigationBloc = NavigationBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +26,7 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: CustomBottomNavigationBar(navigationBloc: navigationBloc),
     );
   }
 }

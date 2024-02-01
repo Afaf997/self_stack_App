@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:self_stack/core/links.dart';
 
-class getLoginservices {
+class getTaskservices {
   Dio dio = Dio();
 
-  Future<Map<String, dynamic>> getUserDetails(String userId) async {
+  Future<Map<String, dynamic>> getTaskDetails(String userId) async {
     try {
-      String apiUrl = "$loginApi/users/$userId$apikey";
+      String apiUrl = "$loginApi/tasks/user/$userId$apikey";
 
       Response response = await dio.get(apiUrl);
       if (response.statusCode == 200) {
