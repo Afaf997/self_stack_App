@@ -294,8 +294,8 @@ class TaskScreen extends StatelessWidget {
                                             : 'assets/image/lock5.png');
 
                                     Color? imageColor = isStarted
-                                        ? selfstackGreen
-                                        : (isCompleted ? null : greymodel);
+                                        ? whiteModel
+                                        : (isCompleted ? null : Color.fromARGB(255, 98, 98, 98));
 
                                     return Container(
                                       width: 80.0,
