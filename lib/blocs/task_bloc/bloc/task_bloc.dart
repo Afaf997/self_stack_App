@@ -8,10 +8,10 @@ part 'task_state.dart';
 
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   TaskBloc() : super(TaskInitial()) {
-    on<TaskaNavigation>(taskaNavigation);
+    on<TaskNavigation>(taskaNavigation);
   }
 
-  FutureOr<void> taskaNavigation(TaskaNavigation event, Emitter<TaskState> emit) {
+  FutureOr<void> taskaNavigation(TaskNavigation event, Emitter<TaskState> emit) {
     emit(navigateState());
   }
 }
