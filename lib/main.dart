@@ -26,18 +26,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(fontFamily: "Poppins",),darkTheme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
       title: 'Self Stack',
+      home: SplashScreen(),
       
-      home:MultiRepositoryProvider(
-        providers: [
-         BlocProvider<NavigationBloc>(
-            create: (context) => NavigationBloc(),
-          ),
-          BlocProvider<TaskBloc>(
-            create: (context) => TaskBloc(), // Create your other Bloc
-          ),
-        ],
-        child: Container(),
-      )
+      // home:MultiRepositoryProvider(
+      //   providers: [
+      //    BlocProvider<NavigationBloc>(
+      //       create: (context) => NavigationBloc(),
+      //     ),
+      //     BlocProvider<TaskBloc>(
+      //       create: (context) => TaskBloc(), // Create your other Bloc
+      //     ),
+      //   ],
+      //   child: SplashScreen(),
+      // )
   
     );
   }

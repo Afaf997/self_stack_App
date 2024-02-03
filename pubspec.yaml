@@ -43,9 +43,10 @@ dependencies:
   pinput: ^3.0.1
   shared_preferences: ^2.2.2
   firebase_auth: ^4.16.0
-  firebase_core: ^2.24.2
+  firebase_core: ^2.25.3
   sign_in_button: ^3.2.0
   google_sign_in: ^6.2.1
+  lottie: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -91,6 +92,7 @@ flutter:
     - assets/image/unlock.png
     - assets/image/unlock1.png
     - assets/image/unlock2.png
+    - assets/lottie/task.json
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

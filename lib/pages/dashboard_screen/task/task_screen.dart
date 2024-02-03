@@ -49,33 +49,13 @@ class TaskScreen extends StatelessWidget {
 
                   return BlocConsumer<NavigationBloc, NavigationState>(
                     bloc: navigationBloc,
-                    buildWhen: (previous, current) =>
-                        current is! NavigationInitial,
+                    buildWhen: (previous, current) =>current is! NavigationInitial,
                     listener: (context, state) {
-                      if (state is HomeScreenState) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => StartScreen()),
-                        );
-                      } else if (state is TaskScreenState) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => TaskScreen()),
-                        );
-                      } else if (state is ScheduleScreenState) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ScheduleScreen()),
-                        );
-                      } else if (state is ProfileScreenState) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ProfileScreen()),
-                        );
-                      }
+                      if (state is HomeScreenState) {Navigator.push(context,  MaterialPageRoute(builder: (context) => StartScreen()),);}
+                       else if (state is TaskScreenState) {Navigator.push(context,  MaterialPageRoute(builder: (context) => TaskScreen()),);}
+                       else if (state is ScheduleScreenState) {Navigator.push(context,  MaterialPageRoute(builder: (context) => ScheduleScreen()),);}
+                       else if (state is ProfileScreenState) {Navigator.push(context,  MaterialPageRoute(builder: (context) => ProfileScreen()),);}
+
                     },
                     builder: (context, state) {
                       return Scaffold(
@@ -91,78 +71,63 @@ class TaskScreen extends StatelessWidget {
                               ),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 50),
+                              padding: const EdgeInsets.only(top: 0),
                               child: GridView.count(
                                 crossAxisCount: 2,
-                                crossAxisSpacing: 30.0,
-                                mainAxisSpacing: 30.0,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
                                 padding: EdgeInsets.all(17.0),
                                 children: List.generate(
-                                  userDetails['userTasks'][0]['tasks'].length,
-                                  (index) {
-                                    String taskName = userDetails['userTasks']
-                                        [0]['tasks'][index]['task_name'];
+                                  userDetails['userTasks'][0]['tasks'].length,(index) {
+                                    String taskName = userDetails['userTasks'][0]['tasks'][index]['task_name'];
+                                    String courseid=userDetails['userTasks'][0]['_id'];
+                                    String id=userDetails['userTasks'][0]['tasks'][index]['_id'];
+                                    bool isStarted = index == userDetails['userData']['tasksStarted'].length -1;
+                                    bool isCompleted = index <userDetails['userData']['tasksStarted'].length;
 
-                                    bool isStarted = index ==
-                                        userDetails['userData']['tasksStarted']
-                                                .length -
-                                            1;
+                                    String imagePath = isStarted? 'assets/image/unlock.png': (isCompleted? 'assets/image/tick1.png' 
+                                       : 'assets/image/lock5.png');
 
-                                    bool isCompleted = index <
-                                        userDetails['userData']['tasksStarted']
-                                            .length;
-
-                                    String imagePath = isStarted
-                                        ? 'assets/image/unlock2.png'
-                                        : (isCompleted
-                                            ? 'assets/image/tick1.png'
-                                            : 'assets/image/lock5.png');
-
-                                    Color? imageColor = isStarted
-                                        ? whiteModel
+                                    Color? imageColor = isStarted? whiteModel
                                         : (isCompleted ? null : Color.fromARGB(255, 98, 98, 98));
+                                        
 
                                     return GestureDetector(
-                                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>const DetailOfTask())),
-                                      child: Container(
-                                        width: 80.0,
-                                        height: 80.0,
-                                        decoration: BoxDecoration(
-                                          color: backgroundmodel,
-                                          borderRadius:
-                                              BorderRadius.circular(15.0),
-                                          border: Border.all(
-                                            color: Colors.white,
-                                            width: 1.0,
-                                          ),
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.only(top: 30),
-                                              child: Text(
-                                                '$taskName',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 19.0,
-                                                  fontWeight: FontWeight.bold,
+                                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailOfTask(taskId: id, courseId: courseid,))),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8),
+                                            child: Card(
+                                              color: Color.fromARGB(255, 36, 36, 36),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(17.0),
+                                                side: BorderSide(
+                                                  color: whiteModel,
+                                                  width: 1.0,
                                                 ),
                                               ),
-                                            ),
-                                           sizedboxB,
-                                            Image.asset(
-                                              imagePath,
-                                              width: 50.0,
-                                              height: 50.0,
-                                              color: imageColor,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    '$taskName',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      color: whiteModel,
+                                                      fontSize: 20.0, 
+                                                      fontWeight: FontWeight.w900,
+                                                    ),
+                                                  ),
+                                                  sizedboxB,
+                                                  Image.asset(
+                                                    imagePath,
+                                                    width: 40.0,
+                                                    height: 40.0,
+                                                    color: imageColor,
+                                                  ),
+                                                ],
+                                                                             ),
+                                                                           ),
+                                          ),
                                     );
                                   },
                                 ),

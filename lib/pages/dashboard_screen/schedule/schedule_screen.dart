@@ -4,7 +4,6 @@ import 'package:self_stack/blocs/bottom_navigation/bloc/navigation_bloc.dart';
 import 'package:self_stack/pages/dashboard_screen/home/dashboard.dart';
 import 'package:self_stack/pages/dashboard_screen/home/widgets/bottom_navigation.dart';
 import 'package:self_stack/pages/dashboard_screen/profile/profile_screen.dart';
-import 'package:self_stack/pages/dashboard_screen/schedule/schedule_screen.dart';
 import 'package:self_stack/pages/dashboard_screen/task/task_screen.dart';
 
 class ScheduleScreen extends StatelessWidget {
