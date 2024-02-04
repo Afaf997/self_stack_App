@@ -93,6 +93,7 @@ flutter:
     - assets/image/unlock1.png
     - assets/image/unlock2.png
     - assets/lottie/task.json
+    - assets/image/feedback.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

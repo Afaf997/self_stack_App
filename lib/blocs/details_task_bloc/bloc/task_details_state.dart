@@ -1,6 +1,17 @@
-part of 'task_details_bloc.dart';
+abstract class TaskDetailState {}
 
-@immutable
-sealed class TaskDetailsState {}
+class InitialTaskDetailState extends TaskDetailState {}
 
-final class TaskDetailsInitial extends TaskDetailsState {}
+class LoadingTaskDetailState extends TaskDetailState {}
+
+class LoadedTaskDetailState extends TaskDetailState {
+  final Map<String, dynamic> taskDetails;
+
+  LoadedTaskDetailState({required this.taskDetails});
+}
+
+class ErrorTaskDetailState extends TaskDetailState {
+  final String error;
+
+  ErrorTaskDetailState({required this.error});
+}

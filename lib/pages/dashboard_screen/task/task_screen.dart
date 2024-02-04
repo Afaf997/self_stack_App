@@ -93,42 +93,64 @@ class TaskScreen extends StatelessWidget {
                                         
 
                                     return GestureDetector(
-                                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailOfTask(taskId: id, courseId: courseid,))),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8),
-                                            child: Card(
-                                              color: Color.fromARGB(255, 36, 36, 36),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(17.0),
-                                                side: BorderSide(
-                                                  color: whiteModel,
-                                                  width: 1.0,
-                                                ),
-                                              ),
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    '$taskName',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      color: whiteModel,
-                                                      fontSize: 20.0, 
-                                                      fontWeight: FontWeight.w900,
-                                                    ),
-                                                  ),
-                                                  sizedboxB,
-                                                  Image.asset(
-                                                    imagePath,
-                                                    width: 40.0,
-                                                    height: 40.0,
-                                                    color: imageColor,
-                                                  ),
-                                                ],
-                                                                             ),
-                                                                           ),
-                                          ),
-                                    );
+  onTap: () {
+  if (!isCompleted) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Keep going! Complete the previous tasks to unlock this one.',
+          style: TextStyle(color:redtheme), 
+        ),
+        duration: Duration(seconds: 3),
+        backgroundColor:whiteModel, 
+        behavior: SnackBarBehavior.floating, 
+      ),
+    );
+}else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DetailOfTask(taskId: id, courseId: courseid),
+        ),
+      );
+    }
+  },
+  child: Padding(
+    padding: const EdgeInsets.all(8),
+    child: Card(
+      color: Color.fromARGB(255, 36, 36, 36),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(17.0),
+        side: BorderSide(
+          color: whiteModel,
+          width: 1.0,
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Task ${index + 1}',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: whiteModel,
+              fontSize: 20.0,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+          sizedboxB,
+          Image.asset(
+            imagePath,
+            width: 40.0,
+            height: 40.0,
+            color: imageColor,
+          ),
+        ],
+      ),
+    ),
+  ),
+);
+
                                   },
                                 ),
                               ),

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/blocs/bottom_navigation/bloc/navigation_bloc.dart';
+import 'package:self_stack/blocs/details_task_bloc/bloc/task_details_bloc.dart';
 import 'package:self_stack/blocs/task_bloc/bloc/task_bloc.dart';
 import 'package:self_stack/firebase_options.dart';
 import 'package:self_stack/pages/authentication_screens/home_screen/splash.dart';
@@ -26,19 +27,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(fontFamily: "Poppins",),darkTheme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
       title: 'Self Stack',
-      home: SplashScreen(),
       
-      // home:MultiRepositoryProvider(
-      //   providers: [
-      //    BlocProvider<NavigationBloc>(
-      //       create: (context) => NavigationBloc(),
-      //     ),
-      //     BlocProvider<TaskBloc>(
-      //       create: (context) => TaskBloc(), // Create your other Bloc
-      //     ),
-      //   ],
-      //   child: SplashScreen(),
-      // )
+      home:MultiRepositoryProvider(
+        providers: [
+         BlocProvider<NavigationBloc>(
+            create: (context) => NavigationBloc(),
+          ),
+          BlocProvider<TaskBloc>(
+            create: (context) => TaskBloc(),
+          ),
+           BlocProvider<TaskDetailBloc>(
+               create: (context) =>TaskDetailBloc(),
+          ),
+        ],
+        child: SplashScreen(),
+      )
   
     );
   }
