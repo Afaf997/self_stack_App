@@ -16,13 +16,13 @@ class SignUpButton extends StatelessWidget {
         width: screenWidth * 0.91,
         height: screenHeight * 0.07,
         decoration: BoxDecoration(
-          color: whiteModel,
+          color: kwhiteModel,
           borderRadius: BorderRadius.circular(screenWidth * 0.02),
         ),
         child: Center(
           child: Text(
             "Sign Up",
-            style: TextStyle(color: backgroundmodel, fontSize: screenWidth * 0.04, fontWeight: FontWeight.bold),
+            style: TextStyle(color: kbackgroundmodel, fontSize: screenWidth * 0.04, fontWeight: FontWeight.bold),
           ),
         ),
       ),

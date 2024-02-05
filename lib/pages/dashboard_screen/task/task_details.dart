@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:self_stack/pages/dashboard_screen/task/feedback.dart';
-import 'package:self_stack/pages/dashboard_screen/task/function/box_task.dart';
 import 'package:self_stack/services/get_details_task_service.dart';
 import 'package:self_stack/utils/constans.dart';
 
@@ -33,7 +32,7 @@ Widget buildSubtitle(String title, List<String> points) {
         title,
         style: TextStyle(
           fontSize: 20,
-          color: whiteModel,
+          color: kwhiteModel,
         ),
       ),
       SizedBox(height: 8.0),
@@ -55,13 +54,13 @@ Widget buildSubtitle(String title, List<String> points) {
                     children: [
                       Text(
                         '\u2022',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                        style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: kwhiteModel),
                       ),
                       SizedBox(width: 9.0),
                       Flexible(
                         child: Text(
                           point,
-                          style: TextStyle(fontSize: 14, color: Colors.white),
+                          style: TextStyle(fontSize: 15, color: Colors.white),
                         ),
                       ),
                     ],
@@ -89,7 +88,7 @@ Widget buildSubtitle(String title, List<String> points) {
             List<dynamic> subtitles = taskDetails['subtitle'];
 
             return Scaffold(
-              backgroundColor: backgroundmodel,
+              backgroundColor: kbackgroundmodel,
               body: Column(
                 children: [
                   Expanded(
@@ -117,17 +116,21 @@ Widget buildSubtitle(String title, List<String> points) {
                                   style: TextStyle(
                                     fontSize: 28,
                                     fontWeight: FontWeight.bold,
-                                    color: selfstackGreen,
+                                    color: kselfstackGreen,
                                   ),
                                 ),
                                 Text(
                                   taskDetails['duration'],
-                                  style: TextStyle(fontSize: 16.0, color: whiteModel),
+                                  style: TextStyle(fontSize: 14.0, color: kwhiteModel,fontWeight: FontWeight.bold),
+                                ),ksizedboxC,
+                                 Text(
+                                  taskDetails['title'],
+                                  style: TextStyle(fontSize: 22.0, color: kwhiteModel,fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
                           ),
-                          sizedboxX,
+                          ksizedboxX,
                           for (var subtitle in subtitles)
                             buildSubtitle(
                               subtitle['subtitle_name'],
@@ -145,7 +148,7 @@ Widget buildSubtitle(String title, List<String> points) {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => FeedbackPage()),
+                            MaterialPageRoute(builder: (context) => FeedbackScreen(tasksId: taskId,taskName: taskDetails['title'],)),
                           );
                         },
                         child: Image.asset(

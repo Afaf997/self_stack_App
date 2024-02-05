@@ -17,7 +17,7 @@ class SliverBarTemplate extends StatelessWidget {
       systemOverlayStyle:
           const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
       expandedHeight: 210.0,
-      backgroundColor:selfstackGreen,
+      backgroundColor:kselfstackGreen,
       elevation: 0.0,
       pinned: true,
       stretch: true,
@@ -36,7 +36,7 @@ class SliverBarTemplate extends StatelessWidget {
           height: 32.0,
           alignment: Alignment.center,
           decoration: const BoxDecoration(
-            color: backgroundmodel,
+            color: kbackgroundmodel,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(32.0),
               topRight: Radius.circular(32.0),

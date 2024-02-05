@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:self_stack/utils/constans.dart';
 
@@ -11,15 +9,15 @@ class SnackbarUtils {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Center(child: Text(mainMessage,style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)),
-           const SizedBox(height: 4),
+            Center(child: Text(mainMessage,style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color:kselfstackGreen),)),
+           ksizedboxA,
             Text(
               subMessages!,
-              style:const TextStyle(fontSize: 12, color:backgroundmodel),
+              style:const TextStyle(fontSize: 12, color:kbackgroundmodel),
             ),
           ],
         ),
-        backgroundColor: selfstackGreen,
+        backgroundColor:kblackLight,
       ),
     );
   }
@@ -36,11 +34,11 @@ class SnackbarUtils {
             if (subMessage != null)
               Text(
                 subMessage,
-                style:const TextStyle(fontSize: 12, color: backgroundmodel),
+                style:const TextStyle(fontSize: 12, color: kbackgroundmodel),
               ),
           ],
         ),
-        backgroundColor: redtheme,
+        backgroundColor: kblackLight,
       ),
     );
   }

@@ -75,7 +75,7 @@ class LoginPage extends StatelessWidget {
         }},
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: backgroundmodel,
+          backgroundColor: kbackgroundmodel,
           body: SafeArea(
             child: SingleChildScrollView(
               child: Column(
@@ -88,7 +88,7 @@ class LoginPage extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
-                          color: whiteModel,
+                          color: kwhiteModel,
                         ),
                         children: [
                           WidgetSpan(
@@ -108,7 +108,7 @@ class LoginPage extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text('Email',
-                        style: TextStyle(color: whiteModel),
+                        style: TextStyle(color: kwhiteModel),
                       ),
                     ),
                   ),
@@ -124,7 +124,7 @@ class LoginPage extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text('password',
-                        style: TextStyle(color: whiteModel),
+                        style: TextStyle(color: kwhiteModel),
                       ),
                     ),
                   ),
@@ -145,7 +145,7 @@ class LoginPage extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.centerRight,
                         child: Text('Forgot Password?',
-                          style: TextStyle(color: whiteModel),
+                          style: TextStyle(color: kwhiteModel),
                         ),
                       ),
                     ),
@@ -156,8 +156,8 @@ class LoginPage extends StatelessWidget {
                       authbloc.add(Loginevent(email:_emailController.text,password: _passwordController.text));
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: backgroundmodel,
-                      side: BorderSide(color: whiteModel, width: 1),
+                      backgroundColor: kbackgroundmodel,
+                      side: BorderSide(color: kwhiteModel, width: 1),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(7),
                       ),),
@@ -167,7 +167,7 @@ class LoginPage extends StatelessWidget {
                       child: const Center(
                         child: Text("Log In",
                           style: TextStyle(
-                            color: whiteModel,
+                            color: kwhiteModel,
                             fontSize: 18,
                           ),
                         ),
@@ -184,7 +184,7 @@ class LoginPage extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.only(left: 22),
                           child: Divider(
-                            color: whiteModel,
+                            color: kwhiteModel,
                             height: 30,
                           ),
                         ),
@@ -196,7 +196,7 @@ class LoginPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: whiteModel,
+                            color: kwhiteModel,
                           ),
                         ),
                       ),
@@ -204,7 +204,7 @@ class LoginPage extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.only(right: 20),
                           child: Divider(
-                            color: whiteModel,
+                            color: kwhiteModel,
                             height: 30,
                             endIndent: 8,
                           ),
@@ -242,7 +242,7 @@ log(e.toString());
                       width: 347,
                       height: 61,
                       decoration: BoxDecoration(
-                        color: whiteModel,
+                        color: kwhiteModel,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Padding(
@@ -274,13 +274,13 @@ log(e.toString());
                     child: const Text.rich(
                       TextSpan(
                         text: "Don't have an account? ",
-                        style: TextStyle(fontSize: 14, color: whiteModel),
+                        style: TextStyle(fontSize: 14, color: kwhiteModel),
                         children: [
                           TextSpan(
                             text: "Sign Up",
                             style: TextStyle(
                               fontSize: 16,
-                              color: selfstackGreen,
+                              color: kselfstackGreen,
                               decoration: TextDecoration.underline,
                             ),
                           ),

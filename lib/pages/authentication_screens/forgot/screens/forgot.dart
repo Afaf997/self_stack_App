@@ -39,7 +39,7 @@ class ForgotScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 27,
                         fontWeight: FontWeight.bold,
-                        color: whiteModel,
+                        color: kwhiteModel,
                       ),
                     ),
                   ),
@@ -69,7 +69,7 @@ class ForgotScreen extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'Email',
-                        style: TextStyle(color: whiteModel),
+                        style: TextStyle(color: kwhiteModel),
                       ),
                     ),
                   ),
@@ -78,17 +78,17 @@ class ForgotScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
                       controller: _emailcontroller,
-                      style: const TextStyle(color: whiteModel),
+                      style: const TextStyle(color: kwhiteModel),
                       decoration: const InputDecoration(
                         labelText: 'Enter your Email',
-                        labelStyle: TextStyle(color: greymodel),
+                        labelStyle: TextStyle(color: kgreymodel),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(7)),
-                          borderSide: BorderSide(color: whiteModel),
+                          borderSide: BorderSide(color: kwhiteModel),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(7)),
-                          borderSide: BorderSide(color: greymodel),
+                          borderSide: BorderSide(color: kgreymodel),
                         ),
                       ),
                     ),
@@ -102,14 +102,14 @@ class ForgotScreen extends StatelessWidget {
                       width: 350,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: selfstackGreen,
+                        color: kselfstackGreen,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Center(
                         child: Text(
                           "GET OTP",
                           style: TextStyle(
-                            color: whiteModel,
+                            color: kwhiteModel,
                             fontSize: 18,
                           ),
                         ),
@@ -126,7 +126,7 @@ class ForgotScreen extends StatelessWidget {
                       child: Text(
                         "Back to sign up",
                         style: TextStyle(
-                            color: whiteModel, fontWeight: FontWeight.w400),
+                            color: kwhiteModel, fontWeight: FontWeight.w400),
                       ),
                     ),
                   )

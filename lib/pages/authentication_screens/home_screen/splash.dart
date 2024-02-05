@@ -27,7 +27,7 @@ class SplashScreen extends StatelessWidget {
     });
 
     return Scaffold(
-      backgroundColor: backgroundmodel,
+      backgroundColor: kbackgroundmodel,
       body: Center(
         child: SingleChildScrollView(
           child: Column(

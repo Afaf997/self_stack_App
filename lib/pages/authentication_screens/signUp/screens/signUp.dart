@@ -30,7 +30,7 @@ class SignUp extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: backgroundmodel,
+          backgroundColor: kbackgroundmodel,
           body: SingleChildScrollView(
             child: SignUpForm(
               formKey: _formKey,

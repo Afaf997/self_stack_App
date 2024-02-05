@@ -38,7 +38,7 @@ class SignUpForm extends StatelessWidget {
                 child: Text(
                   'Create Account',
                   style: TextStyle(
-                    color: whiteModel,
+                    color: kwhiteModel,
                     fontSize: screenWidth * 0.08,
                     fontWeight: FontWeight.bold,
                   ),
@@ -48,7 +48,7 @@ class SignUpForm extends StatelessWidget {
                 "assets/image/star2.png",
                 width: screenWidth * 0.3,
                 height: screenHeight * 0.2,
-                color: whiteModel,
+                color: kwhiteModel,
                 fit: BoxFit.cover,
               ),
             ],
@@ -95,13 +95,13 @@ class SignUpForm extends StatelessWidget {
             child: Text.rich(
               TextSpan(
                 text: "Already have an account? ",
-                style: TextStyle(fontSize: screenWidth * 0.035, color: whiteModel),
+                style: TextStyle(fontSize: screenWidth * 0.035, color: kwhiteModel),
                 children: [
                   TextSpan(
                     text: "Log In",
                     style: TextStyle(
                       fontSize: screenWidth * 0.04,
-                      color: selfstackGreen,
+                      color: kselfstackGreen,
                       decoration: TextDecoration.underline,
                     ),
                   ),

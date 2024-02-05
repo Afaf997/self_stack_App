@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
-// ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 import 'package:self_stack/services/login_service.dart';
 part 'auth_event.dart';
@@ -9,7 +8,6 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Loginservices dioservices = Loginservices();
-  // GoogleSignService googleSignService=GoogleSignService();
 
   AuthBloc() : super(AuthInitial()) {
     on<Loginevent>(loginevent);

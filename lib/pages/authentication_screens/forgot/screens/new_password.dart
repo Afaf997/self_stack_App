@@ -40,7 +40,7 @@ class Newpassword extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 27,
                         fontWeight: FontWeight.bold,
-                        color: whiteModel,
+                        color: kwhiteModel,
                       ),
                     ),
                   ),
@@ -60,57 +60,57 @@ class Newpassword extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'New password',
-                        style: TextStyle(color: whiteModel),
+                        style: TextStyle(color: kwhiteModel),
                       ),
                     ),
                   ),
-                  sizedboxA,
+                  ksizedboxA,
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
                       obscureText: true,
                       controller:resetpassword,
-                      style: const TextStyle(color: whiteModel),
+                      style: const TextStyle(color: kwhiteModel),
                       decoration: const InputDecoration(
-                        labelStyle: TextStyle(color: greymodel),
+                        labelStyle: TextStyle(color: kgreymodel),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(7)),
-                          borderSide: BorderSide(color: whiteModel),
+                          borderSide: BorderSide(color: kwhiteModel),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(7)),
-                          borderSide: BorderSide(color: greymodel),
+                          borderSide: BorderSide(color: kgreymodel),
                         ),
                       ),
                     ),
                   ),
-                  sizedboxD,
+                  ksizedboxD,
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'Confirm password',
-                        style: TextStyle(color: whiteModel),
+                        style: TextStyle(color: kwhiteModel),
                       ),
                     ),
                   ),
-                  sizedbox,
+                  ksizedbox,
                   const SizedBox(height: 5),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
                        obscureText: true,
-                      style: const TextStyle(color: whiteModel),
+                      style: const TextStyle(color: kwhiteModel),
                       decoration: const InputDecoration(
-                        labelStyle: TextStyle(color: greymodel),
+                        labelStyle: TextStyle(color: kgreymodel),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(7)),
-                          borderSide: BorderSide(color: whiteModel),
+                          borderSide: BorderSide(color: kwhiteModel),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(7)),
-                          borderSide: BorderSide(color: greymodel),
+                          borderSide: BorderSide(color: kgreymodel),
                         ),
                       ),
                     ),
@@ -122,12 +122,12 @@ class Newpassword extends StatelessWidget {
                       width: 350,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: selfstackGreen,
+                        color: kselfstackGreen,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Center(
                         child: Text("Submit",
-                          style: TextStyle(color: whiteModel,
+                          style: TextStyle(color: kwhiteModel,
                             fontSize: 18,
                           ),
                         ),
@@ -144,7 +144,7 @@ class Newpassword extends StatelessWidget {
                       child: Text(
                         "Back to varification",
                         style: TextStyle(
-                            color: whiteModel, fontWeight: FontWeight.w400),
+                            color: kwhiteModel, fontWeight: FontWeight.w400),
                       ),
                     ),
                   )

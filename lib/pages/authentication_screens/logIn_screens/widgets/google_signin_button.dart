@@ -21,7 +21,7 @@ class GoogleSignInButton extends StatelessWidget {
         width: screenWidth * 0.85, 
         height: screenHeight * 0.07,
         decoration: BoxDecoration(
-          color: whiteModel,
+          color: kwhiteModel,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(

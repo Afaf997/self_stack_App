@@ -57,7 +57,7 @@ class OtpScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 27,
                       fontWeight: FontWeight.bold,
-                      color: whiteModel,
+                      color: kwhiteModel,
                     ),
                   ),
                 ),
@@ -101,7 +101,7 @@ class OtpScreen extends StatelessWidget {
                               focusNode: focusNodes[index],
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: whiteModel,
+                                color: kwhiteModel,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
                               ),
@@ -148,14 +148,14 @@ class OtpScreen extends StatelessWidget {
                     width: 280,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: selfstackGreen,
+                      color: kselfstackGreen,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: const Center(
                       child: Text(
                         "Verify",
                         style: TextStyle(
-                          color: whiteModel,
+                          color: kwhiteModel,
                           fontSize: 18,
                         ),
                       ),
@@ -172,7 +172,7 @@ class OtpScreen extends StatelessWidget {
                     child: Text(
                       "Back to forgot",
                       style: TextStyle(
-                          color: whiteModel, fontWeight: FontWeight.w700),
+                          color: kwhiteModel, fontWeight: FontWeight.w700),
                     ),
                   ),
                 )

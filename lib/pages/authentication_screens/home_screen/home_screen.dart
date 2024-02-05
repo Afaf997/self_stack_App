@@ -9,7 +9,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor:  backgroundmodel,
+        backgroundColor:  kbackgroundmodel,
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -17,11 +17,11 @@ class HomeScreen extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(right: 140, top: 50),
                 child: Text("Welcome",
-                  style: TextStyle(color: whiteModel, fontSize: 42,
+                  style: TextStyle(color: kwhiteModel, fontSize: 42,
                   ),
                 ),
               ),
-                  sizedboxA,
+                  ksizedboxA,
               Center(
                 child: Image.asset(
                   "assets/image/homepage.png",
@@ -29,13 +29,13 @@ class HomeScreen extends StatelessWidget {
                   width: double.infinity,
                 ),
               ),   
-              sizedboxX,
+              ksizedboxX,
               const Padding(
                 padding: EdgeInsets.only(left: 20),
                 child: Column(
                   children: [
-                    Text("Journey of Self",style: TextStyle(color:whiteModel,fontSize: 24,),),
-                    Text("Discovery, Growth.",style: TextStyle(color: whiteModel,fontSize: 24,),)
+                    Text("Journey of Self",style: TextStyle(color:kwhiteModel,fontSize: 24,),),
+                    Text("Discovery, Growth.",style: TextStyle(color: kwhiteModel,fontSize: 24,),)
                   ],
                 ),
               ),
@@ -55,17 +55,17 @@ class HomeScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color: whiteModel, width: 1,
+                          color: kwhiteModel, width: 1,
                         ),
                       ),    child: const Center(
                         child: Text(
                           "Log In",
-                          style: TextStyle(color: whiteModel, fontSize: 18, ),
+                          style: TextStyle(color: kwhiteModel, fontSize: 18, ),
                         ),
                       ),
                     ),
                   ),
-                 sizedboxC,
+                 ksizedboxC,
                   GestureDetector(
                     onTap: (){
                        Navigator.push(
@@ -77,13 +77,13 @@ class HomeScreen extends StatelessWidget {
                       width: 350,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: selfstackGreen,
+                        color: kselfstackGreen,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Center(
                         child: Text(
                           "Sign Up",
-                          style: TextStyle(color:whiteModel, fontSize: 18,),
+                          style: TextStyle(color:kwhiteModel, fontSize: 18,),
                         ),
                       ),
                     ),

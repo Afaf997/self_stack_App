@@ -12,7 +12,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundmodel,
+      backgroundColor: kbackgroundmodel,
       body: Center(
         child: GestureDetector(
           onTap: () async {
@@ -22,7 +22,7 @@ class ProfileScreen extends StatelessWidget {
           },
           child: Text(
             "Logout",
-            style: TextStyle(color: redtheme,fontSize: 24),
+            style: TextStyle(color: kredtheme,fontSize: 24),
           ),
         ),
       ),

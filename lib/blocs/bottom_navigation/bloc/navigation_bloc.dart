@@ -9,6 +9,7 @@ import 'package:self_stack/blocs/bottom_navigation/bloc/navigation_event.dart';
 part 'navigation_state.dart';
 
 class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
+    int currentIndex = 0;
   NavigationBloc() : super(NavigationInitial()) {
     on<NavigateToHomeEvent>(navigateToHomeEvent);
     on<NavigateToTaskEvent>(navigateToTaskEvent);

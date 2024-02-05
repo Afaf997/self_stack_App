@@ -19,8 +19,8 @@ class ReusableButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundmodel,
-        side: BorderSide(color: whiteModel, width: 1),
+        backgroundColor: kbackgroundmodel,
+        side: BorderSide(color: kwhiteModel, width: 1),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7),
         ),
@@ -32,7 +32,7 @@ class ReusableButton extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(
-              color: whiteModel,
+              color: kwhiteModel,
               fontSize: 18,
             ),
           ),

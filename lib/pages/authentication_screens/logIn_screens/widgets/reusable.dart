@@ -22,18 +22,18 @@ class ReusableTextField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: TextFormField(
         controller: controller,
-        style: const TextStyle(color: whiteModel),
+        style: const TextStyle(color: kwhiteModel),
         obscureText: obscureText,
         decoration: InputDecoration(
           labelText: 'Enter your $label',
-          labelStyle: const TextStyle(color: greymodel),
+          labelStyle: const TextStyle(color: kgreymodel),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(7)),
-            borderSide: BorderSide(color: whiteModel),
+            borderSide: BorderSide(color: kwhiteModel),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(7)),
-            borderSide: BorderSide(color: greymodel),
+            borderSide: BorderSide(color: kgreymodel),
           ),
         ),
         validator: validator,
