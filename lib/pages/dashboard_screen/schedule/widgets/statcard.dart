@@ -4,18 +4,17 @@ import 'package:self_stack/utils/constans.dart';
 class StatCard extends StatelessWidget {
   final IconData icon;
   final String value;
-  final double width;
 
-  StatCard({required this.icon, required this.value, required this.width});
+  StatCard({required this.icon, required this.value,});
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      width: width,
-      height: screenHeight * 0.17,
-      padding: EdgeInsets.all(width * 0.1),
+       margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.042,),
+      height: screenHeight * 0.19,
       decoration: BoxDecoration(
         color: kblackDark,
         borderRadius: BorderRadius.circular(8),
@@ -26,17 +25,16 @@ class StatCard extends StatelessWidget {
           Icon(
             icon,
             color: kwhiteModel,
-            size: width * 0.2,
+            size: screenWidth * 0.07,
           ),
           SizedBox(height: screenHeight * 0.015),
           Text(
             value,
             style: TextStyle(
               color: kwhiteModel,
-              fontSize: width * 0.15,
+              fontSize: screenHeight * 0.03,
             ),
           ),
-          SizedBox(height: 5),
         ],
       ),
     );

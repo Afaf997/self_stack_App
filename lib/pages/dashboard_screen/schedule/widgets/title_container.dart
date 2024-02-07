@@ -13,7 +13,7 @@ class InfoCard extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.05, vertical: screenHeight * 0.02),
+      margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.05, vertical: screenHeight * 0.01),
       width: double.infinity,
       padding: EdgeInsets.all(screenWidth * 0.05),
       decoration: BoxDecoration(
