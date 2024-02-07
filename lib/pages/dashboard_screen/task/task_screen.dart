@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:self_stack/blocs/bottom_navigation/bloc/navigation_bloc.dart';
 import 'package:self_stack/pages/dashboard_screen/home/widgets/bottom_navigation.dart';
 import 'package:self_stack/pages/dashboard_screen/task/task_details.dart';
+import 'package:self_stack/repository/shared_preference.dart';
 import 'package:self_stack/services/get_task_service.dart';
 import 'package:self_stack/utils/constans.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class TaskScreen extends StatelessWidget {
   TaskScreen({Key? key}) : super(key: key);
@@ -12,12 +12,8 @@ class TaskScreen extends StatelessWidget {
   final NavigationBloc navigationBloc = NavigationBloc();
   final getTaskservices getTaskService = getTaskservices();
 
-  Future<String?> _getUserId() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('userId');
-  }
 
-  Future<Map<String, dynamic>> _fetchUserDetails(String userId) async {
+  Future<Map<String, dynamic>> fetchUserDetails(String userId) async {
     try {
       Map<String, dynamic> userDetails = await getTaskService.getTaskDetails(userId);
       return userDetails;
@@ -30,14 +26,14 @@ class TaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<String?>(
-      future: _getUserId(),
+      future: getUserId(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           String? userId = snapshot.data;
 
           if (userId != null) {
             return FutureBuilder<Map<String, dynamic>>(
-              future: _fetchUserDetails(userId),
+              future: fetchUserDetails(userId),
               builder: (context, userSnapshot) {
                 if (userSnapshot.connectionState == ConnectionState.done) {
                   Map<String, dynamic> userDetails = userSnapshot.data!;
@@ -101,7 +97,7 @@ class TaskScreen extends StatelessWidget {
                                               style: TextStyle(color: kredtheme),
                                             ),
                                             duration: Duration(seconds: 3),
-                                            backgroundColor: kwhiteModel,
+                                            backgroundColor: kblackDark,
                                             behavior: SnackBarBehavior.floating,
                                           ),
                                         );

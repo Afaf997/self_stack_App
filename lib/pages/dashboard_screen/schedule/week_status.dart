@@ -6,8 +6,6 @@ import 'package:self_stack/pages/dashboard_screen/schedule/widgets/status_card.d
 import 'package:self_stack/pages/dashboard_screen/schedule/widgets/title_container.dart';
 import 'package:self_stack/utils/constans.dart';
 
-
-
 class TaskStatusScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -30,21 +28,31 @@ class TaskStatusScreen extends StatelessWidget {
                 SizedBox(height: 20),
                 SectionHeader(title: 'web designing'),
                 TaskStatusCard(title: 'Week 1', subtitle: 'Task Completed'),
-                InfoCard(labels: ['Reviewer:', 'Advisor:'], backgroundColor: kblackDark),
+                InfoCard(
+                    labels: ['Reviewer:', 'Advisor:'],
+                    backgroundColor: kblackDark),
                 ksizedboxA,
                 Row(
-                  // mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Expanded(
-                      child: StatCard(icon: Icons.star, value: '6/10',),
+                      child: StatCard(icon: Icons.star, value: '6/10'),
                     ),
                     Expanded(
-                      child: StatCard(icon: Icons.calendar_today, value: '6-2-2024', ),
+                      child: StatCard(
+                          icon: Icons.calendar_today, value: '6-2-2024'),
                     ),
                   ],
-                ),ksizedboxA,
-                TextCard(title: 'Pending Topics :', backgroundColor: kblackDark, height: 0.2),
-                TextCard(title: 'Remarks :', backgroundColor: kblackDark, height: 0.15),
+                ),
+                ksizedboxA,
+                TextCard(
+                    title: 'Pending Topics :',
+                    backgroundColor: kblackDark,
+                    height: 0.2),
+                TextCard(
+                    title: 'Remarks :',
+                    backgroundColor: kblackDark,
+                    height: 0.15),
               ],
             ),
           ),
@@ -53,4 +61,3 @@ class TaskStatusScreen extends StatelessWidget {
     );
   }
 }
-

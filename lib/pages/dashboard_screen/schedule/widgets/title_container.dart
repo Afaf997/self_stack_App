@@ -27,7 +27,7 @@ class InfoCard extends StatelessWidget {
                   children: [
                     Text(
                       label,
-                      style: TextStyle(color: kwhiteModel, fontSize: screenHeight * 0.025),
+                      style: TextStyle(color: kwhiteModel, fontSize: screenHeight * 0.020),
                     ),
                     SizedBox(height: 5),
                   ],

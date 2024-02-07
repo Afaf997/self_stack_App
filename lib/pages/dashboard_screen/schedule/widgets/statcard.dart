@@ -13,7 +13,7 @@ class StatCard extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
-       margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.042,),
+       margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.040,),
       height: screenHeight * 0.19,
       decoration: BoxDecoration(
         color: kblackDark,
@@ -32,7 +32,7 @@ class StatCard extends StatelessWidget {
             value,
             style: TextStyle(
               color: kwhiteModel,
-              fontSize: screenHeight * 0.03,
+              fontSize: screenHeight * 0.02,
             ),
           ),
         ],

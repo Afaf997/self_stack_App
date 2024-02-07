@@ -26,14 +26,14 @@ class TaskStatusCard extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-                color: kwhiteModel, fontSize: screenHeight * 0.04, fontWeight: FontWeight.bold),
+                color: kwhiteModel, fontSize: screenHeight * 0.03, fontWeight: FontWeight.bold),
           ),
           Padding(
             padding: EdgeInsets.only(left: screenWidth * 0.15),
             child: Text(
               subtitle,
               style: TextStyle(
-                  color: kwhiteModel, fontSize: screenHeight * 0.03, fontWeight: FontWeight.bold),
+                  color: kwhiteModel, fontSize: screenHeight * 0.02, fontWeight: FontWeight.bold),
             ),
           ),
         ],

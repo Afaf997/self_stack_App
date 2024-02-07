@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/blocs/bottom_navigation/bloc/navigation_bloc.dart';
 import 'package:self_stack/pages/dashboard_screen/home/widgets/bottom_navigation.dart';
-import 'package:self_stack/pages/dashboard_screen/schedule/task_status.dart';
+import 'package:self_stack/pages/dashboard_screen/schedule/function/week_details.dart';
+import 'package:self_stack/pages/dashboard_screen/schedule/week_status.dart';
+import 'package:self_stack/repository/shared_preference.dart';
+import 'package:self_stack/services/week_wise.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class ScheduleScreen extends StatelessWidget {
   ScheduleScreen({Key? key}) : super(key: key);
   final NavigationBloc navigationBloc = NavigationBloc();
+  final getweekservices getweekService = getweekservices();
 
-  @override
-  Widget build(BuildContext context) {
+  Widget buildScheduleScreen(
+      BuildContext context, Map<String, dynamic> userDetails) {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return BlocConsumer<NavigationBloc, NavigationState>(
@@ -27,9 +31,10 @@ class ScheduleScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                     child: Text(
-                      'Hello afaf,',
+                      'Hello, ${userDetails['student']['name']}',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: screenWidth * 0.08,
@@ -38,7 +43,8 @@ class ScheduleScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.05, vertical: 15),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: screenWidth * 0.05, vertical: 15),
                     width: double.infinity,
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
@@ -56,7 +62,9 @@ class ScheduleScreen extends StatelessWidget {
                             ),
                           ),
                           TextSpan(
-                            text: 'Wednesday, 18 Jan 2024',
+                            text: userDetails['reviews'].isNotEmpty
+                                ? '${userDetails['reviews'][0]['scheduleDate']}'
+                                : 'No date available',
                             style: TextStyle(
                               fontSize: screenWidth * 0.040,
                               color: kselfstackGreen,
@@ -68,46 +76,82 @@ class ScheduleScreen extends StatelessWidget {
                   ),
                   SizedBox(height: screenWidth * 0.04),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                     child: Text(
                       '"Track Your Progress"',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: screenWidth * 0.045,
+                        fontSize: screenWidth * 0.05,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => TaskStatusScreen()),
-                    ),
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.05, vertical: 15),
-                      width: double.infinity,
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Week 1',
-                          style: TextStyle(
-                            fontSize: screenWidth * 0.040,
-                            color: kwhiteModel,
+              
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: userDetails['reviews'].length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: screenWidth * 0.05, vertical: 15),
+                          width: double.infinity,
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                        ),
-                      ),
+                          child: Center(
+                            child: Text(
+                              'Week ${index + 1}',
+                              style: TextStyle(
+                                fontSize: screenWidth * 0.040,
+                                color: kwhiteModel,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
               ),
             ),
           ),
-          bottomNavigationBar: CustomBottomNavigationBar(navigationBloc: navigationBloc),
+          // bottomNavigationBar: CustomBottomNavigationBar(navigationBloc: navigationBloc),
         );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<String?>(
+      future: getUserId(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          String? userId = snapshot.data;
+
+          if (userId != null) {
+            return FutureBuilder<Map<String, dynamic>>(
+              future: fetchweekDetails(userId),
+              builder: (context, userSnapshot) {
+                if (userSnapshot.connectionState == ConnectionState.done) {
+                  Map<String, dynamic> userDetails = userSnapshot.data!;
+                  return buildScheduleScreen(context, userDetails);
+                } else {
+                  return CircularProgressIndicator();
+                }
+              },
+            );
+          } else {
+            // Handle the case where userId is null
+            return SizedBox.shrink();
+          }
+        } else {
+          // Handle loading state
+          return CircularProgressIndicator();
+        }
       },
     );
   }

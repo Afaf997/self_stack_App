@@ -29,7 +29,9 @@ class ProfileScreen extends StatelessWidget {
                   body: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 60,),
+                        padding: const EdgeInsets.only(
+                          top: 60,
+                        ),
                         child: ListTile(
                           title: Text(
                             userDetails['name'],
@@ -58,25 +60,27 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                           trailing: IconButton(
-  onPressed: () async {
-    bool? confirmed = await showLogoutConfirmationDialog(context);
+                            onPressed: () async {
+                              bool? confirmed =
+                                  await showLogoutConfirmationDialog(context);
 
-    if (confirmed != null && confirmed) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.clear();
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
-      );
-    }
-  },
-  icon: Icon(
-    Icons.logout_rounded,
-    color: kredtheme,
-    size: 30,
-  ),
-),
-
+                              if (confirmed != null && confirmed) {
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                await prefs.clear();
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()),
+                                );
+                              }
+                            },
+                            icon: Icon(
+                              Icons.logout_rounded,
+                              color: kredtheme,
+                              size: 30,
+                            ),
+                          ),
                         ),
                       ),
                       ksizedboxD,

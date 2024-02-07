@@ -24,7 +24,7 @@ class TextCard extends StatelessWidget {
       ),
       child: Text(
         title,
-        style: TextStyle(color: kwhiteModel, fontSize: screenHeight * 0.03),
+        style: TextStyle(color: kwhiteModel, fontSize: screenHeight * 0.02),
       ),
     );
   }
