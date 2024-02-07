@@ -6,7 +6,7 @@ const Color kwhiteModel= Color.fromARGB(255, 255, 255, 255) ;
 const Color kgreymodel= Color.fromARGB(255, 157, 157, 157) ;
 const Color kredtheme =Colors.red;
 const Color kblackLight=Color.fromARGB(255, 98, 98, 98);
-
+const Color kblackDark=Color.fromARGB(255, 36, 36, 36);
 
 const SizedBox ksizedbox = SizedBox(height: 5);
 const SizedBox ksizedboxA = SizedBox(height: 10);

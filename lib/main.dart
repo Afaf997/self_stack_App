@@ -36,9 +36,9 @@ class MyApp extends StatelessWidget {
           BlocProvider<TaskBloc>(
             create: (context) => TaskBloc(),
           ),
-           BlocProvider<TaskDetailBloc>(
-               create: (context) =>TaskDetailBloc(),
-          ),
+          //  BlocProvider<TaskDetailsBloc>(
+          //      create: (context) =>TaskDetailsBloc(),
+          // ),
         ],
         child: SplashScreen(),
       )

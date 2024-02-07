@@ -27,9 +27,8 @@ class StartScreen extends StatelessWidget {
             builder: (context, userSnapshot) {
               if (userSnapshot.connectionState == ConnectionState.done) {
                 Map<String, dynamic> userDetails = userSnapshot.data!;
-                // Check if domain is 'No', if so, navigate to DomainDecidePage
                 if (userDetails['domain'] == 'No') {
-                  return DomainDesidePage(); // Navigate to DomainDecidePage
+                  return DomainDesidePage();
                 }
                 return BlocConsumer<NavigationBloc, NavigationState>(
                   bloc: navigationBloc,
@@ -45,7 +44,8 @@ class StartScreen extends StatelessWidget {
                     } else if (state is ScheduleScreenState) {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => TaskScreen()));
-                    } else if (state is ProfileScreenState) {
+                    }
+                     else if (state is ProfileScreenState) {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => ProfileScreen()));
                     }
@@ -57,13 +57,9 @@ class StartScreen extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text('Display Name: ${userDetails['name']}',
+                            Text('Name: ${userDetails['name']}',
                                 style: TextStyle(color: kwhiteModel)),
-                            Text('URI: ${userDetails['email']}',
-                                style: TextStyle(color: kwhiteModel)),
-                            Text('Domain: ${userDetails['domain']}',
-                                style: TextStyle(color: kwhiteModel)),
-                            Text('Profile: ${userDetails['profile']}',
+                            Text('Email: ${userDetails['email']}',
                                 style: TextStyle(color: kwhiteModel)),
                           ],
                         ),

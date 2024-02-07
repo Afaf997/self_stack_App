@@ -9,7 +9,7 @@ class SnackbarUtils {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Center(child: Text(mainMessage,style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color:kselfstackGreen),)),
+            Center(child: Text(mainMessage,style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold,color:kselfstackGreen),)),
            ksizedboxA,
             Text(
               subMessages!,
@@ -17,7 +17,7 @@ class SnackbarUtils {
             ),
           ],
         ),
-        backgroundColor:kblackLight,
+        backgroundColor:Color.fromARGB(255, 22, 22, 22),
       ),
     );
   }

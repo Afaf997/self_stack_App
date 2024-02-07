@@ -1,28 +1,24 @@
-import 'dart:async';
-
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/blocs/details_task_bloc/bloc/task_details_event.dart';
 import 'package:self_stack/blocs/details_task_bloc/bloc/task_details_state.dart';
 import 'package:self_stack/services/get_details_task_service.dart';
-import 'package:self_stack/services/get_details_task_service.dart';
 
 
-class TaskDetailBloc extends Bloc<TaskDetailEvent, TaskDetailState> {
-  final getTaskDetailsServices getTaskdetailsService = getTaskDetailsServices();
+class TaskDetailsBloc extends Bloc<TaskDetailsEvent, TaskDetailsState> {
+  final getTaskDetailsServices getTaskDetailsService = getTaskDetailsServices();
 
-  TaskDetailBloc() : super(InitialTaskDetailState());
+  TaskDetailsBloc() : super(TaskDetailsInitialState());
 
   @override
-  Stream<TaskDetailState> mapEventToState(TaskDetailEvent event) async* {
-    if (event is FetchTaskDetailEvent) {
-      yield LoadingTaskDetailState();
-
+  Stream<TaskDetailsState> mapEventToState(TaskDetailsEvent event) async* {
+    if (event is FetchTaskDetailsEvent) {
+      yield TaskDetailsLoadingState();
       try {
         Map<String, dynamic> taskDetails =
-            await getTaskdetailsService.getDetails(event.taskId, event.courseId);
-        yield LoadedTaskDetailState(taskDetails: taskDetails);
+            await getTaskDetailsService.getDetails(event.taskId, event.courseId);
+        yield TaskDetailsLoadedState(taskDetails: taskDetails);
       } catch (error) {
-        yield ErrorTaskDetailState(error: 'Error fetching task details: $error');
+        yield TaskDetailsErrorState(errorMessage: 'Error fetching task details');
       }
     }
   }

@@ -164,8 +164,7 @@ Widget buildSubtitle(String title, List<String> points) {
             );
           } else {
             return Center(
-              child: Text('Task details not available'),
-            );
+              child: Text('Task details not available'));
           }
         } else if (!tasksnapshot.hasData) {
          return CircularProgressIndicator();

@@ -51,7 +51,7 @@ class TaskScreen extends StatelessWidget {
                           child: Text(
                             'Study Tasks',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: kwhiteModel,
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),

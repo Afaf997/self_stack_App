@@ -1,17 +1,17 @@
-abstract class TaskDetailState {}
+abstract class TaskDetailsState {}
 
-class InitialTaskDetailState extends TaskDetailState {}
+class TaskDetailsInitialState extends TaskDetailsState {}
 
-class LoadingTaskDetailState extends TaskDetailState {}
+class TaskDetailsLoadingState extends TaskDetailsState {}
 
-class LoadedTaskDetailState extends TaskDetailState {
+class TaskDetailsLoadedState extends TaskDetailsState {
   final Map<String, dynamic> taskDetails;
 
-  LoadedTaskDetailState({required this.taskDetails});
+  TaskDetailsLoadedState({required this.taskDetails});
 }
 
-class ErrorTaskDetailState extends TaskDetailState {
-  final String error;
+class TaskDetailsErrorState extends TaskDetailsState {
+  final String errorMessage;
 
-  ErrorTaskDetailState({required this.error});
+  TaskDetailsErrorState({required this.errorMessage});
 }

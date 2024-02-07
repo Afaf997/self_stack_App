@@ -32,10 +32,10 @@ class ScheduleScreen extends StatelessWidget {
             MaterialPageRoute(builder: (context) => TaskScreen()),
           );
         } else if (state is ProfileScreenState) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => ProfileScreen()),
-          );
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => ProfileScreen()),
+          // );
         }
       },
       builder: (context, state) {

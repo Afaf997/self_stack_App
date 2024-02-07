@@ -1,4 +1,4 @@
-    import 'package:self_stack/services/auth_get_service.dart';
+    import 'package:self_stack/services/dashboard_service.dart';
 
 final getLoginservices getloginservices = getLoginservices();
 

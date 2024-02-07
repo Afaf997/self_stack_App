@@ -218,11 +218,11 @@ class LoginPage extends StatelessWidget {
   UserCredential userCredential = await FirebaseServices().signInWithGoogle();
   // ignore: unnecessary_null_comparison
   if (userCredential != null) {
-    // Extract user data
     Map<String, dynamic> googleUserData = {
       'googleId': userCredential.user?.uid,
       'email': userCredential.user?.email,
       'name':userCredential.user?.displayName,
+      'image':userCredential.user?.photoURL,
     };
 
    try{
@@ -234,7 +234,7 @@ log(e.toString());
 
     Navigator.push(context, MaterialPageRoute(builder: (context) => StartScreen()));
   } else {
-    // Handle sign-in failure
+
 
   }
 },
