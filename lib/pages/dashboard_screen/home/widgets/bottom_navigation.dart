@@ -17,8 +17,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           buildNavItem(Icons.home, 'Home', 0),
-          buildNavItem(Icons.task, 'Task', 1),
-          buildNavItem(Icons.schedule, 'Schedule', 2),
+          buildNavItem(Icons.task, 'Schedule', 1),
+          buildNavItem(Icons.schedule, 'Task', 2),
           buildNavItem(Icons.person, 'Profile', 3),
         ],
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:self_stack/pages/authentication_screens/logIn_screens/Screens/login.dart';
 import 'package:self_stack/pages/dashboard_screen/home/functions/fetch_user_details.dart';
+import 'package:self_stack/pages/dashboard_screen/profile/widgets/alert.dart';
 import 'package:self_stack/pages/dashboard_screen/profile/widgets/circular_progrees.dart';
 import 'package:self_stack/pages/dashboard_screen/profile/widgets/reusable_containers.dart';
 import 'package:self_stack/pages/dashboard_screen/profile/widgets/title_container_reusable.dart';
@@ -57,20 +58,25 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                           trailing: IconButton(
-                            onPressed: () async {
-                              SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              await prefs.clear();
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginPage()),
-                              );
-                            },
-                            icon: Icon(Icons.logout_rounded,  color:kredtheme,
-                            size: 30,
-                            ),
-                          ),
+  onPressed: () async {
+    bool? confirmed = await showLogoutConfirmationDialog(context);
+
+    if (confirmed != null && confirmed) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.clear();
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    }
+  },
+  icon: Icon(
+    Icons.logout_rounded,
+    color: kredtheme,
+    size: 30,
+  ),
+),
+
                         ),
                       ),
                       ksizedboxD,
