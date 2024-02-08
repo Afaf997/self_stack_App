@@ -23,7 +23,7 @@ class ScheduleScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: kbackgroundmodel,
+          backgroundColor: kbackgroundmodel,//
           body: Padding(
             padding: const EdgeInsets.only(top: 50),
             child: Container(
