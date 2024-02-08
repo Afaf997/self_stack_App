@@ -67,8 +67,7 @@ class StartScreen extends StatelessWidget {
                       bottomNavigationBar: CustomBottomNavigationBar(
                           navigationBloc: navigationBloc),
                     );
-                  },
-                );
+                  },);
               } else {
                 return Scaffold(
                   body: Container(

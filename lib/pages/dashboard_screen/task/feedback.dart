@@ -85,45 +85,45 @@ class FeedbackScreen extends StatelessWidget {
                   onPressed: () async {
                     String feedbackText = feedbackController.text.trim();
                     String? userId = await userIdFuture;
-
-                    // Validation
                     if (feedbackText.isNotEmpty && userId != null) {
-                      // Submit feedback
                       FeedbackService.postFeedback(
                         userId: userId,
                         taskId: tasksId,
                         feedback: feedbackText,
                       );
 
-                      // Show success alert
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                          title: Text('Success'),
-                          content: Text('Feedback submitted successfully!'),
+                          title: Text('Success',style: TextStyle(color: kselfstackGreen)),
+                          content: Text('Feedback submitted successfully!',style: TextStyle(color: kwhiteModel)),
+                          backgroundColor:kblackDark,
                           actions: [
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
-                              },
-                              child: Text('OK'),
+                                   feedbackController.clear();
+                                },
+                              child: Text('OK',style: TextStyle(color: kwhiteModel),),
                             ),
                           ],
                         ),
                       );
                     } else {
-                      // Show validation error
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                          title: Text('Validation Error'),
-                          content: Text('Please enter valid feedback.'),
+                          title: Text('Validation Error',style: TextStyle(color: kredtheme),),
+                          content: Text('Please enter valid feedback.',style: TextStyle(color: kwhiteModel)),
+                          backgroundColor: kblackDark,
                           actions: [
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
+                                feedbackController.clear();
+
                               },
-                              child: Text('OK'),
+                              child: Text('OK',style: TextStyle(color: kwhiteModel),),
                             ),
                           ],
                         ),
