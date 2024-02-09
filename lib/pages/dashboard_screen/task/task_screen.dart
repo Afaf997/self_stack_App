@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:self_stack/blocs/bottom_navigation/bloc/navigation_bloc.dart';
-import 'package:self_stack/pages/dashboard_screen/home/widgets/bottom_navigation.dart';
 import 'package:self_stack/pages/dashboard_screen/task/task_details.dart';
 import 'package:self_stack/repository/shared_preference.dart';
 import 'package:self_stack/services/get_task_service.dart';
@@ -9,7 +7,7 @@ import 'package:self_stack/utils/constans.dart';
 class TaskScreen extends StatelessWidget {
   TaskScreen({Key? key}) : super(key: key);
 
-  final NavigationBloc navigationBloc = NavigationBloc();
+  // final NavigationBloc navigationBloc = NavigationBloc();
   final getTaskservices getTaskService = getTaskservices();
 
 
@@ -152,9 +150,9 @@ class TaskScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    bottomNavigationBar: CustomBottomNavigationBar(
-                      navigationBloc: navigationBloc,
-                    ),
+                    // bottomNavigationBar: CustomBottomNavigationBar(
+                    //   navigationBloc: navigationBloc,
+                    // ),
                   );
                 } else {
                   return Scaffold(

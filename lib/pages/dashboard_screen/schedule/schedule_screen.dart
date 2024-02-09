@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:self_stack/blocs/bottom_navigation/bloc/navigation_bloc.dart';
-import 'package:self_stack/pages/dashboard_screen/home/widgets/bottom_navigation.dart';
+
 import 'package:self_stack/pages/dashboard_screen/schedule/function/week_details.dart';
 import 'package:self_stack/repository/shared_preference.dart';
 import 'package:self_stack/services/week_wise.dart';
@@ -9,7 +7,7 @@ import 'package:self_stack/utils/constans.dart';
 
 class ScheduleScreen extends StatelessWidget {
   ScheduleScreen({Key? key}) : super(key: key);
-  final NavigationBloc navigationBloc = NavigationBloc();
+
   final getweekservices getweekService = getweekservices();
 
   Widget buildScheduleScreen(
@@ -17,11 +15,6 @@ class ScheduleScreen extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     final countTime = userDetails['reviews'].length;
 
-    return BlocConsumer<NavigationBloc, NavigationState>(
-      bloc: navigationBloc,
-      buildWhen: (previous, current) => current is! NavigationInitial,
-      listener: (context, state) {},
-      builder: (context, state) {
         return Scaffold(
           backgroundColor: kbackgroundmodel,//
           body: Padding(
@@ -111,10 +104,9 @@ class ScheduleScreen extends StatelessWidget {
               ),
             ),
           ),
-          bottomNavigationBar: CustomBottomNavigationBar(navigationBloc: navigationBloc),
         );
-      },
-    );
+    //   },
+    // );
   }
 
   @override

@@ -17,7 +17,7 @@ class SplashScreen extends StatelessWidget {
 
       if (userId != null && userId.isNotEmpty) {
         Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => StartScreen()),
+          MaterialPageRoute(builder: (context) => BottomNavbarScreen()),
         );
       } else {
         Navigator.pushReplacement(context,

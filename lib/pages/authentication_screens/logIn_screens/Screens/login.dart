@@ -60,7 +60,7 @@ class LoginPage extends StatelessWidget {
         } else if (state is LoginSuccessState) {
           log("message");
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => StartScreen()));
+              context, MaterialPageRoute(builder: (context) => BottomNavbarScreen()));
           SnackbarUtils.showSuccessSnackbar(context, 'Login successful!',
               subMessages: 'You have successfully signed into your account ');
         } else if (state is AuthErrorstate) {
@@ -69,7 +69,7 @@ class LoginPage extends StatelessWidget {
               subMessage: 'Ensure your username and password are correct.');
         } else if (state is googleAuthState) {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => StartScreen()));
+              context, MaterialPageRoute(builder: (context) => BottomNavbarScreen()));
         }
       },
       builder: (context, state) {
@@ -245,7 +245,7 @@ class LoginPage extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => StartScreen()));
+                              builder: (context) => BottomNavbarScreen()));
                     } else {}
                   },
                   child: Container(
