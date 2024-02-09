@@ -18,13 +18,12 @@ class ReusableContainerWithTitle extends StatelessWidget {
           padding: const EdgeInsets.only(right: 300),
           child: Text(
             title,
-            style: TextStyle(color: kwhiteModel, fontSize: 20),
+            style: TextStyle(color: kwhiteModel, fontSize: 18),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10),
+        Center(
           child: Container(
-            width: 390,
+            width: 340,
             margin: const EdgeInsets.only(right: 10),
             decoration: BoxDecoration(
               color: kblackDark,

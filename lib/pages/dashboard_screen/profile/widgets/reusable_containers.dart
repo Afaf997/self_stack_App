@@ -29,7 +29,7 @@ class UserDetailsTile extends StatelessWidget {
                         text: '$title: ',
                         style: TextStyle(
                           color: kwhiteModel,
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:self_stack/pages/authentication_screens/home_screen/home_screen.dart';
-import 'package:self_stack/pages/dashboard_screen/home/dashboard.dart';
+import 'package:self_stack/pages/dashboard_screen/home/screen/navigation_bar.dart';
 import 'package:self_stack/utils/constans.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

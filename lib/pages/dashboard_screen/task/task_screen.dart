@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:self_stack/pages/dashboard_screen/task/task_details.dart';
 import 'package:self_stack/repository/shared_preference.dart';
@@ -7,11 +9,10 @@ import 'package:self_stack/utils/constans.dart';
 class TaskScreen extends StatelessWidget {
   TaskScreen({Key? key}) : super(key: key);
 
-  // final NavigationBloc navigationBloc = NavigationBloc();
   final getTaskservices getTaskService = getTaskservices();
 
-
   Future<Map<String, dynamic>> fetchUserDetails(String userId) async {
+    log("task page");
     try {
       Map<String, dynamic> userDetails = await getTaskService.getTaskDetails(userId);
       return userDetails;
@@ -71,7 +72,6 @@ class TaskScreen extends StatelessWidget {
                                 padding: EdgeInsets.all(17.0),
                                 itemCount: userDetails['userTasks'][0]['tasks'].length,
                                 itemBuilder: (context, index) {
-                                  String taskName = userDetails['userTasks'][0]['tasks'][index]['task_name'];
                                   String courseId = userDetails['userTasks'][0]['_id'];
                                   String taskId = userDetails['userTasks'][0]['tasks'][index]['_id'];
                                   bool isStarted = index == userDetails['userData']['tasksStarted'].length - 1;
@@ -83,15 +83,14 @@ class TaskScreen extends StatelessWidget {
 
                                   Color? imageColor = isStarted
                                       ? kwhiteModel
-                                      : (isCompleted ? null : Color.fromARGB(255, 98, 98, 98));
+                                      : (isCompleted ? null : Color.fromARGB(255, 157, 157, 157) );
 
                                   return GestureDetector(
                                     onTap: () {
                                       if (!isCompleted) {
                                         ScaffoldMessenger.of(context).showSnackBar(
                                           SnackBar(
-                                            content: Text(
-                                              'Keep going! Complete the previous tasks to unlock this one.',
+                                            content: Text('Keep going! Complete the previous tasks to unlock this one.',
                                               style: TextStyle(color: kredtheme),
                                             ),
                                             duration: Duration(seconds: 3),
@@ -150,16 +149,13 @@ class TaskScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // bottomNavigationBar: CustomBottomNavigationBar(
-                    //   navigationBloc: navigationBloc,
-                    // ),
                   );
                 } else {
                   return Scaffold(
                     backgroundColor: kbackgroundmodel,
                     body: Center(
                       child: CircularProgressIndicator(
-                        color: Colors.white,
+                        color: kwhiteModel,
                       ),
                     ),
                   );
@@ -179,7 +175,7 @@ class TaskScreen extends StatelessWidget {
             backgroundColor: kbackgroundmodel,
             body: Center(
               child: CircularProgressIndicator(
-                color: Colors.white,
+                color:kwhiteModel,
               ),
             ),
           );

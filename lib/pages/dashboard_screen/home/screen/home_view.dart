@@ -1,7 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:self_stack/pages/dashboard_screen/home/domain_decide.dart';
 import 'package:self_stack/pages/dashboard_screen/home/functions/fetch_user_details.dart';
+import 'package:self_stack/pages/dashboard_screen/home/screen/domain_not_fixed.dart';
 import 'package:self_stack/repository/shared_preference.dart';
 import 'package:self_stack/utils/constans.dart';
 
