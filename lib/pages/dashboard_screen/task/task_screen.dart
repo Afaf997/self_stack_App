@@ -1,26 +1,13 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:self_stack/pages/dashboard_screen/task/function/task_function.dart';
 import 'package:self_stack/pages/dashboard_screen/task/task_details.dart';
 import 'package:self_stack/repository/shared_preference.dart';
-import 'package:self_stack/services/get_task_service.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class TaskScreen extends StatelessWidget {
   TaskScreen({Key? key}) : super(key: key);
 
-  final getTaskservices getTaskService = getTaskservices();
-
-  Future<Map<String, dynamic>> fetchUserDetails(String userId) async {
-    log("task page");
-    try {
-      Map<String, dynamic> userDetails = await getTaskService.getTaskDetails(userId);
-      return userDetails;
-    } catch (error) {
-      print('Error fetching user details: $error');
-      throw Exception("Error fetching user details: $error");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +19,7 @@ class TaskScreen extends StatelessWidget {
 
           if (userId != null) {
             return FutureBuilder<Map<String, dynamic>>(
-              future: fetchUserDetails(userId),
+              future: fetchtaskDetails(userId),
               builder: (context, userSnapshot) {
                 if (userSnapshot.connectionState == ConnectionState.done) {
                   Map<String, dynamic> userDetails = userSnapshot.data!;
