@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/blocs/task_bloc/bloc/task_bloc.dart';
+import 'package:self_stack/blocs/task_details/bloc/score_bloc.dart';
 import 'package:self_stack/firebase_options.dart';
 import 'package:self_stack/pages/authentication_screens/home_screen/splash.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,9 +24,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        // BlocProvider<NavigationBloc>(
-        //   create: (context) => NavigationBloc(),
-        // ),
+        BlocProvider<ScoreBloc>(
+          create: (context) => ScoreBloc(),
+        ),
         BlocProvider<TaskBloc>(
           create: (context) => TaskBloc(),
         ),

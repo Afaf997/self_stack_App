@@ -1,22 +1,43 @@
-import 'package:flutter/material.dart';
+import 'dart:developer';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:self_stack/blocs/task_details/bloc/score_bloc.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/function/week_details.dart';
+import 'package:self_stack/pages/dashboard_screen/schedule/week_status.dart';
 import 'package:self_stack/repository/shared_preference.dart';
-import 'package:self_stack/services/week_wise.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class ScheduleScreen extends StatelessWidget {
   ScheduleScreen({Key? key}) : super(key: key);
-
-  final getweekservices getweekService = getweekservices();
+  ScoreBloc scorebloc = ScoreBloc();
 
   Widget buildScheduleScreen(
-      BuildContext context, Map<String, dynamic> userDetails) {
+    BuildContext context,
+    Map<String, dynamic> userDetails,
+  ) {
     double screenWidth = MediaQuery.of(context).size.width;
     final countTime = userDetails['reviews'].length;
 
+    return BlocConsumer<ScoreBloc, ScoreState>(
+      bloc: scorebloc,
+      listenWhen: (previous, current) => current is scoreActionState,
+      buildWhen: (previous, current) => current is! scoreActionState,
+      listener: (context, state) {
+        if (state is NavigationscoreState) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  TaskStatusScreen(userId: userDetails['student']['_id'],reviewId:userDetails['reviews'][state.index]['reviewId']),
+            ),
+          );
+        }
+        log('${userDetails['reviews'][0]['reviewId']}');
+      },
+      builder: (context, state) {
         return Scaffold(
-          backgroundColor: kbackgroundmodel,//
+          backgroundColor: kbackgroundmodel,
           body: Padding(
             padding: const EdgeInsets.only(top: 50),
             child: Container(
@@ -47,10 +68,11 @@ class ScheduleScreen extends StatelessWidget {
                     child: Text(
                       userDetails['reviews'] != null &&
                               userDetails['reviews'][countTime - 1]
-                            ['scheduleDate'] !=null
+                                      ['scheduleDate'] !=
+                                  null
                           ? 'Next Review Date ${userDetails['reviews'][countTime - 1]['scheduleDate']}'
                           : 'Next Review Not Scheduled',
-                         style: TextStyle(
+                      style: TextStyle(
                         fontSize: screenWidth * 0.040,
                         color: userDetails['reviews'] != null &&
                                 userDetails['reviews'][countTime - 1]
@@ -78,21 +100,26 @@ class ScheduleScreen extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: userDetails['reviews'].length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.symmetric(
-                          horizontal: screenWidth * 0.05, vertical: 10),
-                          width: double.infinity,
-                          padding: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            border: Border.all(color:kwhiteModel),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Week ${index + 1}',
-                              style: TextStyle(
-                                fontSize: screenWidth * 0.040,
-                                color: kwhiteModel,
+                        return GestureDetector(
+                          onTap: () {
+                            scorebloc.add(NavigationscoreEvent(index:index));
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: screenWidth * 0.05, vertical: 10),
+                            width: double.infinity,
+                            padding: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: kwhiteModel),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Week ${index + 1}',
+                                style: TextStyle(
+                                  fontSize: screenWidth * 0.040,
+                                  color: kwhiteModel,
+                                ),
                               ),
                             ),
                           ),
@@ -105,8 +132,8 @@ class ScheduleScreen extends StatelessWidget {
             ),
           ),
         );
-    //   },
-    // );
+      },
+    );
   }
 
   @override
@@ -125,7 +152,10 @@ class ScheduleScreen extends StatelessWidget {
                   Map<String, dynamic> userDetails = userSnapshot.data!;
                   return buildScheduleScreen(context, userDetails);
                 } else {
-                  return CircularProgressIndicator();
+                  return Center(
+                      child: CircularProgressIndicator(
+                    color: kselfstackGreen,
+                  ));
                 }
               },
             );
@@ -133,7 +163,10 @@ class ScheduleScreen extends StatelessWidget {
             return SizedBox.shrink();
           }
         } else {
-          return CircularProgressIndicator();
+          return Center(
+              child: CircularProgressIndicator(
+            color: kselfstackGreen,
+          ));
         }
       },
     );

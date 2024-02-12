@@ -6,7 +6,7 @@ class TextCard extends StatelessWidget {
   final Color backgroundColor;
   final double height;
 
-  TextCard({required this.title, required this.backgroundColor, required this.height});
+    TextCard({required this.title, required this.backgroundColor, required this.height,});
 
   @override
   Widget build(BuildContext context) {

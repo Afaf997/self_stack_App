@@ -18,10 +18,6 @@ class LoginPage extends StatelessWidget {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  // final TextEditingController emailgooglecontroller = TextEditingController();
-  // final TextEditingController displaynameController = TextEditingController();
-  // final TextEditingController uidController = TextEditingController();
-  // final TextEditingController urlController = TextEditingController();
 
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
