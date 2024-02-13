@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:self_stack/pages/dashboard_screen/home/functions/fetch_user_details.dart';
 import 'package:self_stack/pages/dashboard_screen/home/screen/domain_not_fixed.dart';
+import 'package:self_stack/pages/dashboard_screen/home/screen/navigation_bar.dart';
 import 'package:self_stack/repository/shared_preference.dart';
 import 'package:self_stack/utils/constans.dart';
 
@@ -9,12 +11,13 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return FutureBuilder<String?>(
       future: getUserId(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           String? userId = snapshot.data;
-
+    
           return FutureBuilder<Map<String, dynamic>>(
             future: fetchUserDetails(userId!),
             builder: (context, userSnapshot) {
@@ -23,7 +26,7 @@ class HomeView extends StatelessWidget {
                 if (userDetails['domain'] == 'No') {
                   return DomainDesidePage();
                 }
-
+    
                 return buildHomeScreen(context, userDetails);
               } else {
                 return Scaffold(

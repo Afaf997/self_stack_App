@@ -1,4 +1,7 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
+import 'package:self_stack/pages/dashboard_screen/home/screen/navigation_bar.dart';
 import 'package:self_stack/pages/dashboard_screen/task/function/task_function.dart';
 import 'package:self_stack/pages/dashboard_screen/task/task_details.dart';
 import 'package:self_stack/repository/shared_preference.dart';
@@ -160,6 +163,7 @@ import 'package:self_stack/utils/constans.dart';
 //   }
 // }
 
+
 class TaskScreen extends StatefulWidget {
   const TaskScreen({Key? key}) : super(key: key);
 
@@ -183,9 +187,9 @@ class _TaskScreenState extends State<TaskScreen> {
         setState(() {
           _taskDetails = fetchtaskDetails(userId);
         });
-      } 
+      }
     } catch (e) {
-       
+      // Handle the error
     }
   }
 
@@ -213,8 +217,7 @@ class _TaskScreenState extends State<TaskScreen> {
             body: Column(
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsets.only(top: 50, right: 190, bottom: 30),
+                  padding: const EdgeInsets.only(top: 50, right: 190, bottom: 30),
                   child: Text(
                     'Study Tasks',
                     style: TextStyle(
@@ -245,25 +248,22 @@ class _TaskScreenState extends State<TaskScreen> {
                         itemCount: userDetails['userTasks'][0]['tasks'].length,
                         itemBuilder: (context, index) {
                           String courseId = userDetails['userTasks'][0]['_id'];
-                          String taskId = userDetails['userTasks'][0]['tasks']
-                              [index]['_id'];
-                          bool isStarted = index ==
-                              userDetails['userData']['tasksStarted'].length -1;
-                          bool isCompleted = index <
-                              userDetails['userData']['tasksStarted'].length;
-
+                          String taskId = userDetails['userTasks'][0]['tasks'][index]['_id'];
+                          bool isStarted = index == userDetails['userData']['tasksStarted'].length -1;
+                          bool isCompleted = index < userDetails['userData']['tasksStarted'].length;
+    
                           String imagePath = isStarted
                               ? 'assets/image/unlock.png'
                               : (isCompleted
                                   ? 'assets/image/tick1.png'
                                   : 'assets/image/lock5.png');
-
+    
                           Color? imageColor = isStarted
                               ? kwhiteModel
                               : (isCompleted
                                   ? null
                                   : Color.fromARGB(255, 157, 157, 157));
-
+    
                           return GestureDetector(
                             onTap: () {
                               if (!isCompleted) {

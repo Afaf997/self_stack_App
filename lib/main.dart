@@ -5,6 +5,10 @@ import 'package:self_stack/blocs/task_bloc/bloc/task_bloc.dart';
 import 'package:self_stack/blocs/task_details/bloc/score_bloc.dart';
 import 'package:self_stack/firebase_options.dart';
 import 'package:self_stack/pages/authentication_screens/home_screen/splash.dart';
+import 'package:self_stack/pages/dashboard_screen/home/screen/navigation_bar.dart';
+import 'package:self_stack/pages/dashboard_screen/profile/profile_screen.dart';
+import 'package:self_stack/pages/dashboard_screen/schedule/schedule_screen.dart';
+import 'package:self_stack/pages/dashboard_screen/task/task_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -37,6 +41,12 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Self Stack',
         home: SplashScreen(),
+        routes: {
+    '/home': (context) => BottomNavbarScreen(),
+    '/task': (context) => TaskScreen(),
+    '/schedule': (context) => ScheduleScreen(),
+    '/profile': (context) => ProfileScreen(),
+  },
       ),
     );
   }

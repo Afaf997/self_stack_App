@@ -53,6 +53,7 @@ dependencies:
   get: ^4.6.6
   google_nav_bar: ^5.0.6
   color: ^3.0.0
+  firebase_messaging: ^14.7.15
   
 
 dev_dependencies:
