@@ -1,6 +1,6 @@
 part of 'task_bloc.dart';
 
-@immutable
+// @immutable
 sealed class TaskEvent {}
 
 

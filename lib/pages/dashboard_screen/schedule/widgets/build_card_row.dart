@@ -4,8 +4,9 @@ import 'package:self_stack/utils/constans.dart';
 class TaskStatusCard extends StatelessWidget {
   final String title;
   final String subtitle;
+  // final Color backgroundColor; // New parameter for background color
 
-  TaskStatusCard({required this.title, required this.subtitle});
+  TaskStatusCard({required this.title, required this.subtitle,});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class TaskStatusCard extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(screenWidth * 0.05),
       decoration: BoxDecoration(
-        color: kselfstackGreen,
+        color: kselfstackGreen, // Use the provided background color
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(

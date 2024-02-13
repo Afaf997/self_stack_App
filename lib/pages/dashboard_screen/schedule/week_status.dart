@@ -6,18 +6,25 @@ import 'package:self_stack/pages/dashboard_screen/schedule/widgets/build%20info_
 import 'package:self_stack/pages/dashboard_screen/schedule/widgets/build_card_row.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/widgets/statcard.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/widgets/status_card.dart';
-import 'package:self_stack/pages/dashboard_screen/schedule/widgets/title_container.dart'; // Assuming you meant 'constants.dart' instead of 'constans.dart'
+import 'package:self_stack/pages/dashboard_screen/schedule/widgets/title_container.dart'; 
 import 'package:self_stack/services/week_details.dart';
 import 'package:self_stack/utils/constans.dart';
+import 'package:color/color.dart';
+
+RgbColor rgb = new RgbColor(192, 255, 238);
+Color getColor(String colorName) {
+  return RgbColor.name('red');
+}
 
 class TaskStatusScreen extends StatelessWidget {
   final String userId;
   final String reviewId;
+  final int index;
 
-  TaskStatusScreen({required this.userId, required this.reviewId});
-  
+  TaskStatusScreen(
+      {required this.userId, required this.reviewId, required this.index});
+
   final getScoreServices getTaskService = getScoreServices();
-
 
   @override
   Widget build(BuildContext context) {
@@ -25,42 +32,52 @@ class TaskStatusScreen extends StatelessWidget {
       backgroundColor: kselfstackGreen,
       body: Padding(
         padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
-      
-        child: FutureBuilder<Map<String, dynamic>>(
-          future: fetchScoreDetails(userId,reviewId),
-          
-          builder: (context, tasksnapshot) {
-            if (tasksnapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
-            } else if (tasksnapshot.hasError) {
-              return Text('Error: ${tasksnapshot.error}');
-            } else if (tasksnapshot.hasData) {
-              Map<String, dynamic> taskDetails = tasksnapshot.data!;
-
-              return Container(
-                height: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
+        child: Container(
+          height: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(40),
+              topRight: Radius.circular(40),
+            ),
+          ),
+          child: FutureBuilder<Map<String, dynamic>>(
+            future: fetchScoreDetails(userId, reviewId),
+            builder: (context, tasksnapshot) {
+              if (tasksnapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: kselfstackGreen,
                   ),
-                ),
-                child: SingleChildScrollView(
+                );
+              } else if (tasksnapshot.hasError) {
+                return Center(
+                  child: Text('Error: ${tasksnapshot.error}'),
+                );
+              } else if (tasksnapshot.hasData) {
+                Map<String, dynamic> taskDetails = tasksnapshot.data!;
+
+                return SingleChildScrollView(
                   child: Column(
                     children: [
                       SizedBox(height: 20),
-                      SectionHeader(title:taskDetails['taskName'],),
-                      TaskStatusCard(title: '$userId', subtitle: 'Task Completed'),
-                      InfoCard(
-                          labels: ['Reviewer: ${taskDetails['reviewver']}', 'Advisor:'],
-                          backgroundColor: kblackDark),
+                      TaskStatusCard(
+                        title: 'Week ${index + 1}',
+                        subtitle:
+                            'Task ${taskDetails['reviewDetails'][0]['color']}',
+                      ),
+                      InfoCard(labels: [
+                        'Reviewer: ${taskDetails['reviewver']}',
+                        'Advisor: ${taskDetails['advisor']}'
+                      ], backgroundColor: kblackDark),
                       ksizedboxA,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Expanded(
-                            child: StatCard(icon: Icons.star, value: '6/10'),
+                            child: StatCard(
+                                icon: Icons.star,
+                                value: '${taskDetails['points']} / 10'),
                           ),
                           Expanded(
                             child: StatCard(
@@ -81,13 +98,14 @@ class TaskStatusScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-              );
-            } else {
-              // Handle other cases, if any
-              return Text('Something went wrong');
-            }
-          },
+                );
+              } else {
+                return Center(
+                  child: Text('Something went wrong'),
+                );
+              }
+            },
+          ),
         ),
       ),
     );

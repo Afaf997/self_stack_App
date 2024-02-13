@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:self_stack/pages/dashboard_screen/task/feedback.dart';
-import 'package:self_stack/services/get_details_task_service.dart';
+import 'package:self_stack/pages/dashboard_screen/task/function/fetch_details.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class DetailOfTask extends StatelessWidget {
@@ -10,27 +10,11 @@ class DetailOfTask extends StatelessWidget {
 
   DetailOfTask({Key? key, required this.taskId, required this.courseId});
 
-  final getTaskDetailsServices getTaskDetailsService = getTaskDetailsServices();
-
-  Future<Map<String, dynamic>> _fetchTaskDetails(
-      String taskId, String courseId) async {
-    try {
-      Map<String, dynamic> userTaskDetails =
-          await getTaskDetailsService.getDetails(taskId, courseId);
-      return userTaskDetails;
-    } catch (error) {
-      print('Error fetching user details: $error');
-      throw Exception("Error fetching user details: $error");
-    }
-  }
-
 Widget buildSubtitle(String title, List<String> points) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(
-        title,
-        style: TextStyle(
+      Text(title,style: TextStyle(
           fontSize: 20,
           color: kwhiteModel,
         ),
@@ -52,14 +36,12 @@ Widget buildSubtitle(String title, List<String> points) {
                 children: [
                   Row(
                     children: [
-                      Text(
-                        '\u2022',
-                        style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: kwhiteModel),
-                      ),
+                      Text('\u2022',
+                        style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: kwhiteModel),),
                       SizedBox(width: 9.0),
                       Flexible(
                         child: Text(
-                          point,
+point,
                           style: TextStyle(fontSize: 15, color: Colors.white),
                         ),
                       ),
@@ -80,7 +62,7 @@ Widget buildSubtitle(String title, List<String> points) {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Map<String, dynamic>>(
-      future: _fetchTaskDetails(courseId, taskId),
+      future: fetchDetailsOfTask(courseId, taskId),
       builder: (context, tasksnapshot) {
         if (tasksnapshot.connectionState == ConnectionState.done) {
           if (tasksnapshot.data != null) {

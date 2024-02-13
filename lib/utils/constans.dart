@@ -7,6 +7,7 @@ const Color kgreymodel= Color.fromARGB(255, 157, 157, 157) ;
 const Color kredtheme =Colors.red;
 const Color kblackLight=Color.fromARGB(255, 98, 98, 98);
 const Color kblackDark=Color.fromARGB(255, 31, 31, 31);
+const Color kyellow=Colors.yellow;
 
 const SizedBox ksizedbox = SizedBox(height: 5);
 const SizedBox ksizedboxA = SizedBox(height: 10);
