@@ -66,6 +66,9 @@ class TaskStatusScreen extends StatelessWidget {
                         subtitle:
                             'Task ${taskDetails['reviewDetails'][0]['color']}',
                       ),
+                     ksizedboxA,
+                     Text(" Task Compleated Within 5 Days",style: TextStyle(color:Colors.blue,fontSize: 22),),
+                     ksizedboxA,
                       InfoCard(labels: [
                         'Reviewer: ${taskDetails['reviewver']}',
                         'Advisor: ${taskDetails['advisor']}'

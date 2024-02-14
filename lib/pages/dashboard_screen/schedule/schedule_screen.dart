@@ -67,18 +67,12 @@ class ScheduleScreen extends StatelessWidget {
                       color: kblackDark,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Text(  countTime >0 ? 
-                      userDetails['reviews'] != null &&
-                          userDetails['reviews'][0]['scheduleDate'] == null && userDetails['reviews'][countTime - 1]['completedDate'] == null
-                          ? 'Your Task is not Started'
-                          :userDetails['reviews'][countTime - 1]['scheduleDate'] != null && userDetails['reviews'][countTime - 1]['completedDate'] == null
+                    child: Text(  countTime >0 ? userDetails['reviews'][countTime - 1]['scheduleDate'] != null && userDetails['reviews'][countTime - 1]['completedDate'] == null
                           ?'Next Review Date ${userDetails['reviews'][countTime - 1]['scheduleDate']}'
                           : 'Next Review Not Scheduled': 'Your Task is not Started',
                       style: TextStyle(
                         fontSize: screenWidth * 0.040,
-                        color: countTime >0 ?  userDetails['reviews'] != null &&
-                             userDetails['reviews'][0]['scheduleDate'] == null && userDetails['reviews'][countTime - 1]['completedDate'] == null
-                            ? Colors.blue :
+                        color: countTime >0 ? 
                             userDetails['reviews'][countTime - 1]['scheduleDate'] != null && userDetails['reviews'][countTime - 1]['completedDate'] == null
                             ? kselfstackGreen
                             : kyellow : Colors.blue,
@@ -104,13 +98,14 @@ class ScheduleScreen extends StatelessWidget {
                     ),
                   ),
 Expanded(
-  child:countTime >0 
+  child:countTime >0 && userDetails['reviews'][0]['completedDate'] != null 
       ? ListView.builder(
           itemCount: userDetails['reviews'].length,
           itemBuilder: (context, index) {
             if (index < countTime &&
                 userDetails['reviews'][index]['scheduleDate'] != null &&
-                userDetails['reviews'][index]['completedDate'] != null) {
+                userDetails['reviews'][index]['completedDate'] != null
+                ) {
               return GestureDetector(
                 onTap: () {
                   scorebloc.add(NavigationscoreEvent(index: index));
