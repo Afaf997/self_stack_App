@@ -104,7 +104,7 @@ class ScheduleScreen extends StatelessWidget {
                     ),
                   ),
 Expanded(
-  child: userDetails['reviews'] != null
+  child:countTime >0 
       ? ListView.builder(
           itemCount: userDetails['reviews'].length,
           itemBuilder: (context, index) {
@@ -136,11 +136,20 @@ Expanded(
                 ),
               );
             } else {
-              return Container();
+              return Container(
+                
+              );
             }
           },
         )
-      : Container(),
+      : Center(
+        child: Lottie.asset(
+          'assets/lottie/task.json',
+          width: screenWidth * 0.60,
+          height: screenWidth * 0.60,
+          fit: BoxFit.cover,
+        ),
+      ),
 ),
 ],
               ),
