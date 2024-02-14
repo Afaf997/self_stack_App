@@ -201,7 +201,9 @@ class _TaskScreenState extends State<TaskScreen> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Scaffold(
             body: Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: kselfstackGreen,
+              ),
             ),
           );
         } else if (snapshot.hasError) {

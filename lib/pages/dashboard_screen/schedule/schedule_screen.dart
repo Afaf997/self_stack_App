@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:self_stack/blocs/task_details/bloc/score_bloc.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/function/week_details.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/week_status.dart';
@@ -10,13 +11,15 @@ import 'package:self_stack/utils/constans.dart';
 class ScheduleScreen extends StatelessWidget {
   ScheduleScreen({Key? key}) : super(key: key);
   ScoreBloc scorebloc = ScoreBloc();
+  int num=0;
 
   Widget buildScheduleScreen(
     BuildContext context,
     Map<String, dynamic> userDetails,
   ) {
     double screenWidth = MediaQuery.of(context).size.width;
-    final countTime = userDetails['reviews'].length;
+    final countTime = userDetails['reviews'] == null ? 0 :userDetails['reviews'].length;
+
 
     return BlocConsumer<ScoreBloc, ScoreState>(
       bloc: scorebloc,
@@ -64,17 +67,21 @@ class ScheduleScreen extends StatelessWidget {
                       color: kblackDark,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Text(
+                    child: Text(  countTime >0 ? 
                       userDetails['reviews'] != null &&
-                          userDetails['reviews'][countTime - 1]['scheduleDate'] !=null && userDetails['reviews'][countTime - 1]['compleatedDate'] !=null
-                          ? 'Next Review Date ${userDetails['reviews'][countTime - 1]['scheduleDate']}'
-                          : 'Next Review Not Scheduled',
+                          userDetails['reviews'][0]['scheduleDate'] == null && userDetails['reviews'][countTime - 1]['completedDate'] == null
+                          ? 'Your Task is not Started'
+                          :userDetails['reviews'][countTime - 1]['scheduleDate'] != null && userDetails['reviews'][countTime - 1]['completedDate'] == null
+                          ?'Next Review Date ${userDetails['reviews'][countTime - 1]['scheduleDate']}'
+                          : 'Next Review Not Scheduled': 'Your Task is not Started',
                       style: TextStyle(
                         fontSize: screenWidth * 0.040,
-                        color: userDetails['reviews'] != null &&
-                            userDetails['reviews'][countTime - 1]['scheduleDate'] !=null&& userDetails['reviews'][countTime - 1]['compleatedDate'] !=null
+                        color: countTime >0 ?  userDetails['reviews'] != null &&
+                             userDetails['reviews'][0]['scheduleDate'] == null && userDetails['reviews'][countTime - 1]['completedDate'] == null
+                            ? Colors.blue :
+                            userDetails['reviews'][countTime - 1]['scheduleDate'] != null && userDetails['reviews'][countTime - 1]['completedDate'] == null
                             ? kselfstackGreen
-                            : kyellow,
+                            : kyellow : Colors.blue,
                       ),
                     ),
                   ),
@@ -82,51 +89,60 @@ class ScheduleScreen extends StatelessWidget {
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-                    child: Text(
+                    child: Text(               
                       '"Track Your Progress"',
                       style: TextStyle(
                         color: kwhiteModel,
-                        fontSize: screenWidth * 0.05,
+                        fontSize:    countTime >0 ? userDetails['reviews'] != null &&
+                   userDetails['reviews'][0]['completedDate'] == null  &&
+                       userDetails['reviews'][0]['scheduleDate'] != null &&
+                       countTime < 2
+
+                         ? 0 : screenWidth *0.05 :  0 ,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
 Expanded(
-  child: userDetails['reviews'][countTime - 1]['scheduleDate'] != null
+  child: userDetails['reviews'] != null
       ? ListView.builder(
           itemCount: userDetails['reviews'].length,
           itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                scorebloc.add(NavigationscoreEvent(index: index));
-              },
-              child: Container(
-                margin: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.05, vertical: 10),
-                width: double.infinity,
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  border: Border.all(color: kwhiteModel),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Center(
-                  child: Text(
-                    'Week ${index + 1}',
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.040,
-                      color: kwhiteModel,
+            if (index < countTime &&
+                userDetails['reviews'][index]['scheduleDate'] != null &&
+                userDetails['reviews'][index]['completedDate'] != null) {
+              return GestureDetector(
+                onTap: () {
+                  scorebloc.add(NavigationscoreEvent(index: index));
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.05, vertical: 10),
+                  width: double.infinity,
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: kwhiteModel),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Week ${index + 1}',
+                      style: TextStyle(
+                        fontSize: screenWidth * 0.040,
+                        color: kwhiteModel,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            );
+              );
+            } else {
+              return Container();
+            }
           },
         )
       : Container(),
 ),
-
-
-                ],
+],
               ),
             ),
           ),
