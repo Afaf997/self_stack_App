@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:self_stack/blocs/dashboard/bloc/dash_board_bloc.dart';
 import 'package:self_stack/blocs/task_bloc/bloc/task_bloc.dart';
 import 'package:self_stack/blocs/task_details/bloc/score_bloc.dart';
 import 'package:self_stack/firebase_options.dart';
@@ -26,13 +27,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
+    return MultiBlocProvider(
       providers: [
         BlocProvider<ScoreBloc>(
           create: (context) => ScoreBloc(),
         ),
         BlocProvider<TaskBloc>(
           create: (context) => TaskBloc(),
+        ),
+       
+          BlocProvider<DashBoardBloc>(
+          create: (context) => DashBoardBloc(),
         ),
       ],
       child: MaterialApp(

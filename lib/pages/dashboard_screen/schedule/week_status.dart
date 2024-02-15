@@ -6,7 +6,8 @@ import 'package:self_stack/pages/dashboard_screen/schedule/widgets/build%20info_
 import 'package:self_stack/pages/dashboard_screen/schedule/widgets/build_card_row.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/widgets/statcard.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/widgets/status_card.dart';
-import 'package:self_stack/pages/dashboard_screen/schedule/widgets/title_container.dart'; 
+import 'package:self_stack/pages/dashboard_screen/schedule/widgets/task_compleated.dart';
+import 'package:self_stack/pages/dashboard_screen/schedule/widgets/title_container.dart';
 import 'package:self_stack/services/week_details.dart';
 import 'package:self_stack/utils/constans.dart';
 import 'package:color/color.dart';
@@ -66,9 +67,9 @@ class TaskStatusScreen extends StatelessWidget {
                         subtitle:
                             'Task ${taskDetails['reviewDetails'][0]['color']}',
                       ),
-                     ksizedboxA,
-                     Text(" Task Compleated Within 5 Days",style: TextStyle(color:Colors.blue,fontSize: 22),),
-                     ksizedboxA,
+                      ksizedboxA,
+                       buildTaskCompletionText(taskDetails['daysTaken']) ,
+                      ksizedboxA,
                       InfoCard(labels: [
                         'Reviewer: ${taskDetails['reviewver']}',
                         'Advisor: ${taskDetails['advisor']}'

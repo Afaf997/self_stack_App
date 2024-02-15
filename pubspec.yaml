@@ -54,6 +54,13 @@ dependencies:
   google_nav_bar: ^5.0.6
   color: ^3.0.0
   firebase_messaging: ^14.7.15
+  easy_pie_chart: ^1.0.0
+  pie_chart: ^5.4.0
+  syncfusion_flutter_charts: ^24.2.5
+  fl_chart: ^0.66.2
+  table_calendar: ^3.1.0
+  intl: ^0.19.0
+
   
 
 dev_dependencies:
@@ -101,6 +108,7 @@ flutter:
     - assets/image/unlock1.png
     - assets/image/unlock2.png
     - assets/lottie/task.json
+    - assets/lottie/box.json
     - assets/image/feedback.png
 
 

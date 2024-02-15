@@ -166,10 +166,17 @@ class DetailOfTask extends StatelessWidget {
             return Center(child: Text('Task details not available'));
           }
         } else if (!tasksnapshot.hasData) {
-          return CircularProgressIndicator();
+          return Center(
+            child: CircularProgressIndicator(
+              color: kselfstackGreen,
+            ),
+          );
         } else {
           return Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              color: kselfstackGreen
+              ,
+            ),
           );
         }
       },

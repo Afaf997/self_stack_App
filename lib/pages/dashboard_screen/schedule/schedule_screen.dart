@@ -75,7 +75,7 @@ class ScheduleScreen extends StatelessWidget {
                         color: countTime >0 ? 
                             userDetails['reviews'][countTime - 1]['scheduleDate'] != null && userDetails['reviews'][countTime - 1]['completedDate'] == null
                             ? kselfstackGreen
-                            : kyellow : Colors.blue,
+                            : kyellow :kblueTheme,
                       ),
                     ),
                   ),
@@ -139,7 +139,7 @@ Expanded(
         )
       : Center(
         child: Lottie.asset(
-          'assets/lottie/task.json',
+          'assets/lottie/box.json',
           width: screenWidth * 0.60,
           height: screenWidth * 0.60,
           fit: BoxFit.cover,
