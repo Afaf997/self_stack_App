@@ -1,28 +1,20 @@
-
-
 import 'dart:developer';
 
-List<GDPData> getChartData() {
+List<GDPData> getChartData(Map<String, dynamic> apiData) {
   log("call");
-  final List<GDPData> chartData = [
-    GDPData(
-      continent: "Task compleated",
-      taskValue: 20,
-    ),
-    GDPData(
-      continent: "review repeate ",
-      taskValue: 10,
-    ),
-    GDPData(
-      continent: "need impovement",
-      taskValue: 15,
-    ),
-    GDPData(
-      continent: " not attended",
-      taskValue: 5,
-    ),
-    GDPData(continent: "task not compleated", taskValue: 3),
-  ];
+  log(apiData.toString());
+
+  final List<GDPData> chartData = [];
+
+  apiData['reviewStatusCounts'].forEach((key, value) {
+    chartData.add(
+      GDPData(
+        continent: key,
+        taskValue: value,
+      ),
+    );
+  });
+
   return chartData;
 }
 

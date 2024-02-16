@@ -34,7 +34,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         child: ListTile(
                           title: Text(
-                            userDetails['name'],
+                            userDetails['user']['name'],
                             style: TextStyle(
                               color: kwhiteModel,
                               fontSize: 22,
@@ -42,7 +42,7 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                           subtitle: Text(
-                            userDetails['email'],
+                            userDetails['user']['email'],
                             style: TextStyle(
                               color: kwhiteModel,
                               fontSize: 16.0,
@@ -52,7 +52,7 @@ class ProfileScreen extends StatelessWidget {
                             radius: 40,
                             child: ClipOval(
                               child: Image.network(
-                                userDetails['image'],
+                                userDetails['user']['image'],
                                 width: 55,
                                 height: 55,
                                 fit: BoxFit.cover,
@@ -117,12 +117,12 @@ class ProfileScreen extends StatelessWidget {
                                           UserDetailsTile(
                                             icon: Icons.category,
                                             title: 'Batch',
-                                            value: userDetails['batch'],
+                                            value: userDetails['user']['batch'],
                                           ),
                                           UserDetailsTile(
                                             icon: Icons.domain,
                                             title: 'Domain',
-                                            value: userDetails['domain'],
+                                            value: userDetails['user']['domain'],
                                           ),
                                         ],
                                       ),
@@ -132,18 +132,18 @@ class ProfileScreen extends StatelessWidget {
                                           UserDetailsTile(
                                             icon: Icons.people,
                                             title: 'Gender',
-                                            value: userDetails['gender'],
+                                            value: userDetails['user']['gender'],
                                           ),
                                           UserDetailsTile(
                                             icon: Icons.access_time,
                                             title: 'Age',
                                             value:
-                                                userDetails['age'].toString(),
+                                                userDetails['user']['age'].toString(),
                                           ),
                                           UserDetailsTile(
                                             icon: Icons.calendar_today,
                                             title: 'Date Of Birth',
-                                            value: userDetails['dateOfBirth'],
+                                            value: userDetails['user']['dateOfBirth'],
                                           ),
                                         ],
                                       ),
@@ -153,14 +153,14 @@ class ProfileScreen extends StatelessWidget {
                                           UserDetailsTile(
                                             icon: Icons.cast_for_education,
                                             title: 'Education Qualification',
-                                            value: userDetails[
+                                            value: userDetails['user'][
                                                 'educationQualification'],
                                           ),
                                           UserDetailsTile(
                                             icon: Icons.work,
                                             title: 'Work Experiance',
                                             value:
-                                                userDetails['workExperience'],
+                                                userDetails['user']['workExperience'],
                                           ),
                                         ],
                                       ),
@@ -170,23 +170,23 @@ class ProfileScreen extends StatelessWidget {
                                           UserDetailsTile(
                                             icon: Icons.people_alt,
                                             title: 'Guardian Name',
-                                            value: userDetails['guardian'],
+                                            value: userDetails['user']['guardian'],
                                           ),
                                           UserDetailsTile(
                                             icon: Icons.phone,
                                             title: 'Phone',
                                             value:
-                                                userDetails['phone'].toString(),
+                                                userDetails['user']['phone'].toString(),
                                           ),
                                           UserDetailsTile(
                                             icon: Icons.place,
                                             title: 'Place',
-                                            value: userDetails['place'],
+                                            value: userDetails['user']['place'],
                                           ),
                                           UserDetailsTile(
                                             icon: Icons.location_city,
                                             title: 'Address',
-                                            value: userDetails['address'],
+                                            value: userDetails['user']['address'],
                                           ),
                                         ],
                                       ),

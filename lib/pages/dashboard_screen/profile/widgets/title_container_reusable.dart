@@ -15,7 +15,7 @@ class ReusableContainerWithTitle extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(right: 300),
+          padding: const EdgeInsets.only(right: 280),
           child: Text(
             title,
             style: TextStyle(color: kwhiteModel, fontSize: 18),

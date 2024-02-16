@@ -20,3 +20,5 @@ class AttendanceRecordState extends dashboardAction{
   AttendanceRecordState({required this.format});
 }
 
+class NotificationState extends dashboardAction{}
+
