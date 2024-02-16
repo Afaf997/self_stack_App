@@ -213,10 +213,13 @@ class _HomeViewState extends State<HomeView> {
                           fontWeight: FontWeight.bold,
                           fontSize: 23)),
                   ksizedboxC,
+
+
+                  
                   BlocBuilder<DashBoardBloc, DashBoardState>(
                     bloc: dashBoardbloc,
                     buildWhen: (previous, current)=>
-                      state is AttendanceRecordState,
+                      state is DashBoardState,
                   builder: (context, state) {
                       return SizedBox(
                         width: 320,

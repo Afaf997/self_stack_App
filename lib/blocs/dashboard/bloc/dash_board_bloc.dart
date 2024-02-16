@@ -33,6 +33,7 @@ class DashBoardBloc extends Bloc<DashBoardEvent, DashBoardState> {
   }
 
   FutureOr<void> attendanceRecordEvent(AttendanceRecordEvent event, Emitter<DashBoardState> emit) {
+     log("attteee");
        emit(AttendanceRecordState(format: event.format));
       
 
