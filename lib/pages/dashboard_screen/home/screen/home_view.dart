@@ -23,15 +23,9 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   DashBoardBloc dashBoardbloc = DashBoardBloc();
   List<GDPData> chatdata = [];
-  late TooltipBehavior _tooltipBehavior= TooltipBehavior(enable: true);
+  late TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
   Color formatButtonColor = Colors.white;
   CalendarFormat _calendarFormat = CalendarFormat.twoWeeks;
-
-  @override
-  void initState() {
-    // _tooltipBehavior = TooltipBehavior(enable: true);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,12 +87,10 @@ class _HomeViewState extends State<HomeView> {
         if (state is DashboardnavigationState) {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => ScheduleScreen()));
+        }else if(state is AttendanceRecordState){
+           _calendarFormat=state.format;
         }
-        // if (state is InitaialState) {
-        //   log("ggg");
-        //   chatdata = state.chatdata;
-        //   dashBoardbloc.add(DashBoardReloadEvent());
-        // }
+        
       },
       builder: (context, state) {
         return Scaffold(
@@ -169,45 +161,49 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   ),
                   ksizedboxC,
-                  BlocBuilder<DashBoardBloc, DashBoardState>(bloc: dashBoardbloc,
-                    buildWhen: (previous, current) => current is dashboardAction,
+                  BlocBuilder<DashBoardBloc, DashBoardState>(
+                    bloc: dashBoardbloc,
+                    buildWhen: (previous, current) =>
+                        current is InitaialState,
                     builder: (context, state) {
                       log(state.toString());
-                      if (state is InitaialState)
-        
-                      {
-                         chatdata = state.chatdata;
+                      if (state is InitaialState) {
+                        chatdata = state.chatdata;
                         print(state.chatdata);
                         return SfCircularChart(
-                          palette: [
-                            kselfstackGreen,
-                            kredtheme,
-                            kyellow,
-                            kblueTheme,
-                            Colors.orange
-                          ],
-                          title: ChartTitle(
-                              text: "Status Of Review",
-                              textStyle: TextStyle(
-                                  color: kwhiteModel,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20)),
-                          legend: Legend(
-                              isVisible: true,
-                              overflowMode: LegendItemOverflowMode.scroll,
-                              textStyle: TextStyle(color: kwhiteModel)),
-                          tooltipBehavior: _tooltipBehavior,
-                          series: <CircularSeries>[
-                            DoughnutSeries<GDPData, String>(
-                              dataSource: chatdata,
-                              xValueMapper: (GDPData data, _) => data.continent,
-                              yValueMapper: (GDPData data, _) => data.taskValue,
-                              dataLabelSettings:
-                                  DataLabelSettings(isVisible: true),
-                              enableTooltip: true,
-                            )
-                          ]);}
-                          else{return CircularProgressIndicator();}
+                            palette: [
+                              kselfstackGreen,
+                              kredtheme,
+                              kyellow,
+                              kblueTheme,
+                              Colors.orange
+                            ],
+                            title: ChartTitle(
+                                text: "Status Of Review",
+                                textStyle: TextStyle(
+                                    color: kwhiteModel,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20)),
+                            legend: Legend(
+                                isVisible: true,
+                                overflowMode: LegendItemOverflowMode.scroll,
+                                textStyle: TextStyle(color: kwhiteModel)),
+                            tooltipBehavior: _tooltipBehavior,
+                            series: <CircularSeries>[
+                              DoughnutSeries<GDPData, String>(
+                                dataSource: chatdata,
+                                xValueMapper: (GDPData data, _) =>
+                                    data.continent,
+                                yValueMapper: (GDPData data, _) =>
+                                    data.taskValue,
+                                dataLabelSettings:
+                                    DataLabelSettings(isVisible: true),
+                                enableTooltip: true,
+                              )
+                            ]);
+                      } else {
+                        return CircularProgressIndicator();
+                      }
                     },
                   ),
                   ksizedboxX,
@@ -217,81 +213,87 @@ class _HomeViewState extends State<HomeView> {
                           fontWeight: FontWeight.bold,
                           fontSize: 23)),
                   ksizedboxC,
-                  SizedBox(
-                    width: 320,
-                    // height: 400,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: kblackDark),
-                        color: kbackgroundmodel,
-                      ),
-                      child: TableCalendar(
-                        calendarFormat: _calendarFormat,
-                        firstDay: DateTime.utc(2010, 10, 16),
-                        lastDay: DateTime.utc(2030, 3, 14),
-                        focusedDay: DateTime.now(),
-                        calendarStyle: CalendarStyle(
-                          defaultTextStyle: TextStyle(
-                            color: kwhiteModel,
+                  BlocBuilder<DashBoardBloc, DashBoardState>(
+                    bloc: dashBoardbloc,
+                    buildWhen: (previous, current)=>
+                      state is AttendanceRecordState,
+                  builder: (context, state) {
+                      return SizedBox(
+                        width: 320,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: kblackDark),
+                            color: kbackgroundmodel,
+                          ),
+                          child: TableCalendar(
+                            calendarFormat: _calendarFormat,
+                            firstDay: DateTime.utc(2010, 10, 16),
+                            lastDay: DateTime.utc(2030, 3, 14),
+                            focusedDay: DateTime.now(),
+                            calendarStyle: CalendarStyle(
+                              defaultTextStyle: TextStyle(
+                                color: kwhiteModel,
+                              ),
+                            ),
+                            headerStyle: HeaderStyle(
+                              titleTextStyle: TextStyle(
+                                color: kwhiteModel,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              leftChevronIcon: Icon(
+                                Icons.chevron_left,
+                                color: Colors.white,
+                              ),
+                              rightChevronIcon: Icon(
+                                Icons.chevron_right,
+                                color: Colors.white,
+                              ),
+                              formatButtonVisible: true,
+                              formatButtonDecoration: BoxDecoration(
+                                color: kblackDark,
+                              ),
+                              formatButtonTextStyle: TextStyle(
+                                color: kwhiteModel,
+                              ),
+                            ),
+                            onFormatChanged: (format) {
+                              dashBoardbloc.add(AttendanceRecordEvent(format: format));
+                              
+                         
+                            },
+                            calendarBuilders: CalendarBuilders(
+                              dowBuilder: (context, day) {
+                                if (day == DateTime.now()) {
+                                  final text = DateFormat.E().format(day);
+                                  return Center(
+                                    child: Text(
+                                      text,
+                                      style: TextStyle(color: kblueTheme),
+                                    ),
+                                  );
+                                }
+                                if (day.weekday == DateTime.sunday) {
+                                  final text = DateFormat.E().format(day);
+                                  return Center(
+                                    child: Text(
+                                      text,
+                                      style: TextStyle(color: kredtheme),
+                                    ),
+                                  );
+                                } else {
+                                  return Center(
+                                    child: Text(
+                                      DateFormat.E().format(day),
+                                      style: TextStyle(color: kwhiteModel),
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
                           ),
                         ),
-                        headerStyle: HeaderStyle(
-                          titleTextStyle: TextStyle(
-                            color: kwhiteModel,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          leftChevronIcon: Icon(
-                            Icons.chevron_left,
-                            color: Colors.white,
-                          ),
-                          rightChevronIcon: Icon(
-                            Icons.chevron_right,
-                            color: Colors.white,
-                          ),
-                          formatButtonVisible: true,
-                          formatButtonDecoration: BoxDecoration(
-                            color: kblackDark,
-                          ),
-                          formatButtonTextStyle: TextStyle(
-                            color: kwhiteModel,
-                          ),
-                        ),
-                        onFormatChanged: (format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        },
-                        calendarBuilders: CalendarBuilders(
-                          dowBuilder: (context, day) {
-                            if (day == DateTime.now()) {
-                              final text = DateFormat.E().format(day);
-                              return Center(
-                                child: Text(
-                                  text,
-                                  style: TextStyle(color: kblueTheme),
-                                ),
-                              );
-                            }
-                            if (day.weekday == DateTime.sunday) {
-                              final text = DateFormat.E().format(day);
-                              return Center(
-                                child: Text(
-                                  text,
-                                  style: TextStyle(color: kredtheme),
-                                ),
-                              );
-                            } else {
-                              return Center(
-                                child: Text(
-                                  DateFormat.E().format(day),
-                                  style: TextStyle(color: kwhiteModel),
-                                ),
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
                   ksizedboxX,
                 ],

@@ -14,3 +14,8 @@ class InitaialState extends dashboardAction {
 abstract class dashboardAction extends DashBoardState {}
 
 class DashboardnavigationState extends dashboardAction {}
+
+class AttendanceRecordState extends dashboardAction{
+  CalendarFormat format;
+  AttendanceRecordState({required this.format});
+}
