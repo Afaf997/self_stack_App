@@ -122,7 +122,7 @@ class ProfileScreen extends StatelessWidget {
                                           UserDetailsTile(
                                             icon: Icons.domain,
                                             title: 'Domain',
-                                            value: userDetails['user']['domain'],
+                                            value: userDetails['domain'],
                                           ),
                                         ],
                                       ),
@@ -165,7 +165,8 @@ class ProfileScreen extends StatelessWidget {
                                         ],
                                       ),
                                       ReusableContainerWithTitle(
-                                        title: 'Title 2',
+                                        // title: 'Personal Details',
+                                        title: "title",
                                         userDetailsTiles: [
                                           UserDetailsTile(
                                             icon: Icons.people_alt,

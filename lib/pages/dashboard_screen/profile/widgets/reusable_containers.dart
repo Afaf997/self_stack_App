@@ -15,7 +15,7 @@ class UserDetailsTile extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: kselfstackGreen, size: 24),
+          Icon(icon, color: kselfstackGreen, size: 21),
           SizedBox(width: 12),
           Expanded(
             child: Column(

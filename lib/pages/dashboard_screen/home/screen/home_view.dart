@@ -75,17 +75,17 @@ class HomeView extends StatelessWidget {
     : 'Offline'; 
 
 Color onlineColor;
-switch (onlineText) {
-  case 'Present':
+switch (AttendanceEnum.fromString(onlineText)) {
+  case AttendanceEnum.Present:
     onlineColor = kselfstackGreen;
     break;
-  case 'Holiday':
+  case AttendanceEnum.Holiday:
     onlineColor = kyellow; 
     break;
-  case 'HalfDay':
+  case AttendanceEnum.HalfDay:
     onlineColor = kblueTheme; 
     break;
-  case 'Absend':
+  case AttendanceEnum.Absend:
     onlineColor = kredtheme; 
     break;
   default:
@@ -125,7 +125,7 @@ switch (onlineText) {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    // mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Today',
                           style: TextStyle(
@@ -155,7 +155,7 @@ switch (onlineText) {
                           ),
                         ),
                       ),
-                      SizedBox(width: screenWidth * 0.02),
+                      SizedBox(width: screenWidth * 0.18),
                       IconButton(
                         icon: Icon(
                           Icons.notifications_active_outlined,
@@ -248,97 +248,6 @@ switch (onlineText) {
                     },
                   ),
                   ksizedboxX,
-                  Text("Attendance Record",
-                      style: TextStyle(
-                          color: kwhiteModel,
-                          fontWeight: FontWeight.bold,
-                          fontSize: screenHeight * 0.03)),
-                  ksizedboxC,
-                  BlocBuilder<DashBoardBloc, DashBoardState>(
-                    bloc: dashBoardbloc,
-                    buildWhen: (previous, current) =>
-                        state is DashBoardState,
-                    builder: (context, state) {
-                      return SizedBox(
-                        width: screenWidth * 0.8,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: kblackDark),
-                            color: kbackgroundmodel,
-                          ),
-                          child: TableCalendar(                          
-                            eventLoader: (day){
-                                return eventbloc.getEventsForDay(day);
-                            },
-                            calendarFormat: _calendarFormat,
-                            firstDay: DateTime.utc(2010, 10, 16),
-                            lastDay: DateTime.utc(2030, 3, 14),
-                            focusedDay: DateTime.now(),
-                            calendarStyle: CalendarStyle(
-                              defaultTextStyle: TextStyle(
-                                color: kwhiteModel,
-                              ),
-                            ),
-                            headerStyle: HeaderStyle(
-                              titleTextStyle: TextStyle(
-                                color: kwhiteModel,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              leftChevronIcon: Icon(
-                                Icons.chevron_left,
-                                color: kwhiteModel,
-                              ),
-                              rightChevronIcon: Icon(
-                                Icons.chevron_right,
-                                color: kwhiteModel,
-                              ),
-                              formatButtonVisible: true,
-                              formatButtonDecoration: BoxDecoration(
-                                color: kblackDark,
-                              ),
-                              formatButtonTextStyle: TextStyle(
-                                color: kwhiteModel,
-                              ),
-                            ),
-                            onFormatChanged: (format) {
-                              dashBoardbloc.add(
-                                  AttendanceRecordEvent(format: format));
-                            },
-                            calendarBuilders: CalendarBuilders(
-                              dowBuilder: (context, day) {
-                                if (day == DateTime.now()) {
-                                  final text = DateFormat.E().format(day);
-                                  return Center(
-                                    child: Text(
-                                      text,
-                                      style: TextStyle(color: kblueTheme),
-                                    ),
-                                  );
-                                }
-                                if (day.weekday == DateTime.sunday) {
-                                  final text = DateFormat.E().format(day);
-                                  return Center(
-                                    child: Text(
-                                      text,
-                                      style: TextStyle(color: kredtheme),
-                                    ),
-                                  );
-                                } else {
-                                  return Center(
-                                    child: Text(
-                                      DateFormat.E().format(day),
-                                      style: TextStyle(color: kwhiteModel),
-                                    ),
-                                  );
-                                }
-                              },
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  ksizedboxX,
                 ],
               ),
             ),
@@ -348,3 +257,25 @@ switch (onlineText) {
     );
   }
 }
+
+enum AttendanceEnum{
+
+  Present('Present'),
+ Holiday('Holiday'),
+  Absend('Absend'),
+  HalfDay('HalfDay'),
+  Offline('Offline');
+
+  final String value;
+
+  const AttendanceEnum(this.value);
+
+  static AttendanceEnum fromString(String? value) {
+    return AttendanceEnum.values.firstWhere(
+      (e) => e.value == value,
+      orElse: () => AttendanceEnum.Offline,
+    );
+  }
+}
+
+

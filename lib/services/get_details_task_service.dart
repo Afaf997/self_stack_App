@@ -23,3 +23,8 @@ class getTaskDetailsServices {
     }
   }
 }
+
+
+class UserDetails{
+  
+}
