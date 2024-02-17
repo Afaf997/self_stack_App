@@ -12,6 +12,7 @@ import 'package:self_stack/pages/dashboard_screen/home/functions/pie.dart';
 import 'package:self_stack/pages/dashboard_screen/home/screen/attendence_status.dart';
 import 'package:self_stack/pages/dashboard_screen/home/screen/domain_not_fixed.dart';
 import 'package:self_stack/pages/dashboard_screen/home/screen/notification_screen.dart';
+import 'package:self_stack/pages/dashboard_screen/home/widget/enum.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/schedule_screen.dart';
 import 'package:self_stack/repository/shared_preference.dart';
 import 'package:self_stack/utils/constans.dart';
@@ -124,20 +125,67 @@ switch (AttendanceEnum.fromString(onlineText)) {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
-                    // mainAxisAlignment: MainAxisAlignment.center,
+                           Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text('Today',
-                          style: TextStyle(
-                              color: kwhiteModel,
-                              fontWeight: FontWeight.bold,
-                              fontSize: screenWidth * 0.06)),
-                      SizedBox(width: screenWidth * 0.04),
+                      IconButton(
+                        icon: Icon(
+                          Icons.notifications_active_outlined,
+                          color: kwhiteModel,
+                          size: screenWidth * 0.08,
+                        ),
+                        onPressed: () {
+                          dashBoardbloc.add(NotificationEvent());
+                        },
+                      ),
+                    CircleAvatar(
+                            radius: 15,
+                            child: ClipOval(
+                              child: Image.network(
+                                userDetails['user']['image'],
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                PopupMenuButton<String>(
+                  icon: Icon(
+                        Icons.more_vert,
+                        color: Colors.white,
+                      ),
+                  itemBuilder: (BuildContext context) {
+                    return [
+                      PopupMenuItem<String>(
+                        value: 'Item 1',
+                        child: Text('Item 1'),
+                      ),
+                      PopupMenuItem<String>(
+                        value: 'Item 2',
+                        child: Text('Item 2'),
+                      ),
+                      PopupMenuItem<String>(
+                        value: 'Item 3',
+                        child: Text('Item 3'),
+                      ),
+                    ];
+                  },
+                ),
+
+                    ],
+                  ),
+                    Row(
+                      children: [
+                        Text('Today',
+                            style: TextStyle(
+                                color: kwhiteModel,
+                                fontWeight: FontWeight.bold,
+                                fontSize: screenWidth * 0.06)),
+                   
+                      SizedBox(width: screenWidth * 0.03),
                       
                       GestureDetector(
                         onTap: () => dashBoardbloc.add(AttendanceNavigationEvent()),
                         child: Container(
-                          width: screenWidth * 0.35,
+                          width: screenWidth * 0.28,
                           height: screenHeight * 0.05,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
@@ -155,19 +203,8 @@ switch (AttendanceEnum.fromString(onlineText)) {
                           ),
                         ),
                       ),
-                      SizedBox(width: screenWidth * 0.18),
-                      IconButton(
-                        icon: Icon(
-                          Icons.notifications_active_outlined,
-                          color: kwhiteModel,
-                          size: screenWidth * 0.08,
-                        ),
-                        onPressed: () {
-                          dashBoardbloc.add(NotificationEvent());
-                        },
-                      ),
-                    ],
-                  ),
+              ],),
+         
                   SizedBox(height: screenHeight * 0.02),
                   GestureDetector(
                     onTap: () {
@@ -213,12 +250,11 @@ switch (AttendanceEnum.fromString(onlineText)) {
                         print(state.chatdata);
                         return SfCircularChart(
                             palette: [
-                              kselfstackGreen,
-                              kredtheme,
-                              kyellow,
+                              korange,
                               kblueTheme,
-                              Colors.orange
-                            ],
+                              kselfstackGreen,
+                              kyellow,
+                              kredtheme,],
                             title: ChartTitle(
                                 text: "Status Of Review",
                                 textStyle: TextStyle(
@@ -254,26 +290,6 @@ switch (AttendanceEnum.fromString(onlineText)) {
           ),
         );
       },
-    );
-  }
-}
-
-enum AttendanceEnum{
-
-  Present('Present'),
- Holiday('Holiday'),
-  Absend('Absend'),
-  HalfDay('HalfDay'),
-  Offline('Offline');
-
-  final String value;
-
-  const AttendanceEnum(this.value);
-
-  static AttendanceEnum fromString(String? value) {
-    return AttendanceEnum.values.firstWhere(
-      (e) => e.value == value,
-      orElse: () => AttendanceEnum.Offline,
     );
   }
 }
