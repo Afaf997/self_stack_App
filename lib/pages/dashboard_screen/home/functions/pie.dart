@@ -1,8 +1,5 @@
-import 'dart:developer';
 
 List<GDPData> getChartData(Map<String, dynamic> apiData) {
-  log("call");
-  log(apiData.toString());
 
   final List<GDPData> chartData = [];
 

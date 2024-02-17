@@ -66,6 +66,7 @@ class BottomNavbarScreen extends StatelessWidget {
                       textColor: kselfstackGreen,
                       iconActiveColor: kselfstackGreen,
                     ),
+                    
                     GButton(
                       icon: Icons.person_2_outlined,
                       text: 'Person',

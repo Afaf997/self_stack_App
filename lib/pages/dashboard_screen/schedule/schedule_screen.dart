@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:self_stack/blocs/task_details/bloc/score_bloc.dart';
+import 'package:self_stack/pages/dashboard_screen/home/functions/indicater.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/function/week_details.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/week_status.dart';
 import 'package:self_stack/repository/shared_preference.dart';
@@ -76,7 +77,7 @@ class ScheduleScreen extends StatelessWidget {
                             userDetails['reviews'][countTime - 1]['scheduleDate'] != null && userDetails['reviews'][countTime - 1]['completedDate'] == null
                             ? kselfstackGreen
                             : kyellow :kblueTheme,
-                      ),
+                      ), 
                     ),
                   ),
                   SizedBox(height: screenWidth * 0.04),
@@ -171,10 +172,7 @@ Expanded(
                   Map<String, dynamic> userDetails = userSnapshot.data!;
                   return buildScheduleScreen(context, userDetails);
                 } else {
-                  return Center(
-                      child: CircularProgressIndicator(
-                    color: kselfstackGreen,
-                  ));
+                 return buildLoadingWidget(kselfstackGreen);
                 }
               },
             );
@@ -182,10 +180,7 @@ Expanded(
             return SizedBox.shrink();
           }
         } else {
-          return Center(
-              child: CircularProgressIndicator(
-            color: kselfstackGreen,
-          ));
+          return buildLoadingWidget(kselfstackGreen);
         }
       },
     );

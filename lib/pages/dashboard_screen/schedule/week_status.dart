@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:self_stack/pages/dashboard_screen/home/functions/indicater.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/function/get_weekdetails_function.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/widgets/build%20info_container.dart';
 
@@ -104,9 +105,7 @@ class TaskStatusScreen extends StatelessWidget {
                   ),
                 );
               } else {
-                return Center(
-                  child: Text('Something went wrong'),
-                );
+                return buildLoadingWidget(kselfstackGreen);
               }
             },
           ),

@@ -1,11 +1,15 @@
-import 'dart:developer';
 
+// ignore_for_file: must_be_immutable, unnecessary_type_check
+import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:self_stack/blocs/dashboard/bloc/dash_board_bloc.dart';
+import 'package:self_stack/pages/dashboard_screen/home/functions/calender_event.dart';
 import 'package:self_stack/pages/dashboard_screen/home/functions/fetch_user_details.dart';
+import 'package:self_stack/pages/dashboard_screen/home/functions/indicater.dart';
 import 'package:self_stack/pages/dashboard_screen/home/functions/pie.dart';
+import 'package:self_stack/pages/dashboard_screen/home/screen/attendence_status.dart';
 import 'package:self_stack/pages/dashboard_screen/home/screen/domain_not_fixed.dart';
 import 'package:self_stack/pages/dashboard_screen/home/screen/notification_screen.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/schedule_screen.dart';
@@ -18,17 +22,21 @@ class HomeView extends StatelessWidget {
   HomeView({super.key});
 
   DashBoardBloc dashBoardbloc = DashBoardBloc();
-
   List<GDPData> chatdata = [];
-
   late TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
-
   Color formatButtonColor = Colors.white;
-
   CalendarFormat _calendarFormat = CalendarFormat.twoWeeks;
+  final EventBloc eventbloc =EventBloc();
+  
 
   @override
   Widget build(BuildContext context) {
+ final events = LinkedHashMap<DateTime, List<Event>>(
+      equals: isSameDay,
+    )..addAll({
+        for (final event in eventbloc.eventSource)
+          event.date: [event]
+      });
     return FutureBuilder<String?>(
       future: getUserId(),
       builder: (context, snapshot) {
@@ -43,33 +51,14 @@ class HomeView extends StatelessWidget {
                 if (userDetails['domain'] == 'No') {
                   return DomainDesidePage();
                 }
-
                 return buildHomeScreen(context, userDetails);
               } else {
-                return Scaffold(
-                  body: Container(
-                    color: kbackgroundmodel,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: kselfstackGreen,
-                      ),
-                    ),
-                  ),
-                );
+                return buildLoadingWidget(kselfstackGreen);
               }
             },
           );
         } else {
-          return Scaffold(
-            body: Container(
-              color: kbackgroundmodel,
-              child: Center(
-                child: CircularProgressIndicator(
-                  color: kselfstackGreen,
-                ),
-              ),
-            ),
-          );
+           return buildLoadingWidget(kselfstackGreen);
         }
       },
     );
@@ -80,6 +69,29 @@ class HomeView extends StatelessWidget {
     dashBoardbloc.add(InitialEvent());
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+    String onlineText = 
+    userDetails['attendance'] != null && userDetails['attendance'].length > 0
+    ? userDetails['attendance'][0]['status']
+    : 'Offline'; 
+
+Color onlineColor;
+switch (onlineText) {
+  case 'Present':
+    onlineColor = kselfstackGreen;
+    break;
+  case 'Holiday':
+    onlineColor = kyellow; 
+    break;
+  case 'HalfDay':
+    onlineColor = kblueTheme; 
+    break;
+  case 'Absend':
+    onlineColor = kredtheme; 
+    break;
+  default:
+    onlineColor = kblackDark;
+    break;
+}
 
     return BlocConsumer<DashBoardBloc, DashBoardState>(
       bloc: dashBoardbloc,
@@ -94,6 +106,9 @@ class HomeView extends StatelessWidget {
         } else if (state is NotificationState) {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => Notification_Screen()));
+        }else if(state is AttendanceNavigationState){
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AttendanceView()));
         }
       },
       builder: (context, state) {
@@ -118,20 +133,25 @@ class HomeView extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               fontSize: screenWidth * 0.06)),
                       SizedBox(width: screenWidth * 0.04),
-                      Container(
-                        width: screenWidth * 0.35,
-                        height: screenHeight * 0.05,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: kselfstackGreen,
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Online',
-                            style: TextStyle(
-                                color: kwhiteModel,
-                                fontSize: screenWidth * 0.02,
-                                fontWeight: FontWeight.w600),
+                      
+                      GestureDetector(
+                        onTap: () => dashBoardbloc.add(AttendanceNavigationEvent()),
+                        child: Container(
+                          width: screenWidth * 0.35,
+                          height: screenHeight * 0.05,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: onlineColor,
+                          ),
+                          child: Center(
+                            
+                            child: Text(
+                              onlineText,
+                              style: TextStyle(
+                                  color: kwhiteModel,
+                                  fontSize: screenWidth * 0.04,
+                                  fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ),
                       ),
@@ -188,7 +208,6 @@ class HomeView extends StatelessWidget {
                     buildWhen: (previous, current) =>
                         current is InitaialState,
                     builder: (context, state) {
-                      log(state.toString());
                       if (state is InitaialState) {
                         chatdata = state.chatdata;
                         print(state.chatdata);
@@ -247,7 +266,10 @@ class HomeView extends StatelessWidget {
                             border: Border.all(color: kblackDark),
                             color: kbackgroundmodel,
                           ),
-                          child: TableCalendar(
+                          child: TableCalendar(                          
+                            eventLoader: (day){
+                                return eventbloc.getEventsForDay(day);
+                            },
                             calendarFormat: _calendarFormat,
                             firstDay: DateTime.utc(2010, 10, 16),
                             lastDay: DateTime.utc(2030, 3, 14),

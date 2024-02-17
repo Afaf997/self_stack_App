@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:self_stack/pages/dashboard_screen/home/functions/indicater.dart';
 import 'package:self_stack/pages/dashboard_screen/task/feedback.dart';
 import 'package:self_stack/pages/dashboard_screen/task/function/build_Subtitle.dart';
 import 'package:self_stack/pages/dashboard_screen/task/function/fetch_details.dart';
@@ -112,18 +113,9 @@ class DetailOfTask extends StatelessWidget {
             return Center(child: Text('Task details not available'));
           }
         } else if (!tasksnapshot.hasData) {
-          return Center(
-            child: CircularProgressIndicator(
-              color: kselfstackGreen,
-            ),
-          );
+         return buildLoadingWidget(kselfstackGreen);
         } else {
-          return Center(
-            child: CircularProgressIndicator(
-              color: kselfstackGreen
-              ,
-            ),
-          );
+         return buildLoadingWidget(kselfstackGreen);
         }
       },
     );

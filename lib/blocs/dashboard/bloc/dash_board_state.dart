@@ -22,3 +22,5 @@ class AttendanceRecordState extends dashboardAction{
 
 class NotificationState extends dashboardAction{}
 
+class AttendanceNavigationState extends dashboardAction{}
+
