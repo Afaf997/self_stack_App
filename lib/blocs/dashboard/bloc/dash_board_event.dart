@@ -20,3 +20,6 @@ class AttendanceRecordEvent extends DashBoardEvent{
 class NotificationEvent extends  DashBoardEvent{}
 
 class AttendanceNavigationEvent extends DashBoardEvent{}
+
+class TodoNavigationEvent extends DashBoardEvent{}
+class AboutNavigationEvent extends DashBoardEvent{}

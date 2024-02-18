@@ -24,3 +24,7 @@ class NotificationState extends dashboardAction{}
 
 class AttendanceNavigationState extends dashboardAction{}
 
+class TodoNavigationState extends dashboardAction{}
+
+class AboutNavigationState extends dashboardAction{}
+

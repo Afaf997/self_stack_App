@@ -5,17 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:self_stack/blocs/dashboard/bloc/dash_board_bloc.dart';
+import 'package:self_stack/pages/authentication_screens/logIn_screens/Screens/login.dart';
 import 'package:self_stack/pages/dashboard_screen/home/functions/calender_event.dart';
 import 'package:self_stack/pages/dashboard_screen/home/functions/fetch_user_details.dart';
 import 'package:self_stack/pages/dashboard_screen/home/functions/indicater.dart';
 import 'package:self_stack/pages/dashboard_screen/home/functions/pie.dart';
+import 'package:self_stack/pages/dashboard_screen/home/screen/about_us.dart';
 import 'package:self_stack/pages/dashboard_screen/home/screen/attendence_status.dart';
 import 'package:self_stack/pages/dashboard_screen/home/screen/domain_not_fixed.dart';
 import 'package:self_stack/pages/dashboard_screen/home/screen/notification_screen.dart';
+import 'package:self_stack/pages/dashboard_screen/home/screen/todo.dart';
 import 'package:self_stack/pages/dashboard_screen/home/widget/enum.dart';
+import 'package:self_stack/pages/dashboard_screen/profile/widgets/alert.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/schedule_screen.dart';
 import 'package:self_stack/repository/shared_preference.dart';
 import 'package:self_stack/utils/constans.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -110,6 +115,12 @@ switch (AttendanceEnum.fromString(onlineText)) {
         }else if(state is AttendanceNavigationState){
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AttendanceView()));
+        }else if(state is TodoNavigationState){
+           Navigator.push(context,
+              MaterialPageRoute(builder: (context) => TodoScreen()));
+        }else if(state is TodoNavigationState){
+           Navigator.push(context,
+              MaterialPageRoute(builder: (context) => TodoScreen()));
         }
       },
       builder: (context, state) {
@@ -153,6 +164,28 @@ switch (AttendanceEnum.fromString(onlineText)) {
                         Icons.more_vert,
                         color: Colors.white,
                       ),     offset: Offset(0, 50), 
+                      onSelected: (String value) {
+    if (value == 'Item 1') {
+      dashBoardbloc.add(TodoNavigationEvent());
+    } else if (value == 'Item 2') {
+      dashBoardbloc.add(AboutNavigationEvent());
+    } else if (value == 'Item 3') {
+             onPressed: () async {
+                              bool? confirmed =
+                                  await showLogoutConfirmationDialog(context);
+                              if (confirmed != null && confirmed) {
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                await prefs.clear();
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()),
+                                );
+                              }
+                            };
+    }
+  },
                   itemBuilder: (BuildContext context) {
                     return [                      
                       PopupMenuItem<String>(

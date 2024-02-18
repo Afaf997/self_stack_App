@@ -20,6 +20,8 @@ class DashBoardBloc extends Bloc<DashBoardEvent, DashBoardState> {
      on<AttendanceRecordEvent>(attendanceRecordEvent);
      on<NotificationEvent>(notificationEvent);
      on<AttendanceNavigationEvent>(attendanceNavigationEvent);
+     on<TodoNavigationEvent>(todoNavigationEvent);
+     on<AboutNavigationEvent>(aboutNavigationEvent);
   }
 
   FutureOr<void> dashboardnavigationevent(Dashboardnavigationevent event, Emitter<DashBoardState> emit) {
@@ -50,5 +52,13 @@ class DashBoardBloc extends Bloc<DashBoardEvent, DashBoardState> {
 
   FutureOr<void> attendanceNavigationEvent(AttendanceNavigationEvent event, Emitter<DashBoardState> emit) {
     emit(AttendanceNavigationState());
+  }
+
+  FutureOr<void> todoNavigationEvent(TodoNavigationEvent event, Emitter<DashBoardState> emit) {
+    emit(TodoNavigationState());
+  }
+
+  FutureOr<void> aboutNavigationEvent(AboutNavigationEvent event, Emitter<DashBoardState> emit) {
+    emit(AboutNavigationState());
   }
 }
