@@ -137,7 +137,7 @@ switch (AttendanceEnum.fromString(onlineText)) {
                         onPressed: () {
                           dashBoardbloc.add(NotificationEvent());
                         },
-                      ),
+                      ),  SizedBox(width: screenWidth * 0.03),
                     CircleAvatar(
                             radius: 15,
                             child: ClipOval(
@@ -148,23 +148,24 @@ switch (AttendanceEnum.fromString(onlineText)) {
                             ),
                           ),
                 PopupMenuButton<String>(
+                  color: kbackgroundmodel,
                   icon: Icon(
                         Icons.more_vert,
                         color: Colors.white,
-                      ),
+                      ),     offset: Offset(0, 50), 
                   itemBuilder: (BuildContext context) {
-                    return [
+                    return [                      
                       PopupMenuItem<String>(
-                        value: 'Item 1',
-                        child: Text('Item 1'),
+                        // value: 'Item 1',
+                        child: Text('ToDo',style: TextStyle(color: kwhiteModel),),
                       ),
                       PopupMenuItem<String>(
-                        value: 'Item 2',
-                        child: Text('Item 2'),
-                      ),
+                        // value: 'Item 2',
+                        child: Text('About Us',style: TextStyle(color: kwhiteModel),),
+                      ),     
                       PopupMenuItem<String>(
-                        value: 'Item 3',
-                        child: Text('Item 3'),
+                        // value: 'Item 3',
+                        child: Text('Logout',style: TextStyle(color: kwhiteModel),),
                       ),
                     ];
                   },
@@ -180,7 +181,7 @@ switch (AttendanceEnum.fromString(onlineText)) {
                                 fontWeight: FontWeight.bold,
                                 fontSize: screenWidth * 0.06)),
                    
-                      SizedBox(width: screenWidth * 0.03),
+                      SizedBox(width: screenWidth * 0.04),
                       
                       GestureDetector(
                         onTap: () => dashBoardbloc.add(AttendanceNavigationEvent()),
