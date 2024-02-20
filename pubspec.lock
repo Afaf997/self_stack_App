@@ -605,6 +605,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  slidable_bar:
+    dependency: "direct main"
+    description:
+      name: slidable_bar
+      sha256: "5f69d077d017c95b9943ca59fb34d790903a4cbd8a00089b1266ae2107745d05"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
   smart_auth:
     dependency: transitive
     description:

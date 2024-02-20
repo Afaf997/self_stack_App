@@ -164,7 +164,7 @@ switch (AttendanceEnum.fromString(onlineText)) {
                   color: kbackgroundmodel,
                   icon: Icon(
                         Icons.more_vert,
-                        color: Colors.white,
+                        color: kwhiteModel,
                       ),     offset: Offset(0, 50), 
                       onSelected: (String value) {
     if (value == 'Item 1') {
@@ -190,15 +190,15 @@ switch (AttendanceEnum.fromString(onlineText)) {
                     return [                      
                       PopupMenuItem<String>(
                         value: 'Item 1',
-                        child: Text('ToDo',style: TextStyle(color: kwhiteModel),),
+                        child: Text('ToDo',style: TextStyle(color: kselfstackGreen),),
                       ),
                       PopupMenuItem<String>(
                         value: 'Item 2',
-                        child: Text('About Us',style: TextStyle(color: kwhiteModel),),
+                        child: Text('About Us',style: TextStyle(color: kselfstackGreen),),
                       ),     
                       PopupMenuItem<String>(
                         value: 'Item 3',
-                        child: Text('Logout',style: TextStyle(color: kwhiteModel),),
+                        child: Text('Logout',style: TextStyle(color: kselfstackGreen),),
                       ),
                     ];
                   },
@@ -240,9 +240,9 @@ switch (AttendanceEnum.fromString(onlineText)) {
               ],),
          
                   SizedBox(height: screenHeight * 0.02),
-                  EvaluationWidget(),
-                  ksizedboxA,
                  CardScreen(),
+                   SizedBox(height: screenHeight * 0.02),
+                  EvaluationWidget(),
                   BlocBuilder<DashBoardBloc, DashBoardState>(
                     bloc: dashBoardbloc,
                     buildWhen: (previous, current) =>
