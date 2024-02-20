@@ -14,7 +14,9 @@ import 'package:self_stack/pages/dashboard_screen/home/screen/about_us.dart';
 import 'package:self_stack/pages/dashboard_screen/home/screen/attendence_status.dart';
 import 'package:self_stack/pages/dashboard_screen/home/screen/domain_not_fixed.dart';
 import 'package:self_stack/pages/dashboard_screen/home/screen/notification_screen.dart';
+import 'package:self_stack/pages/dashboard_screen/home/screen/review_schedule.dart';
 import 'package:self_stack/pages/dashboard_screen/home/screen/todo.dart';
+import 'package:self_stack/pages/dashboard_screen/home/widget/card.dart';
 import 'package:self_stack/pages/dashboard_screen/home/widget/enum.dart';
 import 'package:self_stack/pages/dashboard_screen/profile/widgets/alert.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/schedule_screen.dart';
@@ -118,9 +120,9 @@ switch (AttendanceEnum.fromString(onlineText)) {
         }else if(state is TodoNavigationState){
            Navigator.push(context,
               MaterialPageRoute(builder: (context) => TodoScreen()));
-        }else if(state is TodoNavigationState){
+        }else if(state is AboutNavigationState){
            Navigator.push(context,
-              MaterialPageRoute(builder: (context) => TodoScreen()));
+              MaterialPageRoute(builder: (context) => AboutUsPage()));
         }
       },
       builder: (context, state) {
@@ -183,21 +185,19 @@ switch (AttendanceEnum.fromString(onlineText)) {
                                       builder: (context) => LoginPage()),
                                 );
                               }
-                            };
-    }
-  },
+                            };}},
                   itemBuilder: (BuildContext context) {
                     return [                      
                       PopupMenuItem<String>(
-                        // value: 'Item 1',
+                        value: 'Item 1',
                         child: Text('ToDo',style: TextStyle(color: kwhiteModel),),
                       ),
                       PopupMenuItem<String>(
-                        // value: 'Item 2',
+                        value: 'Item 2',
                         child: Text('About Us',style: TextStyle(color: kwhiteModel),),
                       ),     
                       PopupMenuItem<String>(
-                        // value: 'Item 3',
+                        value: 'Item 3',
                         child: Text('Logout',style: TextStyle(color: kwhiteModel),),
                       ),
                     ];
@@ -240,40 +240,9 @@ switch (AttendanceEnum.fromString(onlineText)) {
               ],),
          
                   SizedBox(height: screenHeight * 0.02),
-                  GestureDetector(
-                    onTap: () {
-                      dashBoardbloc.add(Dashboardnavigationevent());
-                    },
-                    child: Container(
-                      margin: EdgeInsets.symmetric(
-                          vertical: screenHeight * 0.02),
-                      width: double.infinity,
-                      padding: EdgeInsets.all(screenWidth * 0.04),
-                      decoration: BoxDecoration(
-                        color: kblackDark,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Your upcoming evaluation is.',
-                            style: TextStyle(
-                              fontSize: screenWidth * 0.04,
-                              color: kyellow,
-                            ),
-                          ),
-                          SizedBox(
-                            width: screenWidth * 0.05,
-                          ),
-                          Icon(
-                            Icons.arrow_circle_right,
-                            color: kwhiteModel,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  ksizedboxC,
+                  EvaluationWidget(),
+                  ksizedboxA,
+                 CardScreen(),
                   BlocBuilder<DashBoardBloc, DashBoardState>(
                     bloc: dashBoardbloc,
                     buildWhen: (previous, current) =>
