@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/blocs/dashboard/bloc/dash_board_bloc.dart';
 import 'package:self_stack/blocs/task_bloc/bloc/task_bloc.dart';
 import 'package:self_stack/blocs/task_details/bloc/score_bloc.dart';
+import 'package:self_stack/blocs/to_do/bloc/todo_bloc.dart';
 import 'package:self_stack/firebase_options.dart';
 import 'package:self_stack/pages/authentication_screens/home_screen/splash.dart';
 import 'package:self_stack/pages/dashboard_screen/home/screen/navigation_bar.dart';
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
        
           BlocProvider<DashBoardBloc>(
           create: (context) => DashBoardBloc(),
+        ),
+        BlocProvider<TodoBloc>(
+          create: (context) => TodoBloc(),
         ),
       ],
       child: MaterialApp(
