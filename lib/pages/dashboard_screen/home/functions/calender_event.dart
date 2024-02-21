@@ -18,5 +18,6 @@ class EventBloc {
 
   List<Event> getEventsForDay(DateTime day) {
     return eventSource.where((event) => isSameDay(event.date, day)).toList();
+  
   }
 }

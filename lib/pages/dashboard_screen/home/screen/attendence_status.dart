@@ -30,14 +30,13 @@ class AttendanceView extends StatelessWidget {
                 fontSize: screenHeight * 0.03,
               ),
             ),
-            ksizedboxC,
+            SizedBox(height: 10),
             BlocConsumer<DashBoardBloc, DashBoardState>(
               bloc: dashBoardBloc,
-
               listener: (context, state) {
-                 if (state is AttendanceRecordState) {
-          calendarFormat = state.format;
-        } 
+                if (state is AttendanceRecordState) {
+                  calendarFormat = state.format;
+                }
               },
               builder: (context, state) {
                 return BlocBuilder<DashBoardBloc, DashBoardState>(
@@ -53,7 +52,11 @@ class AttendanceView extends StatelessWidget {
                         ),
                         child: TableCalendar(
                           eventLoader: (day) {
-                            return eventBloc.getEventsForDay(day);
+                            if (isBlackoutDate(day)) {
+                              return [];
+                            } else {
+                              return eventBloc.getEventsForDay(day);
+                            }
                           },
                           calendarFormat: calendarFormat,
                           firstDay: DateTime.utc(2010, 10, 16),
@@ -129,5 +132,11 @@ class AttendanceView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool isBlackoutDate(DateTime date) {
+    // Add your logic to determine blackout dates
+    // For example, let's say blackout dates are weekends (Saturday and Sunday)
+    return date.weekday == DateTime.saturday || date.weekday == DateTime.sunday;
   }
 }

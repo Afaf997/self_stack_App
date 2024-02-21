@@ -1,6 +1,7 @@
 
 // ignore_for_file: must_be_immutable, unnecessary_type_check
 import 'dart:collection';
+import 'package:chart_sparkline/chart_sparkline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -35,6 +36,7 @@ class HomeView extends StatelessWidget {
   Color formatButtonColor = Colors.white;
   CalendarFormat _calendarFormat = CalendarFormat.twoWeeks;
   final EventBloc eventbloc =EventBloc();
+  var data = [0.0, 1.0, 1.5, 2.0, 0.0, 0.0, -0.5, -1.0,];
   
 
   @override
@@ -287,6 +289,12 @@ switch (AttendanceEnum.fromString(onlineText)) {
                     },
                   ),
                   ksizedboxX,
+                  Sparkline(
+  data: data,
+  pointsMode: PointsMode.all,
+  pointSize: 8.0,
+  pointColor: Colors.amber,
+)
                 ],
               ),
             ),
