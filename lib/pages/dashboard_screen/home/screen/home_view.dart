@@ -147,14 +147,14 @@ switch (AttendanceEnum.fromString(onlineText)) {
                         icon: Icon(
                           Icons.notifications_active_outlined,
                           color: kwhiteModel,
-                          size: screenWidth * 0.08,
+                          size: screenWidth * 0.07,
                         ),
                         onPressed: () {
                           dashBoardbloc.add(NotificationEvent());
                         },
                       ),  SizedBox(width: screenWidth * 0.03),
                     CircleAvatar(
-                            radius: 15,
+                            radius: 14,
                             child: ClipOval(
                               child: Image.network(
                                 userDetails['user']['image'],

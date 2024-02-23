@@ -6,7 +6,7 @@ class TodoModel {
     String subtitle;
     bool isPublic;
     String createdBy;
-    int percentage;
+    double percentage;
     String status;
     int v;
 

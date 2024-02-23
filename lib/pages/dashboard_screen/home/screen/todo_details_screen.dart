@@ -1,3 +1,4 @@
+import 'package:dashed_circular_progress_bar/dashed_circular_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:self_stack/response/todo_model.dart';
 import 'package:self_stack/utils/constans.dart';
@@ -6,6 +7,7 @@ class TodoDetailScreen extends StatelessWidget {
   final TodoModel todo;
 
   TodoDetailScreen({required this.todo});
+    final ValueNotifier<double> _valueNotifier = ValueNotifier(0);
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +34,9 @@ class TodoDetailScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Container(
            decoration: BoxDecoration(
-        border: Border.all(color: kwhiteModel),
+        border: Border.all(color: kblackDark),
         borderRadius: BorderRadius.circular(2),
+        
       ),
           height: double.infinity,
           width: double.infinity, 
@@ -50,7 +53,10 @@ class TodoDetailScreen extends StatelessWidget {
                 ' ${todo.subtitle}',
                 style: TextStyle(fontSize: 18, color: kwhiteModel),
               ),
+
+ 
             ],
+            
           ),
         ),
       ),
