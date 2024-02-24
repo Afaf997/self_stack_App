@@ -50,7 +50,7 @@ class BottomNavbarScreen extends StatelessWidget {
                       text: 'Home',
                       iconColor: kwhiteModel,
                       textColor: kselfstackGreen,
-                      iconActiveColor: kselfstackGreen, // Set the active color when selected
+                      iconActiveColor: kselfstackGreen,
                     ),
                     GButton(
                       icon: Icons.task_alt,

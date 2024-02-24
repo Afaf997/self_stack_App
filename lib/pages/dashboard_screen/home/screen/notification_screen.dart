@@ -36,14 +36,13 @@ class Notification_Screen extends StatelessWidget {
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
-                  // Navigate to NotificationDetailScreen when ListTile is tapped
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => NotificationDetailScreen(
                         notificationHeading: 'Notification Heading $index',
                         notificationSubtitle:
-                            'Notification Subtitle djkhslaf we47yirusdfhjk eriutyhjdkfgnv u4aeiwrtfhjsdnv re8usidfjkn erusidfjklanskjdfuia $index',
+                            'Notification Subtitle  $index',
                       ),
                     ),
                   );
