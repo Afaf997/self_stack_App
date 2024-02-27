@@ -311,7 +311,7 @@ class CustomRoundProgressBar extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Handle submit logic here
-                Navigator.pop(context); // Close the dialog on submit
+                Navigator.pop(context); 
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: kselfstackGreen,

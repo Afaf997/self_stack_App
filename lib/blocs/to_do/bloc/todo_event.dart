@@ -4,3 +4,5 @@ part of 'todo_bloc.dart';
 sealed class TodoEvent {}
 
 class RefreshEvent extends TodoEvent{}
+
+class NavigationEvent extends TodoEvent{}
