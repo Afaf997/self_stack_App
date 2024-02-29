@@ -1,5 +1,6 @@
-import 'package:dashed_circular_progress_bar/dashed_circular_progress_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:self_stack/pages/dashboard_screen/home/functions/delete_conformation.dart';
+import 'package:self_stack/pages/dashboard_screen/home/functions/edit_conformation.dart';
 import 'package:self_stack/response/todo_model.dart';
 import 'package:self_stack/utils/constans.dart';
 
@@ -7,7 +8,8 @@ class TodoDetailScreen extends StatelessWidget {
   final TodoModel todo;
 
   TodoDetailScreen({required this.todo});
-    final ValueNotifier<double> _valueNotifier = ValueNotifier(0);
+
+  final ValueNotifier<double> _valueNotifier = ValueNotifier(0);
 
   @override
   Widget build(BuildContext context) {
@@ -26,37 +28,49 @@ class TodoDetailScreen extends StatelessWidget {
           style: TextStyle(color: kwhiteModel, fontWeight: FontWeight.bold),
         ),
         actions: [
-          Icon(Icons.edit, color: kwhiteModel),
-          Icon(Icons.delete, color: kwhiteModel),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditTodoScreen(todo: todo),
+                ),
+              );
+            },
+            icon: Icon(Icons.edit, color: kwhiteModel),
+          ),
+          IconButton(
+            onPressed: () {
+              showDeleteConfirmation(context, todo);
+            },
+            icon: Icon(Icons.delete, color: kwhiteModel),
+          ),
         ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Container(
-           decoration: BoxDecoration(
-        border: Border.all(color: kblackDark),
-        borderRadius: BorderRadius.circular(2),
-        
-      ),
+          decoration: BoxDecoration(
+            border: Border.all(color: kblackDark),
+            borderRadius: BorderRadius.circular(2),
+          ),
           height: double.infinity,
-          width: double.infinity, 
+          width: double.infinity,
           padding: EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Title: ${todo.title}',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: kwhiteModel),
+                style: TextStyle(
+                    fontSize: 20, fontWeight: FontWeight.bold, color: kwhiteModel),
               ),
               SizedBox(height: 8),
               Text(
                 ' ${todo.subtitle}',
                 style: TextStyle(fontSize: 18, color: kwhiteModel),
               ),
-
- 
             ],
-            
           ),
         ),
       ),

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -8,25 +9,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PutTodoServices {
   Dio dio = Dio();
 
- Future<List<TodoModel>> PutTodogetDetails() async {
-  try {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String userId = prefs.getString('userId') ?? '';
-    String apiUrl = "$loginApi/todo/user/public/$userId$apikey";
+ Future PutTodogetDetails(String id,String title, String subtitle) async {
+   var data = {
+      "title": title,
+      "subtitle":subtitle
+    };
 
-    Response response = await dio.put(apiUrl);
-    print('Response status code: ${response.statusCode}');
-    print('Response data: ${response.data}');
-    log("message");
-log(response.toString());
-    if (response.statusCode == 200) {
-      List<TodoModel> todoList = (response.data as List<dynamic>)
-          .map((task) => TodoModel.fromJson(task))
-          .toList();
-      return todoList;
-    } else {
-      throw Exception("Failed to retrieve task details. Status code: ${response.statusCode}");
-    }
+    try {
+    await dio.put(
+        "$loginApi/todo/$id$apikey",
+        data: jsonEncode(data),
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+        ),
+      );
   } catch (error) {
     print('Error fetching task details: $error');
     throw Exception("Error fetching task details: $error");

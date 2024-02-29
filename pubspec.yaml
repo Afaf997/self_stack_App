@@ -53,7 +53,7 @@ dependencies:
   get: ^4.6.6
   google_nav_bar: ^5.0.6
   color: ^3.0.0
-  firebase_messaging: ^14.7.15
+  firebase_messaging: ^14.7.17
   easy_pie_chart: ^1.0.0
   pie_chart: ^5.4.0
   syncfusion_flutter_charts: ^24.2.5
@@ -63,6 +63,7 @@ dependencies:
   slidable_bar: ^1.1.1
   chart_sparkline: ^1.0.15+1
   dashed_circular_progress_bar: ^0.0.6
+  flutter_local_notifications: ^16.3.2
 
   
 

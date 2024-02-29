@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/blocs/dashboard/bloc/dash_board_bloc.dart';
@@ -11,15 +12,22 @@ import 'package:self_stack/pages/dashboard_screen/home/screen/navigation_bar.dar
 import 'package:self_stack/pages/dashboard_screen/profile/profile_screen.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/schedule_screen.dart';
 import 'package:self_stack/pages/dashboard_screen/task/task_screen.dart';
+import 'package:self_stack/repository/firebase_messaging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
+Future _firebaseBackgroundMessage(RemoteMessage message)async{
+  if(message.notification != null){}
+}
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferences.getInstance();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseApicall().initNotification();
+
+ 
   runApp(const MyApp());
 }
 
