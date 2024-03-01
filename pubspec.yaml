@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+    
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -66,6 +67,7 @@ dependencies:
   flutter_local_notifications: ^16.3.2
   overlay_support: ^2.1.0
   firebase_analytics: ^10.8.7
+  flutter_launcher_icons: ^0.13.1
 
   
 
@@ -109,6 +111,7 @@ flutter:
     - assets/image/lock4.png
     - assets/image/lock5.png
     - assets/image/tick.png
+    - assets/image/self_stack_icon.png
     - assets/image/tick1.png
     - assets/image/unlock.png
     - assets/image/unlock1.png

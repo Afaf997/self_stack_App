@@ -11,7 +11,6 @@ class getTaskDetailsServices {
       String apiUrl = "$loginApi/tasks/$taskId/tasks/$courseId$apikey";
 
       Response response = await dio.get(apiUrl);
-      print(response.data);
       if (response.statusCode == 200) {
         return response.data;
       } else {

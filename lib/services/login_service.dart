@@ -22,9 +22,6 @@ var data = {
       ),
     );
 
-    print(response.statusCode);
-
-    log(response.data['userId'.toString()]);
     
     if(response.statusCode ==200){
         SharedPreferences prefs = await SharedPreferences.getInstance();

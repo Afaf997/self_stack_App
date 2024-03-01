@@ -36,7 +36,6 @@ class ScheduleScreen extends StatelessWidget {
             ),
           );
         }
-        log('${userDetails['reviews'][0]['reviewId']}');
       },
       builder: (context, state) {
         return Scaffold(

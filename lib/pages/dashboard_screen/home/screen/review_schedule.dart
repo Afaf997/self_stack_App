@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:self_stack/blocs/dashboard/bloc/dash_board_bloc.dart';
+import 'package:self_stack/pages/dashboard_screen/schedule/schedule_screen.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class EvaluationWidget extends StatelessWidget {
@@ -13,7 +14,7 @@ class EvaluationWidget extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: () {
-        dashBoardbloc.add(Dashboardnavigationevent());
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>ScheduleScreen()));
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: screenHeight * 0.02),

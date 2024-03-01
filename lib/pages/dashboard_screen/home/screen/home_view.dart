@@ -116,7 +116,7 @@ switch (AttendanceEnum.fromString(onlineText)) {
           _calendarFormat = state.format;
         } else if (state is NotificationState) {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => FirebaseNotification()));
+              MaterialPageRoute(builder: (context) => Notification_Screen()));
         }else if(state is AttendanceNavigationState){
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AttendanceView()));
@@ -242,7 +242,7 @@ switch (AttendanceEnum.fromString(onlineText)) {
                       ),
               ],),
          
-                  SizedBox(height: screenHeight * 0.02),
+                  SizedBox(height: screenHeight * 0.06),
                  CardScreen(),
                    SizedBox(height: screenHeight * 0.02),
                   EvaluationWidget(),
@@ -289,13 +289,7 @@ switch (AttendanceEnum.fromString(onlineText)) {
                       }
                     },
                   ),
-                  ksizedboxX,
-                  Sparkline(
-  data: data,
-  pointsMode: PointsMode.all,
-  pointSize: 8.0,
-  pointColor: Colors.amber,
-)
+ 
                 ],
               ),
             ),

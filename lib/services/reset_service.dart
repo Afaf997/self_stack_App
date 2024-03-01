@@ -22,8 +22,6 @@ class ResetPasswordService {
         ),
       );
 
-      log(response.statusCode.toString());
-      print(response.statusCode);
 
       if (response.statusCode == 200) {
         // Handle success

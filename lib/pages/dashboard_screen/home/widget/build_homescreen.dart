@@ -37,7 +37,7 @@ Widget buildHomeScreen(
           _calendarFormat = state.format;
         } else if (state is NotificationState) {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => FirebaseNotification()));
+              context, MaterialPageRoute(builder: (context) => Notification_Screen()));
         } else if (state is AttendanceNavigationState) {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => AttendanceView()));

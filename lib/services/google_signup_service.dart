@@ -9,9 +9,6 @@ Future<bool> postGoogleDataToAPI(Map<String, dynamic> googleUserData) async {
 
     Dio dio = Dio();
 
-    print("object");
-    print(googleUserData.toString());
-
     Response response = await dio.post(
       apiUrl,
       data: jsonEncode(googleUserData),

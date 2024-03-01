@@ -5,7 +5,6 @@ import 'package:self_stack/services/week_details.dart';
 final getScoreServices getTaskService = getScoreServices();
 
     Future<Map<String, dynamic>> fetchScoreDetails(String userId, String reviewId) async {
-    log("task page");
     try {
       Map<String, dynamic> userDetails = await getTaskService.getScoreDetails(userId,reviewId);
       return userDetails;

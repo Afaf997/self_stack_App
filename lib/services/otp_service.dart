@@ -22,8 +22,6 @@ class OtpService {
         ),
       );
 
-      log(response.statusCode.toString());
-      print(response.statusCode);
 
       if (response.statusCode == 200) {
         return true;
