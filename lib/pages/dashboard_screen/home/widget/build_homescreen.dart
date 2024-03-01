@@ -8,6 +8,7 @@ import 'package:self_stack/pages/dashboard_screen/home/widget/enum.dart';
 import 'package:self_stack/pages/dashboard_screen/home/widget/evelution_section.dart';
 import 'package:self_stack/pages/dashboard_screen/home/widget/pie_diagram.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/schedule_screen.dart';
+import 'package:self_stack/repository/firebase_messaging.dart';
 import 'package:self_stack/utils/constans.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -36,7 +37,7 @@ Widget buildHomeScreen(
           _calendarFormat = state.format;
         } else if (state is NotificationState) {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Notification_Screen()));
+              context, MaterialPageRoute(builder: (context) => FirebaseNotification()));
         } else if (state is AttendanceNavigationState) {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => AttendanceView()));

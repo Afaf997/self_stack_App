@@ -64,6 +64,8 @@ dependencies:
   chart_sparkline: ^1.0.15+1
   dashed_circular_progress_bar: ^0.0.6
   flutter_local_notifications: ^16.3.2
+  overlay_support: ^2.1.0
+  firebase_analytics: ^10.8.7
 
   
 

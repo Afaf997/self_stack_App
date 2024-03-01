@@ -1,96 +1,125 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-late AndroidNotificationChannel channel;
-bool isFlutterLocalNotificationsInitialized = false;
-late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+import 'package:flutter/material.dart';
+import 'package:overlay_support/overlay_support.dart';
+import 'package:self_stack/response/push_notification.dart';
 
-
-Future handleBackgroundMessage(RemoteMessage message) async {
-    // if(message == null){
-    //   return;
-    // }
-    print('title :${message!.notification?.title}');
-  
-  }
-class FirebaseApicall{
- static final _firebaseMessaging = FirebaseMessaging.instance;
-
-initPushNotifications()async{
-   _firebaseMessaging.getInitialMessage().then(handleMessage);
-    FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
-    FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
-    FirebaseMessaging.onMessage.listen(showFlutterNotification);
-  }
-  void showFlutterNotification(RemoteMessage message) {
-  RemoteNotification? notification = message.notification;
-  AndroidNotification? android = message.notification?.android;
-  if (notification != null && android != null && !kIsWeb) {
-    flutterLocalNotificationsPlugin.show(
-      notification.hashCode,
-      notification.title,
-      notification.body,
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          channel.id,
-          channel.name,
-          channelDescription: channel.description,
-          // TODO add a proper drawable resource to android, for now using
-          //      one that already exists in example app.
-          icon: 'launch_background',
-        ),
-      ),
-    );
-  }
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("Handling a background message codewaa: ${message}");
 }
 
-   handleMessage(RemoteMessage? message) async {
-    if(message == null){
-      return;
-    }
-    print('title :${message.notification?.title}');
-  
-  }
-  void initiLocalNotification(){
-    
-  }
-Future<void> setupFlutterNotifications() async {
-  if (isFlutterLocalNotificationsInitialized) {
-    return;
-  }
-  channel = const AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    description:
-        'This channel is used for important notifications.', // description
-    importance: Importance.high,
-  );
 
-  flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+class FirebaseNotification extends StatefulWidget {
+  const FirebaseNotification({super.key});
 
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
+  @override
+  State<FirebaseNotification> createState() => _FirebaseNotificationState();
+}
+
+class _FirebaseNotificationState extends State<FirebaseNotification> {
+  @override
+void initState() {
+  _totalNotifications = 0;
+  registerNotification();
+  checkForInitialMessage();
+
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    PushNotification notification = PushNotification(
+      title: message.notification?.title ?? "",
+      body: message.notification?.body ?? '',
+      dataTitle: message.data['title']?? '',
+      dataBody: message.data['body']?? '',
+    );
+
+    setState(() {
+      _notificationInfo = notification;
+      _totalNotifications++;
+    });
+  });
+
+  super.initState();
+}
 
 
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+
+
+  late FirebaseMessaging _messaging;
+late int _totalNotifications;
+late PushNotification _notificationInfo;
+
+
+void registerNotification() async {
+  await Firebase.initializeApp();
+  _messaging = FirebaseMessaging.instance;
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  NotificationSettings settings = await _messaging.requestPermission(
     alert: true,
     badge: true,
+    provisional: false,
     sound: true,
   );
-  isFlutterLocalNotificationsInitialized = true;
+
+  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+    print('User granted permission');
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print(
+          'Message title: ${message.notification?.title}, body: ${message.notification?.body}, data: ${message.data},',);
+
+      // Parse the message received
+      PushNotification notification = PushNotification(
+        title: message.notification!.title ?? "",
+        body: message.notification?.body ?? "",
+        dataTitle: message.data['title'] ??'',
+        dataBody: message.data['body'] ??'',
+      );
+
+      setState(() {
+        _notificationInfo = notification;
+        _totalNotifications++;
+      });
+
+      if (_notificationInfo != null) {
+        // For displaying the notification as an overlay
+        showSimpleNotification(
+          Text(_notificationInfo.title),
+          subtitle: Text(_notificationInfo.body),
+          background: Colors.cyan.shade700,
+          duration: Duration(seconds: 2),
+        );
+      }
+    });
+  } else {
+    print('User declined or has not accepted permission');
+  }
 }
-initNotification()async{
-  await _firebaseMessaging.requestPermission();
-  final fcmToken=await _firebaseMessaging.getToken();
-  print("Token: $fcmToken");
-  await setupFlutterNotifications();
-  initPushNotifications();
 
+// For handling notification when the app is in terminated state
+checkForInitialMessage() async {
+  await Firebase.initializeApp();
+  RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+
+  if (initialMessage != null) {
+    PushNotification notification = PushNotification(
+      title: initialMessage.notification?.title ?? "Default Title",
+      body: initialMessage.notification?.body ?? "Default Body",
+      dataTitle: initialMessage.data['title'] ?? "Default Data Title",
+      dataBody: initialMessage.data['body'] ?? "Default Data Body",
+    );
+
+    setState(() {
+      _notificationInfo = notification;
+      _totalNotifications++;
+    });
+  }
 }
 
+
+  
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold();
+  }
 }
-
- 
-

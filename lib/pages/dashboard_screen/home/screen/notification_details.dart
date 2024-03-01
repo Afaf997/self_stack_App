@@ -17,7 +17,6 @@ class NotificationDetailScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: kselfstackGreen,
 
-        // title: Text('Notification Detail'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

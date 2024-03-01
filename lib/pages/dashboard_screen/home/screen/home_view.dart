@@ -21,6 +21,7 @@ import 'package:self_stack/pages/dashboard_screen/home/widget/card.dart';
 import 'package:self_stack/pages/dashboard_screen/home/widget/enum.dart';
 import 'package:self_stack/pages/dashboard_screen/profile/widgets/alert.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/schedule_screen.dart';
+import 'package:self_stack/repository/firebase_messaging.dart';
 import 'package:self_stack/repository/shared_preference.dart';
 import 'package:self_stack/utils/constans.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -115,7 +116,7 @@ switch (AttendanceEnum.fromString(onlineText)) {
           _calendarFormat = state.format;
         } else if (state is NotificationState) {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => Notification_Screen()));
+              MaterialPageRoute(builder: (context) => FirebaseNotification()));
         }else if(state is AttendanceNavigationState){
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AttendanceView()));
