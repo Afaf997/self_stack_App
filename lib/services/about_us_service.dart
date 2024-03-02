@@ -1,20 +1,18 @@
-
-
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:self_stack/core/links.dart';
 
-class getLoginservices {
+class getAboutUsServices {
   Dio dio = Dio();
 
-  Future<Map<String, dynamic>> getUserDetails(String userId) async {
+  Future<Map<String, dynamic>> getAboutUsDetails() async {
     try {
-      String apiUrl = "$loginApi/users/$userId$apikey";
+      String apiUrl = "$loginApi/about$apikey";
 
       Response response = await dio.get(apiUrl);
+   
       if (response.statusCode == 200) {
-      //  log(response.toString());
         return response.data;
       } else {
         throw Exception("Failed to retrieve user details. Status code: ${response.statusCode}");

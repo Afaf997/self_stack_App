@@ -15,7 +15,6 @@ class GetTodoServices {
     String apiUrl = "$loginApi/todo/user/public/$userId$apikey";
 
     Response response = await dio.get(apiUrl);
-log(response.toString());
     if (response.statusCode == 200) {
       List<TodoModel> todoList = (response.data as List<dynamic>)
           .map((task) => TodoModel.fromJson(task))

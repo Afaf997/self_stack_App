@@ -13,10 +13,7 @@ import 'package:self_stack/services/week_details.dart';
 import 'package:self_stack/utils/constans.dart';
 import 'package:color/color.dart';
 
-RgbColor rgb = new RgbColor(192, 255, 238);
-Color getColor(String colorName) {
-  return RgbColor.name('red');
-}
+// Existing imports...
 
 class TaskStatusScreen extends StatelessWidget {
   final String userId;
@@ -25,8 +22,6 @@ class TaskStatusScreen extends StatelessWidget {
 
   TaskStatusScreen(
       {required this.userId, required this.reviewId, required this.index});
-
-  final getScoreServices getTaskService = getScoreServices();
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +64,7 @@ class TaskStatusScreen extends StatelessWidget {
                             'Task ${taskDetails['reviewDetails'][0]['color']}',
                       ),
                       ksizedboxA,
-                       buildTaskCompletionText(taskDetails['daysTaken']) ,
+                      buildTaskCompletionText(taskDetails['daysTaken']),
                       ksizedboxA,
                       InfoCard(labels: [
                         'Reviewer: ${taskDetails['reviewver']}',
@@ -95,11 +90,13 @@ class TaskStatusScreen extends StatelessWidget {
                         title: 'Pending Topics :',
                         backgroundColor: kblackDark,
                         height: 0.2,
+                        content: buildPointByPointText(taskDetails['pendingTopics']),
                       ),
                       TextCard(
                         title: 'Remarks :',
                         backgroundColor: kblackDark,
                         height: 0.15,
+                       content: buildPointByPointText(taskDetails['remarks'] ?? ''),
                       ),
                     ],
                   ),
@@ -110,6 +107,15 @@ class TaskStatusScreen extends StatelessWidget {
             },
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildPointByPointText(String text) {
+    return ListTile(
+      title: Text(
+        text.trim(),
+        style: TextStyle(color: Colors.white),
       ),
     );
   }
