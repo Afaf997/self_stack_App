@@ -6,7 +6,7 @@ class NotificationDetailScreen extends StatelessWidget {
   final String notificationSubtitle;
 
   NotificationDetailScreen({
-    required this.notificationHeading,
+  required this.notificationHeading,
     required this.notificationSubtitle,
   });
 
@@ -16,6 +16,10 @@ class NotificationDetailScreen extends StatelessWidget {
       backgroundColor: kbackgroundmodel,
       appBar: AppBar(
         backgroundColor: kselfstackGreen,
+        iconTheme: IconThemeData(color: kwhiteModel),
+        actions: [
+          IconButton(onPressed: (){}, icon: Icon(Icons.delete,color: kwhiteModel,))
+        ],
 
       ),
       body: Padding(

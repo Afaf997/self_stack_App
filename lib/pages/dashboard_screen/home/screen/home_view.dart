@@ -25,17 +25,28 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   HomeView({super.key});
 
-  DashBoardBloc dashBoardbloc = DashBoardBloc();
-  List<GDPData> chatdata = [];
-  late TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
-  Color formatButtonColor = Colors.white;
-  CalendarFormat _calendarFormat = CalendarFormat.twoWeeks;
-  final EventBloc eventbloc =EventBloc();
-  var data = [0.0, 1.0, 1.5, 2.0, 0.0, 0.0, -0.5, -1.0,];
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
   
+  DashBoardBloc dashBoardbloc = DashBoardBloc();
+
+  List<GDPData> chatdata = [];
+
+  late TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
+
+  Color formatButtonColor = Colors.white;
+
+  CalendarFormat _calendarFormat = CalendarFormat.twoWeeks;
+
+  final EventBloc eventbloc =EventBloc();
+
+  var data = [0.0, 1.0, 1.5, 2.0, 0.0, 0.0, -0.5, -1.0,];
 
   @override
   Widget build(BuildContext context) {

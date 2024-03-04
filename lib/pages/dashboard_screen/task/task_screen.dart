@@ -24,7 +24,7 @@ class _TaskScreenState extends State<TaskScreen> {
     loadTaskDetails();
   }
 
-  Future<void> loadTaskDetails() async {
+Future<void> loadTaskDetails() async {
     try {
       String? userId = await getUserId();
       if (userId != null) {

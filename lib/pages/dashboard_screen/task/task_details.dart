@@ -6,7 +6,8 @@ import 'package:self_stack/pages/dashboard_screen/task/function/build_Subtitle.d
 import 'package:self_stack/pages/dashboard_screen/task/function/fetch_details.dart';
 import 'package:self_stack/utils/constans.dart';
 
-class DetailOfTask extends StatelessWidget {
+class DetailOfTask extends StatelessWidget{
+  
   final String taskId;
   final String courseId;
 
