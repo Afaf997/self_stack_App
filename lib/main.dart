@@ -1,20 +1,20 @@
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:overlay_support/overlay_support.dart';
-import 'package:self_stack/blocs/dashboard/bloc/dash_board_bloc.dart';
-import 'package:self_stack/blocs/task_bloc/bloc/task_bloc.dart';
-import 'package:self_stack/blocs/task_details/bloc/score_bloc.dart';
-import 'package:self_stack/blocs/to_do/bloc/todo_bloc.dart';
+import 'package:self_stack/advisor/bloc/navigation/bloc/navbar_admin_bloc.dart';
 import 'package:self_stack/firebase_options.dart';
-import 'package:self_stack/pages/authentication_screens/home_screen/splash.dart';
-import 'package:self_stack/pages/dashboard_screen/home/screen/navigation_bar.dart';
-import 'package:self_stack/pages/dashboard_screen/profile/profile_screen.dart';
-import 'package:self_stack/pages/dashboard_screen/schedule/schedule_screen.dart';
-import 'package:self_stack/pages/dashboard_screen/task/task_screen.dart';
-import 'package:self_stack/response/push_notification.dart';
+import 'package:self_stack/user/blocs/dashboard/bloc/dash_board_bloc.dart';
+import 'package:self_stack/user/blocs/task_bloc/bloc/task_bloc.dart';
+import 'package:self_stack/user/blocs/task_details/bloc/score_bloc.dart';
+import 'package:self_stack/user/blocs/to_do/bloc/todo_bloc.dart';
+import 'package:self_stack/user/pages/authentication_screens/home_screen/splash.dart';
+import 'package:self_stack/user/pages/dashboard_screen/home/screen/navigation_bar.dart';
+import 'package:self_stack/user/pages/dashboard_screen/profile/profile_screen.dart';
+import 'package:self_stack/user/pages/dashboard_screen/schedule/schedule_screen.dart';
+import 'package:self_stack/user/pages/dashboard_screen/task/task_screen.dart';
+import 'package:self_stack/user/response/push_notification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -29,7 +29,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
 
    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
    RemoteMessage? initialMessage =
@@ -68,6 +67,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<TaskBloc>(
             create: (context) => TaskBloc(),
+          ),
+           BlocProvider<NavbarAdminBloc>(
+            create: (context) => NavbarAdminBloc(),
           ),
          
             BlocProvider<DashBoardBloc>(
