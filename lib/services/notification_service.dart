@@ -6,7 +6,7 @@ class getNotificationservices {
 
   Future<Map<String, dynamic>> getNotificationFunc(String userId) async {
     try {
-      String apiUrl = "$loginApi/notification/notifications/$userId$apikey";
+      String apiUrl = "$loginApi/notification/$userId$apikey";
 
       Response response = await dio.get(apiUrl);
       if (response.statusCode == 200) {

@@ -135,8 +135,6 @@ class AttendanceView extends StatelessWidget {
   }
 
   bool isBlackoutDate(DateTime date) {
-    // Add your logic to determine blackout dates
-    // For example, let's say blackout dates are weekends (Saturday and Sunday)
     return date.weekday == DateTime.saturday || date.weekday == DateTime.sunday;
   }
 }

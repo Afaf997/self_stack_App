@@ -1,3 +1,4 @@
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,6 @@ import 'package:self_stack/pages/dashboard_screen/home/screen/navigation_bar.dar
 import 'package:self_stack/pages/dashboard_screen/profile/profile_screen.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/schedule_screen.dart';
 import 'package:self_stack/pages/dashboard_screen/task/task_screen.dart';
-import 'package:self_stack/repository/firebase_messaging.dart';
 import 'package:self_stack/response/push_notification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,6 +29,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+
    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
    RemoteMessage? initialMessage =
   await FirebaseMessaging.instance.getInitialMessage();

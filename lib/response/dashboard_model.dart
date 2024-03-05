@@ -5,12 +5,16 @@ class Dashboard {
     List<dynamic> attendance;
     String domain;
     ReviewStatusCounts reviewStatusCounts;
+    String randomQuote;
+    String randomAuthor;
 
     Dashboard({
         required this.user,
         required this.attendance,
         required this.domain,
         required this.reviewStatusCounts,
+        required this.randomQuote,
+        required this.randomAuthor,
     });
 
     factory Dashboard.fromRawJson(String str) => Dashboard.fromJson(json.decode(str));
@@ -22,6 +26,8 @@ class Dashboard {
         attendance: List<dynamic>.from(json["attendance"].map((x) => x)),
         domain: json["domain"],
         reviewStatusCounts: ReviewStatusCounts.fromJson(json["reviewStatusCounts"]),
+        randomQuote: json["randomQuote"],
+        randomAuthor: json["randomAuthor"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -29,22 +35,24 @@ class Dashboard {
         "attendance": List<dynamic>.from(attendance.map((x) => x)),
         "domain": domain,
         "reviewStatusCounts": reviewStatusCounts.toJson(),
+        "randomQuote": randomQuote,
+        "randomAuthor": randomAuthor,
     };
 }
 
 class ReviewStatusCounts {
-    int needImprovement;
-    int taskCompleted;
     int notAttended;
-    int taskRepeated;
+    int taskCompleted;
     int notCompleted;
+    int taskRepeated;
+    int needImprovement;
 
     ReviewStatusCounts({
-        required this.needImprovement,
-        required this.taskCompleted,
         required this.notAttended,
-        required this.taskRepeated,
+        required this.taskCompleted,
         required this.notCompleted,
+        required this.taskRepeated,
+        required this.needImprovement,
     });
 
     factory ReviewStatusCounts.fromRawJson(String str) => ReviewStatusCounts.fromJson(json.decode(str));
@@ -52,19 +60,19 @@ class ReviewStatusCounts {
     String toRawJson() => json.encode(toJson());
 
     factory ReviewStatusCounts.fromJson(Map<String, dynamic> json) => ReviewStatusCounts(
-        needImprovement: json["Need Improvement"],
-        taskCompleted: json["Task Completed"],
         notAttended: json["Not Attended"],
-        taskRepeated: json["Task Repeated"],
+        taskCompleted: json["Task Completed"],
         notCompleted: json["Not Completed"],
+        taskRepeated: json["Task Repeated"],
+        needImprovement: json["Need Improvement"],
     );
 
     Map<String, dynamic> toJson() => {
-        "Need Improvement": needImprovement,
-        "Task Completed": taskCompleted,
         "Not Attended": notAttended,
-        "Task Repeated": taskRepeated,
+        "Task Completed": taskCompleted,
         "Not Completed": notCompleted,
+        "Task Repeated": taskRepeated,
+        "Need Improvement": needImprovement,
     };
 }
 

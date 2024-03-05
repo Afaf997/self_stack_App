@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:self_stack/blocs/dashboard/bloc/dash_board_bloc.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/schedule_screen.dart';
@@ -27,9 +29,9 @@ class EvaluationWidget extends StatelessWidget {
         child: Row(
           children: [
             Text(
-              'Your upcoming evaluation is.',
+              'The next assessment is scheduled for',
               style: TextStyle(
-                fontSize: screenWidth * 0.04,
+                fontSize: screenWidth * 0.035,
                 color: kyellow,
               ),
             ),

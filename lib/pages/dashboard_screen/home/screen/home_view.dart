@@ -1,9 +1,7 @@
-
-// ignore_for_file: must_be_immutable, unnecessary_type_check, unused_label
-import 'dart:collection';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:self_stack/blocs/dashboard/bloc/dash_board_bloc.dart';
+import 'package:self_stack/blocs/dashboard/bloc/dash_board_bloc.dart'; 
 import 'package:self_stack/pages/authentication_screens/logIn_screens/Screens/login.dart';
 import 'package:self_stack/pages/dashboard_screen/home/functions/calender_event.dart';
 import 'package:self_stack/pages/dashboard_screen/home/functions/fetch_user_details.dart';
@@ -20,6 +18,7 @@ import 'package:self_stack/pages/dashboard_screen/home/widget/enum.dart';
 import 'package:self_stack/pages/dashboard_screen/profile/widgets/alert.dart';
 import 'package:self_stack/pages/dashboard_screen/schedule/schedule_screen.dart';
 import 'package:self_stack/repository/shared_preference.dart';
+import 'package:self_stack/response/dashboard_model.dart';
 import 'package:self_stack/utils/constans.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -33,29 +32,12 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  
   DashBoardBloc dashBoardbloc = DashBoardBloc();
-
-  List<GDPData> chatdata = [];
-
   late TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
-
-  Color formatButtonColor = Colors.white;
-
   CalendarFormat _calendarFormat = CalendarFormat.twoWeeks;
-
-  final EventBloc eventbloc =EventBloc();
-
-  var data = [0.0, 1.0, 1.5, 2.0, 0.0, 0.0, -0.5, -1.0,];
 
   @override
   Widget build(BuildContext context) {
- final events = LinkedHashMap<DateTime, List<Event>>(
-      equals: isSameDay,
-    )..addAll({
-        for (final event in eventbloc.eventSource)
-          event.date: [event]
-      });
     return FutureBuilder<String?>(
       future: getUserId(),
       builder: (context, snapshot) {
@@ -70,47 +52,45 @@ class _HomeViewState extends State<HomeView> {
                 if (userDetails['domain'] == 'No') {
                   return DomainDesidePage();
                 }
-                return buildHomeScreen(context, userDetails);
+                Dashboard dashboard = Dashboard.fromJson(userDetails);
+                return buildHomeScreen(context, dashboard);
               } else {
                 return buildLoadingWidget(kselfstackGreen);
               }
             },
           );
         } else {
-           return buildLoadingWidget(kselfstackGreen);
+          return buildLoadingWidget(kselfstackGreen);
         }
       },
     );
   }
 
-  Widget buildHomeScreen(
-      BuildContext context, Map<String, dynamic> userDetails) {
+  Widget buildHomeScreen(BuildContext context, Dashboard dashboard) {
     dashBoardbloc.add(InitialEvent());
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    String onlineText = 
-    userDetails['attendance'] != null && userDetails['attendance'].length > 0
-    ? userDetails['attendance'][0]['status']
-    : 'Offline'; 
-
-Color onlineColor;
-switch (AttendanceEnum.fromString(onlineText)) {
-  case AttendanceEnum.Present:
-    onlineColor = kselfstackGreen;
-    break;
-  case AttendanceEnum.Holiday:
-    onlineColor = kyellow; 
-    break;
-  case AttendanceEnum.HalfDay:
-    onlineColor = kblueTheme; 
-    break;
-  case AttendanceEnum.Absend:
-    onlineColor = kredtheme; 
-    break;
-  default:
-    onlineColor = kblackDark;
-    break;
-}
+    String onlineText = dashboard.attendance.isNotEmpty
+        ? dashboard.attendance[0]['status']
+        : 'Offline';
+    Color onlineColor;
+    switch (AttendanceEnum.fromString(onlineText)) {
+      case AttendanceEnum.Present:
+        onlineColor = kselfstackGreen;
+        break;
+      case AttendanceEnum.Holiday:
+        onlineColor = kyellow;
+        break;
+      case AttendanceEnum.HalfDay:
+        onlineColor = kblueTheme;
+        break;
+      case AttendanceEnum.Absend:
+        onlineColor = kredtheme;
+        break;
+      default:
+        onlineColor = kblackDark;
+        break;
+    }
 
     return BlocConsumer<DashBoardBloc, DashBoardState>(
       bloc: dashBoardbloc,
@@ -125,14 +105,14 @@ switch (AttendanceEnum.fromString(onlineText)) {
         } else if (state is NotificationState) {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => Notification_Screen()));
-        }else if(state is AttendanceNavigationState){
+        } else if (state is AttendanceNavigationState) {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AttendanceView()));
-        }else if(state is TodoNavigationState){
-           Navigator.push(context,
+        } else if (state is TodoNavigationState) {
+          Navigator.push(context,
               MaterialPageRoute(builder: (context) => TodoScreen()));
-        }else if(state is AboutNavigationState){
-           Navigator.push(context,
+        } else if (state is AboutNavigationState) {
+          Navigator.push(context,
               MaterialPageRoute(builder: (context) => AboutUsPage()));
         }
       },
@@ -149,7 +129,7 @@ switch (AttendanceEnum.fromString(onlineText)) {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                           Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconButton(
@@ -161,29 +141,31 @@ switch (AttendanceEnum.fromString(onlineText)) {
                         onPressed: () {
                           dashBoardbloc.add(NotificationEvent());
                         },
-                      ),  SizedBox(width: screenWidth * 0.03),
-                    CircleAvatar(
-                            radius: 14,
-                            child: ClipOval(
-                              child: Image.network(
-                                userDetails['user']['image'],
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                      ),
+                      SizedBox(width: screenWidth * 0.03),
+                      CircleAvatar(
+                        radius: 14,
+                        child: ClipOval(
+                          child: Image.network(
+                            dashboard.user.image,
+                            fit: BoxFit.cover,
                           ),
-                PopupMenuButton<String>(
-                  color: kbackgroundmodel,
-                  icon: Icon(
-                        Icons.more_vert,
-                        color: kwhiteModel,
-                      ),     offset: Offset(0, 50), 
-                      onSelected: (String value) {
-    if (value == 'Item 1') {
-      dashBoardbloc.add(TodoNavigationEvent());
-    } else if (value == 'Item 2') {
-      dashBoardbloc.add(AboutNavigationEvent());
-    } else if (value == 'Item 3') {
-             onPressed: () async {
+                        ),
+                      ),
+                      PopupMenuButton<String>(
+                        color: kbackgroundmodel,
+                        icon: Icon(
+                          Icons.more_vert,
+                          color: kwhiteModel,
+                        ),
+                        offset: Offset(0, 50),
+                        onSelected: (String value) {
+                          if (value == 'Item 1') {
+                            dashBoardbloc.add(TodoNavigationEvent());
+                          } else if (value == 'Item 2') {
+                            dashBoardbloc.add(AboutNavigationEvent());
+                          } else if (value == 'Item 3') {
+                            onPressed: () async {
                               bool? confirmed =
                                   await showLogoutConfirmationDialog(context);
                               if (confirmed != null && confirmed) {
@@ -196,39 +178,48 @@ switch (AttendanceEnum.fromString(onlineText)) {
                                       builder: (context) => LoginPage()),
                                 );
                               }
-                            };}},
-                  itemBuilder: (BuildContext context) {
-                    return [                      
-                      PopupMenuItem<String>(
-                        value: 'Item 1',
-                        child: Text('ToDo',style: TextStyle(color: kselfstackGreen),),
+                            };
+                          }
+                        },
+                        itemBuilder: (BuildContext context) {
+                          return [
+                            PopupMenuItem<String>(
+                              value: 'Item 1',
+                              child: Text(
+                                'ToDo',
+                                style: TextStyle(color: kselfstackGreen),
+                              ),
+                            ),
+                            PopupMenuItem<String>(
+                              value: 'Item 2',
+                              child: Text(
+                                'About Us',
+                                style: TextStyle(color: kselfstackGreen),
+                              ),
+                            ),
+                            PopupMenuItem<String>(
+                              value: 'Item 3',
+                              child: Text(
+                                'Logout',
+                                style: TextStyle(color: kselfstackGreen),
+                              ),
+                            ),
+                          ];
+                        },
                       ),
-                      PopupMenuItem<String>(
-                        value: 'Item 2',
-                        child: Text('About Us',style: TextStyle(color: kselfstackGreen),),
-                      ),     
-                      PopupMenuItem<String>(
-                        value: 'Item 3',
-                        child: Text('Logout',style: TextStyle(color: kselfstackGreen),),
-                      ),
-                    ];
-                  },
-                ),
-
                     ],
                   ),
-                    Row(
-                      children: [
-                        Text('Today',
-                            style: TextStyle(
-                                color: kwhiteModel,
-                                fontWeight: FontWeight.bold,
-                                fontSize: screenWidth * 0.06)),
-                   
+                  Row(
+                    children: [
+                      Text('Today',
+                          style: TextStyle(
+                              color: kwhiteModel,
+                              fontWeight: FontWeight.bold,
+                              fontSize: screenWidth * 0.06)),
                       SizedBox(width: screenWidth * 0.04),
-                      
                       GestureDetector(
-                        onTap: () => dashBoardbloc.add(AttendanceNavigationEvent()),
+                        onTap: () =>
+                            dashBoardbloc.add(AttendanceNavigationEvent()),
                         child: Container(
                           width: screenWidth * 0.28,
                           height: screenHeight * 0.05,
@@ -237,7 +228,6 @@ switch (AttendanceEnum.fromString(onlineText)) {
                             color: onlineColor,
                           ),
                           child: Center(
-                            
                             child: Text(
                               onlineText,
                               style: TextStyle(
@@ -248,11 +238,11 @@ switch (AttendanceEnum.fromString(onlineText)) {
                           ),
                         ),
                       ),
-              ],),
-         
-                  SizedBox(height: screenHeight * 0.06),
-                 CardScreen(),
-                   SizedBox(height: screenHeight * 0.02),
+                    ],
+                  ),
+                  SizedBox(height: screenHeight * 0.04),
+                  CardScreen(dashboard: dashboard),
+                  SizedBox(height: screenHeight * 0.02),
                   EvaluationWidget(),
                   BlocBuilder<DashBoardBloc, DashBoardState>(
                     bloc: dashBoardbloc,
@@ -260,44 +250,14 @@ switch (AttendanceEnum.fromString(onlineText)) {
                         current is InitaialState,
                     builder: (context, state) {
                       if (state is InitaialState) {
-                        chatdata = state.chatdata;
+                        List<GDPData> chatdata = state.chatdata;
                         print(state.chatdata);
-                        return SfCircularChart(
-                            palette: [
-                              korange,
-                              kblueTheme,
-                              kselfstackGreen,
-                              kyellow,
-                              kredtheme,],
-                            title: ChartTitle(
-                                text: "Status Of Review",
-                                textStyle: TextStyle(
-                                    color: kwhiteModel,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: screenWidth * 0.04)),
-                            legend: Legend(
-                                isVisible: true,
-                                overflowMode: LegendItemOverflowMode.scroll,
-                                textStyle: TextStyle(color: kwhiteModel)),
-                            tooltipBehavior: _tooltipBehavior,
-                            series: <CircularSeries>[
-                              DoughnutSeries<GDPData, String>(
-                                dataSource: chatdata,
-                                xValueMapper: (GDPData data, _) =>
-                                    data.continent,
-                                yValueMapper: (GDPData data, _) =>
-                                    data.taskValue,
-                                dataLabelSettings:
-                                    DataLabelSettings(isVisible: true),
-                                enableTooltip: true,
-                              )
-                            ]);
+                        return buildCircularChart(chatdata, screenWidth);
                       } else {
                         return CircularProgressIndicator();
                       }
                     },
                   ),
- 
                 ],
               ),
             ),
@@ -306,6 +266,43 @@ switch (AttendanceEnum.fromString(onlineText)) {
       },
     );
   }
+
+  Widget buildCircularChart(List<GDPData> chatdata, double screenWidth) {
+    if (chatdata.isNotEmpty) {
+      return SfCircularChart(
+        palette: [
+          kyellow,
+          kblueTheme,
+          korange,
+          kselfstackGreen,
+          kredtheme,
+        ],
+        title: ChartTitle(
+          text: "Status Of Review",
+          textStyle: TextStyle(
+            color: kwhiteModel,
+            fontWeight: FontWeight.bold,
+            fontSize: screenWidth * 0.04,
+          ),
+        ),
+        legend: Legend(
+          isVisible: true,
+          overflowMode: LegendItemOverflowMode.scroll,
+          textStyle: TextStyle(color: kwhiteModel),
+        ),
+        tooltipBehavior: TooltipBehavior(enable: true),
+        series: <CircularSeries>[
+          DoughnutSeries<GDPData, String>(
+            dataSource: chatdata,
+            xValueMapper: (GDPData data, _) => data.continent,
+            yValueMapper: (GDPData data, _) => data.taskValue,
+            dataLabelSettings: DataLabelSettings(isVisible: true),
+            enableTooltip: true,
+          ),
+        ],
+      );
+    } else {
+      return CircularProgressIndicator();
+    }
+  }
 }
-
-

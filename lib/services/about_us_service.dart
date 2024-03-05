@@ -18,7 +18,6 @@ class getAboutUsServices {
         throw Exception("Failed to retrieve user details. Status code: ${response.statusCode}");
       }
     } catch (error) {
-      print('Error fetchi ang user details: $error');
       throw Exception("Error fetching user details: $error");
     }
   }

@@ -1,9 +1,10 @@
-import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:self_stack/pages/dashboard_screen/home/functions/notification_function.dart';
+import 'package:self_stack/pages/dashboard_screen/home/screen/home_view.dart';
+import 'package:self_stack/pages/dashboard_screen/home/screen/navigation_bar.dart';
 import 'package:self_stack/pages/dashboard_screen/home/screen/notification_details.dart';
 import 'package:self_stack/response/notification_model.dart';
 import 'package:self_stack/response/push_notification.dart';
@@ -29,7 +30,7 @@ class _Notification_ScreenState extends State<Notification_Screen> {
   @override
   void initState() {
     totalNotifications = 0;
-    notifications = []; // Initialize notifications list
+    notifications = []; 
     registerNotification();
     checkForInitialMessage();
 
@@ -79,7 +80,6 @@ class _Notification_ScreenState extends State<Notification_Screen> {
           dataBody: message.data['body'] ?? '',
         );
 
-        // Check if the widget is still mounted before calling setState
         if (mounted) {
           setState(() {
             totalNotifications++;
@@ -88,9 +88,11 @@ class _Notification_ScreenState extends State<Notification_Screen> {
 
         if (notification != null) {
           showSimpleNotification(
-            Text(notification.title),
-            subtitle: Text(notification.body),
-            background: kblueTheme,
+            Text(notification.title,maxLines: 1,
+            style: TextStyle(color: kselfstackGreen),),
+            subtitle: Text(notification.body,maxLines: 2,),
+          
+            background: kblackDark,
             duration: Duration(seconds: 5),
           );
         }
@@ -113,7 +115,7 @@ class _Notification_ScreenState extends State<Notification_Screen> {
         dataBody: initialMessage.data['body'] ?? "Default Data Body",
       );
 
-      // Check if the widget is still mounted before calling setState
+
       if (mounted) {
         setState(() {
           totalNotifications++;
@@ -133,7 +135,7 @@ Widget build(BuildContext context) {
       leading: IconButton(
         icon: Icon(Icons.arrow_circle_left_outlined, size: 27, color: kwhiteModel,),
         onPressed: () {
-          Navigator.pop(context);
+         Navigator.push(context, MaterialPageRoute(builder: (context)=> BottomNavbarScreen()));
         },
       ),
       title: Text(
@@ -165,74 +167,80 @@ Widget build(BuildContext context) {
           } else {
             Notification_model notification = snapshot.data!;
 
-            return ListView.builder(
-              itemCount: notification.notifications.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NotificationDetailScreen(
-                          notificationHeading: notification.notifications[index].title,
-                          notificationSubtitle: notification.notifications[index].body,
-                        ),
-                      ),
-                    );
-                  },
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                             Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              '${DateTime.now().toString().split(".")[0].split(" ")[1]}',
-                              style: TextStyle(
-                                color: kwhiteModel,
-                              ),
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          
-                          title: Text(
-                            notification.notifications[index].title,
-                            style: TextStyle(
-                              color: kselfstackGreen, 
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          subtitle: Text(
-                            notification.notifications[index].body,
-                            style: TextStyle(
-                              color: kwhiteModel, 
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              '${DateTime.now().toString().split(" ")[0]}',
-                              style: TextStyle(
-                                color: kyellow,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Divider(
-                          color: kwhiteModel, 
-                          thickness: 0.2,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            );
+       return  ListView.builder(
+  itemCount: notification.notifications.length,
+  itemBuilder: (context, index) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => NotificationDetailScreen(
+              notificationHeading: notification.notifications[index].title,
+              notificationSubtitle: notification.notifications[index].body,
+              id: notification.notifications[index].id,
+            ),
+          ),
+        );
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ListTile(
+            title: Text(
+              notification.notifications[index].title,
+              maxLines: 1,
+              style: TextStyle(
+                color: kselfstackGreen,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            subtitle: Text(
+              notification.notifications[index].body,
+              maxLines: 2,
+              style: TextStyle(
+                color: kwhiteModel,
+                fontSize: 14,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                '${DateTime.now().toString().split(".")[0].split(" ")[1]}',
+                style: TextStyle(
+                  color: kwhiteModel,
+                  fontSize: 13,
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                '${DateTime.now().toString().split(" ")[0]}',
+                style: TextStyle(
+                  color: kyellow,
+                  fontSize: 13,
+                ),
+              ),
+            ),
+          ),
+          Divider(
+            color: kwhiteModel,
+            thickness: 0.2,
+          ),
+        ],
+      ),
+    );
+  },
+);
+
           }
         },
       ),

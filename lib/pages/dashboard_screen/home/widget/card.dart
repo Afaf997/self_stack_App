@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:self_stack/response/dashboard_model.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class CardScreen extends StatelessWidget {
-  const CardScreen({Key? key});
+  final Dashboard dashboard;
+
+  const CardScreen({Key? key, required this.dashboard}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,47 +13,64 @@ class CardScreen extends StatelessWidget {
       color: kbackgroundmodel,
       elevation: 3,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0), 
-        side: BorderSide(color: kwhiteModel,width: .2)
+        borderRadius: BorderRadius.circular(10.0),
+        side: BorderSide(color: kwhiteModel, width: .2),
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image
             Container(
               width: 80,
               height: 140,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: AssetImage('assets/image/images1.png'),
+                  image: AssetImage("assets/image/for2.webp"),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
             SizedBox(width: 12),
-
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Motivational Quote',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: kwhiteModel
+                  ksizedboxD,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Text(
+                      'Motivation Quotes',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: kwhiteModel,
+                      ),
                     ),
                   ),
-                  SizedBox(height: 8),
                   Text(
-                    'Your motivational quote goes here. It can be as long as you want.',
+                    ' " ${dashboard.randomQuote} " ',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
                     ),
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          ' - ${dashboard.randomAuthor}',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: kwhiteModel,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

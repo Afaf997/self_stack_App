@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/blocs/to_do/bloc/todo_bloc.dart';
+import 'package:self_stack/pages/authentication_screens/home_screen/home_screen.dart';
 import 'package:self_stack/pages/dashboard_screen/home/screen/custom_progress_bar.dart';
+import 'package:self_stack/pages/dashboard_screen/home/screen/home_view.dart';
+import 'package:self_stack/pages/dashboard_screen/home/screen/navigation_bar.dart';
 import 'package:self_stack/pages/dashboard_screen/home/screen/todo_details_screen.dart';
 import 'package:self_stack/response/todo_model.dart';
 import 'package:self_stack/services/todo_service.dart';
@@ -47,7 +50,9 @@ class _TodoScreenState extends State<TodoScreen> {
               color: kwhiteModel, fontSize: 22, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: (){
+               Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavbarScreen()));
+          },
           icon: Icon(
             Icons.arrow_circle_left_outlined,
             color: kwhiteModel,

@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:self_stack/pages/dashboard_screen/home/functions/alert_notification.dart';
+import 'package:self_stack/response/notification_model.dart';
+import 'package:self_stack/services/notification_delete.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class NotificationDetailScreen extends StatelessWidget {
   final String notificationHeading;
   final String notificationSubtitle;
+  final String id;
 
   NotificationDetailScreen({
-  required this.notificationHeading,
+    required this.notificationHeading,
     required this.notificationSubtitle,
+    required this.id,
   });
 
+  final DeleteNotificationServices deleteService = DeleteNotificationServices();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,31 +24,37 @@ class NotificationDetailScreen extends StatelessWidget {
         backgroundColor: kselfstackGreen,
         iconTheme: IconThemeData(color: kwhiteModel),
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.delete,color: kwhiteModel,))
+          IconButton(
+            onPressed: () {
+             
+              showDeleteNotification(context,id);
+            },
+            icon: Icon(Icons.delete, color: kwhiteModel),
+          ),
         ],
-
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Heading: $notificationHeading',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-                color: kwhiteModel
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Heading: $notificationHeading',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  
+                  fontSize: 18,
+                  color: kselfstackGreen,
+                ),
               ),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Subtitle: $notificationSubtitle',
-              style: TextStyle(fontSize: 16,
-              color: kwhiteModel),
-              
-            ),
-          ],
+              SizedBox(height: 8),
+              Text(
+                'Subtitle: $notificationSubtitle',
+                style: TextStyle(fontSize: 16, color: kwhiteModel),
+              ),
+            ],
+          ),
         ),
       ),
     );

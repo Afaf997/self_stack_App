@@ -11,10 +11,7 @@ Future<Notification_model> fetchNotificationDetails() async {
     String? userId = await getUserId();
     if (userId != null) {
       Map<String, dynamic> userDetails = await getNotificationServices.getNotificationFunc(userId);
-     log(userDetails.toString());
       Notification_model notificationDetails = Notification_model.fromJson(userDetails);
-      log("ji");
-      log(notificationDetails.toString());
       return notificationDetails;
     } else {
       throw Exception('User ID is null');
