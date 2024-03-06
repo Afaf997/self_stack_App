@@ -1,6 +1,13 @@
-
+import 'dart:convert';
+import 'dart:developer';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:self_stack/advisor/bloc/dashboard/bloc/batch_bloc.dart';
+import 'package:self_stack/advisor/response/batch_model.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/list_of_students.dart';
+import 'package:self_stack/advisor/services/batch_services.dart/get_batch.dart';
+import 'package:self_stack/advisor/services/batch_services.dart/post_batch.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class BatchScreen extends StatefulWidget {
@@ -11,78 +18,104 @@ class BatchScreen extends StatefulWidget {
 }
 
 class _BatchScreenState extends State<BatchScreen> {
-  List<ContainerData> batchContainers = [];
+  late Future<Welcome> future;
+
+  @override
+  void initState() {
+    super.initState();
+    future = BatchService().fetchData();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kbackgroundmodel,
-      body: Padding(
-        padding: const EdgeInsets.only(top: 30),
-        child: Container(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "All Batch",
-                    style: TextStyle(
-                      color: kwhiteModel,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.notifications,
-                      color: kwhiteModel,
-                    ),
-                    onPressed: () {},
-                  ),
-                ],
-              ),
-              Expanded(
-                child: GridView.builder(
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 16.0,
-                    mainAxisSpacing: 16.0,
-                  ),
-                  itemCount: batchContainers.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const StudentsBatchScreen(),
-                          ),
-                        );
-                      },
-                      child: buildGridItem(batchContainers[index]),
-                    );
-                  },
-                ),
+    return BlocConsumer<BatchBloc, BatchState>(
+      listener: (context, state) {
+        if (state is navigationState) {
+          _showAddDialog(context);
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: kbackgroundmodel,
+            title: const Text("All Batch", style: TextStyle(color: kwhiteModel)),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.notifications),
+                color: kwhiteModel,
+                onPressed: () {},
               ),
             ],
           ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _showAddDialog(context);
-        },
-        child: Icon(Icons.add, color: kwhiteModel),
-        backgroundColor: kblackDark,
+          backgroundColor: kbackgroundmodel,
+          body: FutureBuilder<Welcome>(
+            future: future,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return _buildLoadingWidget();
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text('Error: ${snapshot.error}'),
+                );
+              } else {
+                final welcome = snapshot.data!;
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                    
+                      Expanded(
+                        child: GridView.builder(
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 16.0,
+                            mainAxisSpacing: 16.0,
+                          ),
+                          itemCount: welcome.batches.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final batch = welcome.batches[index];
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => StudentsBatchScreen(),
+                                  ),
+                                );
+                              },
+                              child: buildGridItem(batch),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              BlocProvider.of<BatchBloc>(context).add(NavigationEvent());
+            },
+            child: Icon(Icons.add, color: kwhiteModel),
+            backgroundColor: kblackDark,
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildLoadingWidget() {
+    return Center(
+      child: CircularProgressIndicator(
+        color: kselfstackGreen,
       ),
     );
   }
 
-  Widget buildGridItem(ContainerData containerData) {
+  Widget buildGridItem(BatchElement batch) {
     return Container(
       decoration: BoxDecoration(
         color: Color.fromARGB(255, 172, 172, 172),
@@ -94,11 +127,12 @@ class _BatchScreenState extends State<BatchScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: 30),
             child: Text(
-              containerData.title,
+               'BATCH ${batch.batch.name}',
               style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 23,
-                  fontWeight: FontWeight.bold),
+                color:kblackDark,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           const SizedBox(height: 10),
@@ -108,11 +142,9 @@ class _BatchScreenState extends State<BatchScreen> {
             color: kblackLight,
             child: Center(
               child: Text(
-                containerData.text,
+               '${batch.batch.studentIds?.length ?? 0} Students',
                 style: TextStyle(
-                  color: containerData.startDate != null
-                      ? Colors.white // White color for selected date
-                      : kwhiteModel, // Your original color for batch number
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -121,94 +153,113 @@ class _BatchScreenState extends State<BatchScreen> {
       ),
     );
   }
-Future<void> _showAddDialog(BuildContext context) async {
-  String batchNumber = '';
-  DateTime? startDate;
 
-  return showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Add Container', style: TextStyle(color: Colors.white)),
-        backgroundColor: const Color.fromARGB(255, 56, 56, 56),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              decoration: const InputDecoration(
-                labelText: 'Batch Number',
-                labelStyle: TextStyle(color: Colors.white),
-              ),
-              onChanged: (value) {
-                batchNumber = value;
-              },
+  Future<void> _showAddDialog(BuildContext context) async {
+    String batchNumber = '';
+    DateTime? startDate;
+return showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    return AlertDialog(
+      title: const Text('Add Batches', style: TextStyle(color: Colors.white)),
+      backgroundColor: const Color.fromARGB(255, 56, 56, 56),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            decoration: InputDecoration(
+              labelText: 'Batch Number',
+              labelStyle: TextStyle(color: Colors.white),
             ),
-            const SizedBox(height: 16),
-            TextField(
-              readOnly: true,
-              onTap: () async {
-                DateTime? selectedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2101),
-                );
-                if (selectedDate != null && selectedDate != startDate) {
-                  setState(() {
-                    startDate = selectedDate;
-                  });
-                }
-              },
-              decoration: InputDecoration(
-                labelText: 'Start Date',
-                labelStyle: TextStyle(
-                  color: startDate != null ? Colors.white : Colors.white, // Set white color for selected date
-                ),
-              ),
-              controller: TextEditingController(
-                text: startDate != null ? "${startDate!.toLocal()}".split(' ')[0] : "",
-              // style: TextStyle(color: Colors.white), // Set white color for selected date text
-              ),
-            ),
-          ],
-        ),
-        actions: <Widget>[
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              _addNewContainer(batchNumber, startDate);
+            style: TextStyle(color: Colors.white), // Set text color to white
+            onChanged: (value) {
+              batchNumber = value;
             },
-            child: Text('Add'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
+          ),
+          const SizedBox(height: 16),
+          TextField(
+            readOnly: true,
+            onTap: () async {
+              DateTime? selectedDate = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2000),
+                lastDate: DateTime(2101),
+              );
+              if (selectedDate != null && selectedDate != startDate) {
+                setState(() {
+                  startDate = selectedDate;
+                });
+              }
+            },
+            decoration: InputDecoration(
+              labelText: 'Start Date',
+              labelStyle: TextStyle(
+                color: startDate != null ? Colors.white : Colors.white,
+              ),
             ),
+            controller: TextEditingController(
+              text: startDate != null ? "${startDate!.toLocal()}".split(' ')[0] : "",
+            ),
+            style: TextStyle(color: Colors.white), // Set text color to white
           ),
         ],
-      );
-    },
-  );
-}
+      ),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('Cancel', style: TextStyle(color: Colors.white)),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+            _addNewContainer(batchNumber, startDate);
+          },
+          child: Container(
+            width: 70.0,
+            height: 40.0,
+            alignment: Alignment.center,
+            child: Text('Add',style: TextStyle(color: kwhiteModel),),
+          ),
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0), 
+            ),
+            backgroundColor: Colors.green,
+          ),
+        ),
+      ],
+    );
+  },
+);
 
-
-  void _addNewContainer(String batchNumber, DateTime? startDate) {
-    setState(() {
-      final newContainer = ContainerData(
-        title: 'Batch $batchNumber',
-        text: '13 students',
-        startDate: startDate,
-      );
-      batchContainers.add(newContainer);
-    });
   }
-}
 
-class ContainerData {
-  final String title;
-  final String text;
-  final DateTime? startDate;
+  void _addNewContainer(String batchNumber, DateTime? startDate) async {
+    try {
+      bool success = await BatchPostService().PostBatchDetails(batchNumber, startDate!);
 
-  ContainerData({required this.title, required this.text, this.startDate});
+      if (success) {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => BatchScreen()));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to add batch. Please try again.'),
+          ),
+        );
+      }
+    } catch (e) {
+      print('Error: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An error occurred. Please try again later.$e'),
+        ),
+      );
+    }
+  }
 }

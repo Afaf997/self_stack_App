@@ -1,29 +1,23 @@
-
 import 'package:dio/dio.dart';
+import 'package:self_stack/advisor/response/batch_model.dart';
 import 'package:self_stack/user/core/links.dart';
 
-class GetbatchService{
+class BatchService {
   Dio dio = Dio();
 
-  Future<Map<String, dynamic>> getBathDetails(String taskId, String courseId) async {
-    print(courseId.toString());
+  Future<Welcome> fetchData() async {
     try {
-      String apiUrl = "$loginApi/tasks/$taskId/tasks/$courseId$apikey";
-
+      String apiUrl = "$loginApi/batch$apikey";
       Response response = await dio.get(apiUrl);
+
       if (response.statusCode == 200) {
-        return response.data;
+        return Welcome.fromJson(response.data);
       } else {
-        throw Exception("Failed to retrieve task details. Status code: ${response.statusCode}");
+        throw Exception("Failed to retrieve data. Status code: ${response.statusCode}");
       }
     } catch (error) {
-      print('Error fetching task details: $error');
-      throw Exception("Error fetching task details: $error");
+      print('Error fetching data: $error');
+      throw Exception("Error fetching data: $error");
     }
   }
-}
-
-
-class UserDetails{
-  
 }
