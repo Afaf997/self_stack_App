@@ -269,7 +269,7 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                           // Replace the placeholder content with a TextField
                           TextField(
                             controller: pendingTopicsController,
-                            maxLines: null, // Allow multiple lines
+                            maxLines: null, 
                             style: const TextStyle(color: Colors.white),
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),

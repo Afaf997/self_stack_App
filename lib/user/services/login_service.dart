@@ -22,14 +22,11 @@ var data = {
       ),
     );
 
-    
     if(response.statusCode ==200){
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString('userId', response.data['userId'.toString()]); 
-
-    }
-    
-     
+        prefs.setString('userId', response.data['userId'.toString()]);
+        prefs.setString('roll', response.data['userRoll'].toString()); }
+        
 
    if(response.statusCode==401){
 

@@ -3,7 +3,7 @@ import 'package:self_stack/user/response/dashboard_model.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class CardScreen extends StatelessWidget {
-  final Dashboard dashboard;
+  final Users dashboard;
 
   const CardScreen({Key? key, required this.dashboard}) : super(key: key);
 

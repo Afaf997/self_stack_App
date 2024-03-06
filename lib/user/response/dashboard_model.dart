@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class Dashboard {
+class Users {
     User user;
     List<dynamic> attendance;
     String domain;
@@ -8,7 +8,7 @@ class Dashboard {
     String randomQuote;
     String randomAuthor;
 
-    Dashboard({
+    Users({
         required this.user,
         required this.attendance,
         required this.domain,
@@ -17,11 +17,11 @@ class Dashboard {
         required this.randomAuthor,
     });
 
-    factory Dashboard.fromRawJson(String str) => Dashboard.fromJson(json.decode(str));
+    factory Users.fromRawJson(String str) => Users.fromJson(json.decode(str));
 
     String toRawJson() => json.encode(toJson());
 
-    factory Dashboard.fromJson(Map<String, dynamic> json) => Dashboard(
+    factory Users.fromJson(Map<String, dynamic> json) => Users(
         user: User.fromJson(json["user"]),
         attendance: List<dynamic>.from(json["attendance"].map((x) => x)),
         domain: json["domain"],

@@ -20,6 +20,7 @@ Future<bool> postGoogleDataToAPI(Map<String, dynamic> googleUserData) async {
     if (response.statusCode == 200) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('userId', response.data['_id']);
+    prefs.setString('roll', response.data['roll']);
 
       return true;
     } else {

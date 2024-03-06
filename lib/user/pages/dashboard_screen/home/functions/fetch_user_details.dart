@@ -4,10 +4,11 @@ import 'package:self_stack/user/services/dashboard_service.dart';
 
 final getLoginservices getloginservices = getLoginservices();
    DashBoardBloc dashBoardbloc =DashBoardBloc();
-    Future<Map<String, dynamic>> fetchUserDetails(String userId) async {
+   Future<Map<String, dynamic>> fetchUserDetails(String? userId) async {
+
     try {
       Map<String, dynamic> userDetails =
-          await getloginservices.getUserDetails(userId);
+          await getloginservices.getUserDetails(userId!);
       dashBoardbloc.add(InitialEvent());
       return userDetails;
     } catch (error) {

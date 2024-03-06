@@ -39,7 +39,7 @@ class NotificationDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Heading: $notificationHeading',
+                '$notificationHeading',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   
@@ -49,7 +49,7 @@ class NotificationDetailScreen extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Text(
-                'Subtitle: $notificationSubtitle',
+                '$notificationSubtitle',
                 style: TextStyle(fontSize: 16, color: kwhiteModel),
               ),
             ],

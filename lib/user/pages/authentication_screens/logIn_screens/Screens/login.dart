@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/user/pages/authentication_screens/forgot/screens/forgot.dart';
+import 'package:self_stack/user/pages/authentication_screens/home_screen/splash.dart';
 import 'package:self_stack/user/pages/authentication_screens/logIn_screens/widgets/reusable.dart';
 import 'package:self_stack/user/pages/authentication_screens/logIn_screens/widgets/snackbar.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/screen/navigation_bar.dart';
@@ -56,7 +57,7 @@ class LoginPage extends StatelessWidget {
         } else if (state is LoginSuccessState) {
           log("message");
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => BottomNavbarScreen()));
+              context, MaterialPageRoute(builder: (context) => SplashScreen(delaySeconds: 0,)));
           SnackbarUtils.showSuccessSnackbar(context, 'Login successful!',
               subMessages: 'You have successfully signed into your account ');
         } else if (state is AuthErrorstate) {
@@ -65,7 +66,7 @@ class LoginPage extends StatelessWidget {
               subMessage: 'Ensure your username and password are correct.');
         } else if (state is googleAuthState) {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => BottomNavbarScreen()));
+              context, MaterialPageRoute(builder: (context) => SplashScreen()));
         }
       },
       builder: (context, state) {
@@ -241,7 +242,7 @@ class LoginPage extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => BottomNavbarScreen()));
+                              builder: (context) => SplashScreen(delaySeconds:0)));
                     } else {}
                   },
                   child: Container(

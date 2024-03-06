@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/batch.dart';
+import 'package:self_stack/advisor/screens/navigation_screen.dart/navigation_admin.dart';
 import 'package:self_stack/user/blocs/dashboard/bloc/dash_board_bloc.dart';
 import 'package:self_stack/user/pages/authentication_screens/logIn_screens/Screens/login.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/functions/fetch_user_details.dart';
@@ -47,11 +49,14 @@ class _HomeViewState extends State<HomeView> {
             builder: (context, userSnapshot) {
               if (userSnapshot.connectionState == ConnectionState.done) {
                 Map<String, dynamic> userDetails = userSnapshot.data!;
-                if (userDetails['domain'] == 'No') {
+               
+                  if (userDetails['domain'] == 'No') {
                   return DomainDesidePage();
                 }
-                Dashboard dashboard = Dashboard.fromJson(userDetails);
+                Users dashboard = Users.fromJson(userDetails);
                 return buildHomeScreen(context, dashboard);
+                
+                
               } else {
                 return buildLoadingWidget(kselfstackGreen);
               }
@@ -64,7 +69,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget buildHomeScreen(BuildContext context, Dashboard dashboard) {
+  Widget buildHomeScreen(BuildContext context, Users dashboard) {
     dashBoardbloc.add(InitialEvent());
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;

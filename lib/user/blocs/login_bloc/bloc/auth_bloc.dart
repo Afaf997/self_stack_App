@@ -37,7 +37,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   FutureOr<void> googleConnectEvent(GoogleConnectEvent event, Emitter<AuthState> emit)async{
 
-    // emit( googleAuthState());
+    emit( googleAuthState());
   }
 
   FutureOr<void> signUpNavigationEvent(
