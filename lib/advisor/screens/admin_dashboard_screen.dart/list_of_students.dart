@@ -1,8 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/status_of_student.dart';
+import 'package:self_stack/advisor/response/batch_model.dart';
+import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/edit_screen.dart';
+import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/review_updating.dart';
+import 'package:self_stack/advisor/services/batch_services.dart/get_batch.dart';
+import 'package:self_stack/utils/constans.dart';
 
 class StudentsBatchScreen extends StatefulWidget {
-  const StudentsBatchScreen({Key? key}) : super(key: key);
+  final int index;
+
+  const StudentsBatchScreen({Key? key, required this.index}) : super(key: key);
 
   @override
   _StudentsBatchScreenState createState() => _StudentsBatchScreenState();
@@ -12,12 +19,45 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
   List<StudentData> studentsList = [];
 
   @override
+  void initState() {
+    super.initState();
+    fetchDataAndUpdateList();
+  }
+
+  Future<void> fetchDataAndUpdateList() async {
+    try {
+      BatchService batchService = BatchService();
+      Welcome batchData = await batchService.fetchData();
+      
+      if (widget.index >= 0 && widget.index < batchData.batches.length) {
+        BatchElement selectedBatch = batchData.batches[widget.index];
+
+        setState(() {
+          studentsList = selectedBatch.batch.studentIds
+              .map((studentId) => StudentData(
+                   id: studentId.id,
+                    name: studentId.name,
+                    details: "${studentId.email}",
+                    avatarImage: studentId.image,
+                  ))
+              .toList();
+        });
+      } else {
+        print('Invalid index provided');
+      }
+    } catch (error) {
+      print('Error fetching and updating data: $error');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 82, 203, 86),
+      backgroundColor: kselfstackGreen,
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
         toolbarHeight: 100,
-        backgroundColor: Color.fromARGB(255, 82, 203, 86),
+        backgroundColor: kselfstackGreen,
         title: const Text(
           'Students Batch',
           style: TextStyle(
@@ -27,9 +67,13 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications, color: Colors.white),
+            icon: const Icon(Icons.notifications, color: kwhiteModel),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete, color: kwhiteModel),
             onPressed: () {
-              // Handle notification icon press
+              //  showDeleteConfirmationDialog(context);
             },
           ),
         ],
@@ -58,17 +102,29 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
                 borderRadius: BorderRadius.circular(15.0),
               ),
               child: ListTile(
-                leading: const CircleAvatar(
-                  backgroundColor: Colors.black,
-                  backgroundImage: AssetImage('assets/image.png'),
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(studentsList[index].avatarImage),
                 ),
-                title: Text(studentsList[index].name, style: const TextStyle(color: Colors.white)),
-                subtitle: Text(studentsList[index].details, style: const TextStyle(color: Colors.white)),
+                title: Text(studentsList[index].name,
+                    style: const TextStyle(color:kwhiteModel)),
+                subtitle: Text(studentsList[index].details,
+                    style: const TextStyle(color: kwhiteModel)),
+                trailing: IconButton(
+                  icon: const Icon(Icons.edit, color: kwhiteModel),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditStudentPage(userId:studentsList[index].id), 
+                      ),
+                    );
+                  },
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => StatusOfStudent(),
+                      builder: (context) => ReviewUpdatingPage(),
                     ),
                   );
                 },
@@ -82,8 +138,10 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
 }
 
 class StudentData {
+  final String id;
   final String name;
   final String details;
+  final String avatarImage;
 
-  StudentData({required this.name, required this.details});
+  StudentData({required this.id,  required this.name, required this.details, required this.avatarImage});
 }

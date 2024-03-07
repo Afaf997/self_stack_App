@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:self_stack/utils/constans.dart';
 
 class DomainPage extends StatefulWidget {
   const DomainPage({Key? key}) : super(key: key);
@@ -14,10 +15,10 @@ class _AttendancePageState extends State<DomainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor:kbackgroundmodel,
       appBar: AppBar(
         toolbarHeight: 100,
-        backgroundColor: Colors.green,
+        backgroundColor:kselfstackGreen,
         shape: const ContinuousRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomRight: Radius.circular(55.0),
@@ -27,7 +28,7 @@ class _AttendancePageState extends State<DomainPage> {
         title: const Text(
           'Domain Students',
           style: TextStyle(
-            color: Colors.white,
+            color: kwhiteModel,
           ),
         ),
         centerTitle: true,
@@ -51,7 +52,7 @@ class _AttendancePageState extends State<DomainPage> {
           _showAddDialog(context);
         },
         child:  Icon(Icons.add),
-        backgroundColor: Colors.green,
+        backgroundColor:kselfstackGreen,
       ),
     );
   }
@@ -79,7 +80,7 @@ class _AttendancePageState extends State<DomainPage> {
             style: const TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.bold,
-              color: Colors.white, 
+              color:kwhiteModel, 
             ),
           ),
         ],

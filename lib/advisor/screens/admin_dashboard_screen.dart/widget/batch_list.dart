@@ -30,7 +30,7 @@ class BatchList extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => StudentsBatchScreen(),
+                        builder: (context) => StudentsBatchScreen(index: index,),
                       ),
                     );
                   },

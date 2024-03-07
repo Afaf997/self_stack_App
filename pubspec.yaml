@@ -69,6 +69,7 @@ dependencies:
   firebase_analytics: ^10.8.7
   flutter_launcher_icons: ^0.13.1
   mongo_dart: ^0.10.0
+  flutter_dropdown: ^1.0.1+hotfix.1
 
   
 
