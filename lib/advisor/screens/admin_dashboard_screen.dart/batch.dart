@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/advisor/bloc/dashboard/bloc/batch_bloc.dart';
-import 'package:self_stack/advisor/response/batch_model.dart';
+import 'package:self_stack/advisor/response/domain_model.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/list_of_students.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/widget/add_batch_dialog.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/widget/batch_list.dart';
@@ -36,7 +36,13 @@ class _BatchScreenState extends State<BatchScreen> {
       },
       builder: (context, state) {
         return Scaffold(
-          // appBar: _buildAppBar(),
+          appBar: AppBar(
+            backgroundColor: kbackgroundmodel,
+            title: Padding(
+              padding: const EdgeInsets.only(top: 30),
+              child: Text("All Batches",style: TextStyle(color: kwhiteModel,fontWeight: FontWeight.bold,fontSize: 25),),
+            ),
+          ),
           backgroundColor: kbackgroundmodel,
           body: _buildBody(),
           floatingActionButton: _buildFloatingActionButton(),
@@ -48,9 +54,8 @@ class _BatchScreenState extends State<BatchScreen> {
 
   Widget _buildBody() {
     return Padding(
-      padding: EdgeInsets.only(top: 25),
+      padding: EdgeInsets.only(top: 20),
       child: Container(
-        height: 620,
         child: _buildFutureBuilder(),
       ),
     );
@@ -88,7 +93,7 @@ class _BatchScreenState extends State<BatchScreen> {
         BlocProvider.of<BatchBloc>(context).add(NavigationEvent());
       },
       child: Icon(Icons.add, color: kwhiteModel),
-      backgroundColor: kblackDark,
+      backgroundColor: kselfstackGreen,
     );
   }
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:self_stack/advisor/response/batch_model.dart';
+import 'package:self_stack/advisor/response/domain_model.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/list_of_students.dart';
 import 'package:self_stack/utils/constans.dart';
 
@@ -47,8 +47,14 @@ class BatchList extends StatelessWidget {
   Widget buildGridItem(BatchElement batch) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 172, 172, 172),
-        borderRadius: BorderRadius.circular(8.0),
+        color: kblackDark,
+        // borderRadius: BorderRadius.circular(8.0), 
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(8.0), topRight: Radius.circular(8.0))
+        // border: Border.all(
+        //   color: kwhiteModel,
+        //   width:0.7
+        // ), 
+        // border: BorderDirectional(start: BorderSide(color: kwhiteModel),)
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -56,11 +62,10 @@ class BatchList extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 30),
             child: Text(
-              'BATCH ${batch.batch.name}',
+              'Batch  ${batch.batch.name}',
               style: const TextStyle(
-                color:kblackDark,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+                color:kwhiteModel,
+                fontSize: 22,
               ),
             ),
           ),
@@ -68,7 +73,7 @@ class BatchList extends StatelessWidget {
           Container(
             height: 40,
             width: double.infinity,
-            color: kblackLight,
+            color: Color.fromARGB(132, 158, 158, 158),
             child: Center(
               child: Text(
                 '${batch.batch.studentIds?.length ?? 0} Students',

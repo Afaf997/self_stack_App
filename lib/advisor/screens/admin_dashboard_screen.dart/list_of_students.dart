@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:self_stack/advisor/response/batch_model.dart';
+import 'package:self_stack/advisor/response/domain_model.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/edit_screen.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/review_updating.dart';
 import 'package:self_stack/advisor/services/batch_services.dart/get_batch.dart';

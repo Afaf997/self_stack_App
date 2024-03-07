@@ -70,6 +70,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   mongo_dart: ^0.10.0
   flutter_typeahead: ^5.2.0
+  dropdown_search: ^5.0.6
 
   
 
