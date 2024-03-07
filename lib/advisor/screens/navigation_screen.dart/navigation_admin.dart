@@ -7,6 +7,8 @@ import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/batch.dar
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/list_of_students.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/review_updating.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/status_of_student.dart';
+import 'package:self_stack/advisor/screens/domain_screen.dart/domain_students.dart';
+import 'package:self_stack/advisor/screens/todo_screen.dart/admin_todo.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class BottomNavbarAdmin extends StatelessWidget {
@@ -24,8 +26,8 @@ class BottomNavbarAdmin extends StatelessWidget {
               index: (state as NavbarAdminInitial).tabIndex,
               children: [
                 BatchScreen(),
-                StudentsBatchScreen(),
-                ReviewUpdatingPage(),
+                TodoAdmin(),
+                DomainPage(),
                 StatusOfStudent(),
               ],
             ),

@@ -120,6 +120,7 @@ flutter:
     - assets/lottie/task.json
     - assets/lottie/box.json
     - assets/image/feedback.png
+    - assets/image/domain.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
