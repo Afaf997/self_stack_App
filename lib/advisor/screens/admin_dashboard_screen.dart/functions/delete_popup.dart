@@ -1,5 +1,6 @@
   import 'package:flutter/material.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/edit_screen.dart';
+import 'package:self_stack/utils/constans.dart';
 class DeleteConfirmationDialog extends StatelessWidget {
   final VoidCallback onConfirm;
 
@@ -8,14 +9,15 @@ class DeleteConfirmationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Confirm Deletion'),
-      content: Text('Are you sure you want to delete this user?'),
+      backgroundColor: kblackDark,
+      title: Text('Confirm Deletion',style: TextStyle(color: kwhiteModel),),
+      content: Text('Are you sure you want to delete this user?',style: TextStyle(color: kwhiteModel),),
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop(); // Close the dialog
+            Navigator.of(context).pop(); 
           },
-          child: Text('Cancel'),
+          child: Text('Cancel',style: TextStyle(color: kwhiteModel),),
         ),
         TextButton(
           onPressed: onConfirm,

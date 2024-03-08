@@ -1,8 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:self_stack/advisor/response/domain_model.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/edit_screen.dart';
-import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/review_updating.dart';
 import 'package:self_stack/advisor/services/batch_services.dart/get_batch.dart';
 import 'package:self_stack/utils/constans.dart';
 
@@ -24,31 +23,33 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
     fetchDataAndUpdateList();
   }
 
-  Future<void> fetchDataAndUpdateList() async {
-    try {
-      BatchService batchService = BatchService();
-      Welcome batchData = await batchService.fetchData();
-      
-      if (widget.index >= 0 && widget.index < batchData.batches.length) {
-        BatchElement selectedBatch = batchData.batches[widget.index];
+ Future<void> fetchDataAndUpdateList() async {
+  try {
+    BatchService batchService = BatchService();
+    Welcome batchData = await batchService.fetchData();
 
-        setState(() {
-          studentsList = selectedBatch.batch.studentIds
-              .map((studentId) => StudentData(
-                   id: studentId.id,
-                    name: studentId.name,
-                    details: "${studentId.email}",
-                    avatarImage: studentId.image,
-                  ))
-              .toList();
-        });
-      } else {
-        print('Invalid index provided');
-      }
-    } catch (error) {
-      print('Error fetching and updating data: $error');
+    if (widget.index >= 0 && widget.index < batchData.batches.length) {
+      BatchElement selectedBatch = batchData.batches[widget.index];
+
+      setState(() {
+        studentsList = selectedBatch.batch.studentIds
+            .map((studentId) => StudentData(
+                  id: studentId.id,
+                  name: studentId.name,
+                  details: "${studentId.email}",
+                  avatarImage: studentId.image,
+                  attendanceStatus: AttendanceStatus.offline, // Set to offline initially
+                ))
+            .toList();
+      });
+    } else {
+      print('Invalid index provided');
     }
+  } catch (error) {
+    print('Error fetching and updating data: $error');
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +80,7 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
         ],
       ),
       body: Container(
+        width: double.infinity,
         decoration: const BoxDecoration(
           color: Colors.black,
           borderRadius: BorderRadius.only(
@@ -89,44 +91,82 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
         child: ListView.builder(
           itemCount: studentsList.length,
           itemBuilder: (context, index) {
-            return Container(
-              width: double.infinity,
-              margin: EdgeInsets.only(
-                left: 20.0,
-                right: 20.0,
-                top: index == 0 ? 40.0 : 8.0,
-                bottom: 8.0,
-              ),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 43, 43, 43),
-                borderRadius: BorderRadius.circular(15.0),
+            return Slidable(
+              key: ValueKey(studentsList[index].id),
+              endActionPane: ActionPane(
+                motion: const DrawerMotion(),
+                children: [
+                  SlidableAction(
+                    backgroundColor: kblueTheme,
+                    icon: Icons.edit,
+                    label: 'Edit',
+                    onPressed: (context) => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditStudentPage(userId: studentsList[index].id),
+                      ),
+                    ),
+                  ),
+                  SlidableAction(
+                    backgroundColor: kredtheme,
+                    icon: Icons.delete,
+                    label: 'Delete',
+                    onPressed: (context) {
+                      // Handle delete action
+                    },
+                  ),
+                ],
               ),
               child: ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
                 leading: CircleAvatar(
                   backgroundImage: NetworkImage(studentsList[index].avatarImage),
                 ),
                 title: Text(studentsList[index].name,
-                    style: const TextStyle(color:kwhiteModel)),
-                subtitle: Text(studentsList[index].details,
                     style: const TextStyle(color: kwhiteModel)),
-                trailing: IconButton(
-                  icon: const Icon(Icons.edit, color: kwhiteModel),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EditStudentPage(userId:studentsList[index].id), 
-                      ),
-                    );
-                  },
+                subtitle: Row(
+                  children: [
+                    Expanded(
+                      child: Text(studentsList[index].details,
+                          style: const TextStyle(color: kwhiteModel)),
+                    ),
+                    const SizedBox(width: 8.0),
+                   DropdownButtonHideUnderline(
+  child: DropdownButton<AttendanceStatus>(
+    dropdownColor: kblackDark,
+    value: studentsList[index].attendanceStatus,
+    icon: const Icon(Icons.arrow_drop_down, color: kwhiteModel),
+    iconSize: 24,
+    elevation: 16,
+    style: const TextStyle(color: kwhiteModel),
+    onChanged: (AttendanceStatus? newValue) {
+      if (newValue != null) {
+        setState(() {
+          studentsList[index].attendanceStatus = newValue;
+        });
+      }
+    },
+    items: AttendanceStatus.values.map<DropdownMenuItem<AttendanceStatus>>((AttendanceStatus value) {
+      return DropdownMenuItem<AttendanceStatus>(
+        value: value,
+        child: Text(getStatusText(value)),
+      );
+    }).toList(),
+  ),
+),
+
+                  ],
+                ),
+                trailing: Container(
+                  width: 20.0,
+                  height: 20.0,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: getAttendanceColor(studentsList[index].attendanceStatus),
+                  ),
                 ),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ReviewUpdatingPage(),
-                    ),
-                  );
+                  // Handle onTap action
                 },
               ),
             );
@@ -135,6 +175,32 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
       ),
     );
   }
+
+  Color getAttendanceColor(AttendanceStatus status) {
+    switch (status) {
+      case AttendanceStatus.present:
+        return kselfstackGreen;
+      case AttendanceStatus.absent:
+        return kredtheme;
+      case AttendanceStatus.halfDay:
+        return kblueTheme;
+      case AttendanceStatus.offline:
+        return kblackLight;
+    }
+  }
+
+  String getStatusText(AttendanceStatus status) {
+    switch (status) {
+      case AttendanceStatus.present:
+        return 'Present';
+      case AttendanceStatus.absent:
+        return 'Absent';
+      case AttendanceStatus.halfDay:
+        return 'Half Day';
+      case AttendanceStatus.offline:
+        return 'Offline';
+    }
+  }
 }
 
 class StudentData {
@@ -142,6 +208,20 @@ class StudentData {
   final String name;
   final String details;
   final String avatarImage;
+  AttendanceStatus attendanceStatus;
 
-  StudentData({required this.id,  required this.name, required this.details, required this.avatarImage});
+  StudentData({
+    required this.id,
+    required this.name,
+    required this.details,
+    required this.avatarImage,
+    required this.attendanceStatus,
+  });
+}
+
+enum AttendanceStatus {
+  present,
+  absent,
+  halfDay,
+  offline,
 }
