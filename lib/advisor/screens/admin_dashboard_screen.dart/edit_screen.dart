@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:dropdown_search/dropdown_search.dart';
-import 'package:self_stack/advisor/response/batches_model.dart'; // Import your data model
-import 'package:self_stack/advisor/response/domain_model.dart'; // Import your domain data model
+import 'package:self_stack/advisor/response/batches_model.dart';
+import 'package:self_stack/advisor/response/domain_model.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/functions/delete_popup.dart';
 import 'package:self_stack/advisor/services/batch_services.dart/domain_service.dart';
 import 'package:self_stack/advisor/services/batch_services.dart/get_batch.dart';
@@ -112,26 +111,16 @@ class _EditStudentPageState extends State<EditStudentPage> {
                     buildTextField('Age', keyboardType: TextInputType.number, initialValue: userDetails!['user']['age'].toString()),
                     buildTextField('Date of Birth', hintText: 'YYYY-MM-DD', initialValue: userDetails!['user']['dateOfBirth'].toString()),
                     buildTextField('Email', keyboardType: TextInputType.emailAddress, initialValue: userDetails!['user']['email']),
-                    buildDropdownSearch(
-                      'Batch',
-                      initialValue: selectedBatch,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedBatch = value;
-                        });
-                      },
-                      items: batchOptions,
-                    ),
-                    buildDropdownSearch(
-                      'Domain',
-                      initialValue: selectedDomain,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedDomain = value;
-                        });
-                      },
-                      items: domainOptions,
-                    ),
+                    buildDropdownField('Batch', initialValue: selectedBatch, options: batchOptions, onChanged: (value) {
+                      setState(() {
+                        selectedBatch = value;
+                      });
+                    }),
+                    buildDropdownField('Domain', initialValue: selectedDomain, options: domainOptions, onChanged: (value) {
+                      setState(() {
+                        selectedDomain = value;
+                      });
+                    }),
                     buildTextField('Gender', initialValue: userDetails!['user']['gender']),
                     buildTextField('Place', initialValue: userDetails!['user']['place']),
                     buildTextField('Address', initialValue: userDetails!['user']['address']),
@@ -190,32 +179,53 @@ class _EditStudentPageState extends State<EditStudentPage> {
     );
   }
 
-  Widget buildDropdownSearch(String labelText,
-      {String? initialValue, required void Function(String?) onChanged, required List<String> items}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(labelText, style: TextStyle(fontSize: 15, color: kwhiteModel)),
-        SizedBox(height: 5),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.0),
-            border: Border.all(color: kwhiteModel),
-          ),
-          child: DropdownSearch<String>(
-            // mode: DropdownSearchMode.MENU,
-            // showSelectedItem: true,
-            items: items,
-            // label: 'Select $labelText',
-            onChanged: onChanged,
-            selectedItem: initialValue,
-            // popupItemDisabled: (String s) => s.startsWith('I am Disabled'),
-            // You can customize the dropdown further according to your needs
-          ),
+  Widget buildDropdownField(String labelText,
+    {String? initialValue, required List<String> options, required void Function(String?) onChanged}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(labelText, style: TextStyle(fontSize: 15, color: kwhiteModel)),
+      SizedBox(height: 5),
+      Container(
+        decoration: BoxDecoration(
+          color: Colors.black, // Set the background color to black
+          border: Border.all(color: kwhiteModel),
+          borderRadius: BorderRadius.circular(8.0),
         ),
-        SizedBox(height: 16),
-      ],
-    );
-  }
+        child: Row(
+          children: [
+            Expanded(
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  dropdownColor: kblackDark,
+                  value: initialValue,
+                  icon: Icon(Icons.arrow_drop_down, color: kwhiteModel),
+                  iconSize: 24,
+                  elevation: 16,
+                  style: TextStyle(color: kwhiteModel),
+                  onChanged: onChanged,
+                  items: options.map((String option) {
+                    return DropdownMenuItem<String>(    
+
+                      value: option,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          option,
+                          style: TextStyle(color: kwhiteModel),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      SizedBox(height: 16),
+    ],
+  );
+}
+
 }
