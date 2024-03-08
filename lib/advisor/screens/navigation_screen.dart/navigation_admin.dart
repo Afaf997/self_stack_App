@@ -4,8 +4,6 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:self_stack/advisor/bloc/navigation/bloc/navbar_admin_bloc.dart';
 import 'package:self_stack/advisor/bloc/navigation/bloc/navbar_admin_state.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/batch.dart';
-import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/list_of_students.dart';
-import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/review_updating.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/status_of_student.dart';
 import 'package:self_stack/advisor/screens/domain_screen.dart/domain_students.dart';
 import 'package:self_stack/advisor/screens/todo_screen.dart/admin_todo.dart';
@@ -26,9 +24,9 @@ class BottomNavbarAdmin extends StatelessWidget {
               index: (state as NavbarAdminInitial).tabIndex,
               children: [
                 BatchScreen(),
-                TodoAdmin(),
-                DomainPage(),
+                TodoAdmin(),           
                 StatusOfStudent(),
+                DomainPage(),
               ],
             ),
             bottomNavigationBar: Container(

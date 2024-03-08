@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:self_stack/advisor/response/batches_model.dart';
-import 'package:self_stack/advisor/response/domain_model.dart';
+import 'package:dropdown_search/dropdown_search.dart';
+import 'package:self_stack/advisor/response/batches_model.dart'; // Import your data model
+import 'package:self_stack/advisor/response/domain_model.dart'; // Import your domain data model
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/functions/delete_popup.dart';
 import 'package:self_stack/advisor/services/batch_services.dart/domain_service.dart';
 import 'package:self_stack/advisor/services/batch_services.dart/get_batch.dart';
@@ -23,6 +24,7 @@ class _EditStudentPageState extends State<EditStudentPage> {
   late BatchService _batchService;
   late DomainService _domainService;
   late List<String> batchOptions;
+  late List<String> domainOptions;
 
   @override
   void initState() {
@@ -30,8 +32,10 @@ class _EditStudentPageState extends State<EditStudentPage> {
     _batchService = BatchService();
     _domainService = DomainService();
     batchOptions = [];
+    domainOptions = [];
     loadUserDetails();
     loadBatchOptions();
+    loadDomainOptions();
   }
 
   Future<void> loadUserDetails() async {
@@ -49,7 +53,7 @@ class _EditStudentPageState extends State<EditStudentPage> {
 
   Future<void> loadBatchOptions() async {
     try {
-     Welcome batchResponse = await _batchService.fetchData();
+      Welcome batchResponse = await _batchService.fetchData();
       setState(() {
         batchOptions = batchResponse.batches.map((batch) => batch.batch.name).toList();
         selectedBatch = userDetails?['user']['batch'];
@@ -59,15 +63,17 @@ class _EditStudentPageState extends State<EditStudentPage> {
     }
   }
 
- Future<void> loadDomainOptions() async {
-  try {
-    List<Domainbatch> domainList = await _domainService.DomainfetchData();
-    // Handle the domainList as needed
-  } catch (error) {
-    print('Error fetching domain options: $error');
+  Future<void> loadDomainOptions() async {
+    try {
+      List<Domainbatch> domainList = await _domainService.DomainfetchData();
+      setState(() {
+        domainOptions = domainList.map((domain) => domain.courseName).toList();
+        selectedDomain = userDetails?['domain'];
+      });
+    } catch (error) {
+      print('Error fetching domain options: $error');
+    }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -106,14 +112,26 @@ class _EditStudentPageState extends State<EditStudentPage> {
                     buildTextField('Age', keyboardType: TextInputType.number, initialValue: userDetails!['user']['age'].toString()),
                     buildTextField('Date of Birth', hintText: 'YYYY-MM-DD', initialValue: userDetails!['user']['dateOfBirth'].toString()),
                     buildTextField('Email', keyboardType: TextInputType.emailAddress, initialValue: userDetails!['user']['email']),
-                    buildDropdownField('Batch', initialValue: selectedBatch, onChanged: (value) {
-                      selectedBatch = value;
-                      loadBatchOptions();
-                    }),
-                    buildDropdownField('Domain', initialValue: selectedDomain, onChanged: (value) {
-                      selectedDomain = value;
-                      loadDomainOptions();
-                    }),
+                    buildDropdownSearch(
+                      'Batch',
+                      initialValue: selectedBatch,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedBatch = value;
+                        });
+                      },
+                      items: batchOptions,
+                    ),
+                    buildDropdownSearch(
+                      'Domain',
+                      initialValue: selectedDomain,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedDomain = value;
+                        });
+                      },
+                      items: domainOptions,
+                    ),
                     buildTextField('Gender', initialValue: userDetails!['user']['gender']),
                     buildTextField('Place', initialValue: userDetails!['user']['place']),
                     buildTextField('Address', initialValue: userDetails!['user']['address']),
@@ -172,8 +190,8 @@ class _EditStudentPageState extends State<EditStudentPage> {
     );
   }
 
-  Widget buildDropdownField(String labelText,
-      {String? initialValue, required void Function(String?) onChanged}) {
+  Widget buildDropdownSearch(String labelText,
+      {String? initialValue, required void Function(String?) onChanged, required List<String> items}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -185,31 +203,15 @@ class _EditStudentPageState extends State<EditStudentPage> {
             borderRadius: BorderRadius.circular(8.0),
             border: Border.all(color: kwhiteModel),
           ),
-          child: DropdownButtonFormField<String>(
-            value: initialValue,
-            dropdownColor: kblackDark,
-            icon: Icon(Icons.arrow_drop_down, color: kwhiteModel),
-            style: TextStyle(color: kwhiteModel),
-            items: ['All', ...batchOptions].map((String option) {
-              return DropdownMenuItem<String>(
-                value: option,
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: Container(
-                    color: kblackDark,
-                    child: Text(
-                      option,
-                      style: TextStyle(color: kselfstackGreen),
-                    ),
-                  ),
-                ),
-              );
-            }).toList(),
+          child: DropdownSearch<String>(
+            // mode: DropdownSearchMode.MENU,
+            // showSelectedItem: true,
+            items: items,
+            // label: 'Select $labelText',
             onChanged: onChanged,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-            ),
-            elevation: 5,
+            selectedItem: initialValue,
+            // popupItemDisabled: (String s) => s.startsWith('I am Disabled'),
+            // You can customize the dropdown further according to your needs
           ),
         ),
         SizedBox(height: 16),

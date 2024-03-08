@@ -55,8 +55,6 @@ dependencies:
   google_nav_bar: ^5.0.6
   color: ^3.0.0
   firebase_messaging: ^14.7.17
-  easy_pie_chart: ^1.0.0
-  pie_chart: ^5.4.0
   syncfusion_flutter_charts: ^24.2.5
   fl_chart: ^0.66.2
   table_calendar: ^3.1.0
@@ -67,7 +65,6 @@ dependencies:
   flutter_local_notifications: ^16.3.2
   overlay_support: ^2.1.0
   firebase_analytics: ^10.8.7
-  flutter_launcher_icons: ^0.13.1
   mongo_dart: ^0.10.0
   flutter_typeahead: ^5.2.0
   dropdown_search: ^5.0.6
