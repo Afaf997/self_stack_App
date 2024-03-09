@@ -6,6 +6,7 @@ import 'package:self_stack/advisor/bloc/navigation/bloc/navbar_admin_state.dart'
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/batch.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/status_of_student.dart';
 import 'package:self_stack/advisor/screens/domain_screen.dart/domain_students.dart';
+import 'package:self_stack/advisor/screens/profile_screen.dart/profile_admin.dart';
 import 'package:self_stack/advisor/screens/todo_screen.dart/admin_todo.dart';
 import 'package:self_stack/utils/constans.dart';
 
@@ -25,8 +26,8 @@ class BottomNavbarAdmin extends StatelessWidget {
               children: [
                 BatchScreen(),
                 TodoAdmin(),           
-                StatusOfStudent(),
                 DomainPage(),
+                AdvisorProfile(),
               ],
             ),
             bottomNavigationBar: Container(
@@ -61,16 +62,16 @@ class BottomNavbarAdmin extends StatelessWidget {
                       iconActiveColor: kselfstackGreen,
                     ),
                     GButton(
-                      icon: Icons.calendar_month_outlined,
-                      text: 'Attendance',
+                      icon: Icons.domain,
+                      text: 'Domain',
                       iconColor: kwhiteModel,
                       textColor: kselfstackGreen,
                       iconActiveColor: kselfstackGreen,
                     ),
                     
                     GButton(
-                      icon: Icons.domain,
-                      text: 'Domain',
+                      icon: Icons.person,
+                      text: 'Profile',
                       iconColor: kwhiteModel,
                       textColor: kselfstackGreen,
                       iconActiveColor: kselfstackGreen,

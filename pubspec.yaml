@@ -49,14 +49,11 @@ dependencies:
   google_sign_in: ^6.2.1
   lottie: ^3.0.0
   bottom_navy_bar: ^6.0.0
-  curved_navigation_bar: ^1.0.3
   persistent_bottom_nav_bar: ^5.0.2
-  get: ^4.6.6
   google_nav_bar: ^5.0.6
   color: ^3.0.0
   firebase_messaging: ^14.7.17
   syncfusion_flutter_charts: ^24.2.5
-  fl_chart: ^0.66.2
   table_calendar: ^3.1.0
   intl: ^0.19.0
   slidable_bar: ^1.1.1
@@ -83,6 +80,11 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/image/selfstack.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
