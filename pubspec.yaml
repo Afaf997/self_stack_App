@@ -41,15 +41,12 @@ dependencies:
   bloc: ^8.1.2
   flutter_bloc: ^8.1.3
   flutter_otp_text_field: ^1.1.1
-  pinput: ^3.0.1
   shared_preferences: ^2.2.2
   firebase_auth: ^4.16.0
   firebase_core: ^2.25.3
   sign_in_button: ^3.2.0
   google_sign_in: ^6.2.1
   lottie: ^3.0.0
-  bottom_navy_bar: ^6.0.0
-  persistent_bottom_nav_bar: ^5.0.2
   google_nav_bar: ^5.0.6
   color: ^3.0.0
   firebase_messaging: ^14.7.17
@@ -58,13 +55,12 @@ dependencies:
   intl: ^0.19.0
   slidable_bar: ^1.1.1
   chart_sparkline: ^1.0.15+1
-  dashed_circular_progress_bar: ^0.0.6
   flutter_local_notifications: ^16.3.2
   overlay_support: ^2.1.0
   firebase_analytics: ^10.8.7
   mongo_dart: ^0.10.0
   dropdown_search: ^5.0.6
-  autocomplete_textfield: ^2.0.1
+
   flutter_slidable: ^3.0.1
   
 
@@ -84,7 +80,8 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/image/selfstack.png"
+  image_path: "assets/image/app_icon.png"
+ 
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -102,8 +99,8 @@ flutter:
     - assets/image/selfstack.png
     - assets/image/homepage.png
     - assets/image/hand.png
+    - assets/image/app_icon.png
     - assets/image/google_pic.png
-    - assets/image/star2.png
     - assets/image/lock.png
     - assets/image/lock1.png
     - assets/image/background.jpg
@@ -114,12 +111,8 @@ flutter:
     - assets/image/lock3.png
     - assets/image/lock4.png
     - assets/image/lock5.png
-    - assets/image/tick.png
-    - assets/image/self_stack_icon.png
     - assets/image/tick1.png
     - assets/image/unlock.png
-    - assets/image/unlock1.png
-    - assets/image/unlock2.png
     - assets/lottie/task.json
     - assets/lottie/box.json
     - assets/image/feedback.png
