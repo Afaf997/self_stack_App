@@ -44,38 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyC2yeZowOvOluchF6dmMRroe1aETl_9bNw',
-    appId: '1:569932012172:web:6bf9c82c84078e939639a9',
-    messagingSenderId: '569932012172',
-    projectId: 'self-stack-project',
-    authDomain: 'self-stack-project.firebaseapp.com',
-    storageBucket: 'self-stack-project.appspot.com',
-    measurementId: 'G-H778E1P3HN',
+    apiKey: 'AIzaSyCP6QCMl9u72xssYcWXlt5PCZV6WzM6chc',
+    appId: '1:853468185307:web:78888fbe6acbfe24bd82fe',
+    messagingSenderId: '853468185307',
+    projectId: 'organization-self-stack',
+    authDomain: 'organization-self-stack.firebaseapp.com',
+    storageBucket: 'organization-self-stack.appspot.com',
+    measurementId: 'G-6LRQMS18TN',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAYXY8GjaX54ZemAUMuXSQRw2DddSk-X9k',
-    appId: '1:569932012172:android:04f61e6cbaf593e39639a9',
-    messagingSenderId: '569932012172',
-    projectId: 'self-stack-project',
-    storageBucket: 'self-stack-project.appspot.com',
+    apiKey: 'AIzaSyAXvw9Yj1v3sUdoe1EH9l5pNyQJmb_ahQo',
+    appId: '1:853468185307:android:65366c02e52a4c64bd82fe',
+    messagingSenderId: '853468185307',
+    projectId: 'organization-self-stack',
+    storageBucket: 'organization-self-stack.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAWHZIAN4_05cW9JBl3kcNkBx7djOROuik',
-    appId: '1:569932012172:ios:97bb88bf96a904119639a9',
-    messagingSenderId: '569932012172',
-    projectId: 'self-stack-project',
-    storageBucket: 'self-stack-project.appspot.com',
+    apiKey: 'AIzaSyDdYcTn4q_ZvHRuFUWU1k-9JnnIluALFnI',
+    appId: '1:853468185307:ios:29a64e3da2a50f09bd82fe',
+    messagingSenderId: '853468185307',
+    projectId: 'organization-self-stack',
+    storageBucket: 'organization-self-stack.appspot.com',
     iosBundleId: 'com.example.selfStack',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAWHZIAN4_05cW9JBl3kcNkBx7djOROuik',
-    appId: '1:569932012172:ios:8b9ca3a5f69284389639a9',
-    messagingSenderId: '569932012172',
-    projectId: 'self-stack-project',
-    storageBucket: 'self-stack-project.appspot.com',
+    apiKey: 'AIzaSyDdYcTn4q_ZvHRuFUWU1k-9JnnIluALFnI',
+    appId: '1:853468185307:ios:61cd61dcce1c1721bd82fe',
+    messagingSenderId: '853468185307',
+    projectId: 'organization-self-stack',
+    storageBucket: 'organization-self-stack.appspot.com',
     iosBundleId: 'com.example.selfStack.RunnerTests',
   );
 }

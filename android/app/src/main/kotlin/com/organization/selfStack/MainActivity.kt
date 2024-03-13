@@ -1,4 +1,4 @@
-package com.example.self_stack
+package com.organization.selfStack
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/advisor/bloc/dashboard/bloc/batch_bloc.dart';
 import 'package:self_stack/advisor/response/domain_model.dart';
-import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/list_of_students.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/widget/add_batch_dialog.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/widget/batch_list.dart';
 import 'package:self_stack/advisor/screens/navigation_screen.dart/navigation_admin.dart';

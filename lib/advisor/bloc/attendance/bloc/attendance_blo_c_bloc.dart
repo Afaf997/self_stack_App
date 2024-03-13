@@ -7,7 +7,7 @@ part 'attendance_blo_c_state.dart';
 class AttendanceBloCBloc extends Bloc<AttendanceBloCEvent, AttendanceBloCState> {
   AttendanceBloCBloc() : super(AttendanceBloCInitial()) {
     on<AttendanceBloCEvent>((event, emit) {
-      // TODO: implement event handler
+        
     });
   }
 }

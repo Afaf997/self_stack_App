@@ -87,7 +87,7 @@ class SignUpForm extends StatelessWidget {
               return null;
             },
           ),
-          SizedBox(height: screenHeight * 0.06),
+          SizedBox(height: screenHeight * 0.07),
           SignUpButton(onPressed: onSignUpPressed),
           SizedBox(height: screenHeight * 0.02),
           GestureDetector(
