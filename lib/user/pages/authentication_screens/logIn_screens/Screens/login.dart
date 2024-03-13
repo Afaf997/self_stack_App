@@ -6,7 +6,6 @@ import 'package:self_stack/user/pages/authentication_screens/forgot/screens/forg
 import 'package:self_stack/user/pages/authentication_screens/home_screen/splash.dart';
 import 'package:self_stack/user/pages/authentication_screens/logIn_screens/widgets/reusable.dart';
 import 'package:self_stack/user/pages/authentication_screens/logIn_screens/widgets/snackbar.dart';
-import 'package:self_stack/user/pages/dashboard_screen/home/screen/navigation_bar.dart';
 import 'package:self_stack/user/repository/firebase_auth_repository.dart';
 import 'package:self_stack/user/services/google_signup_service.dart';
 import 'package:self_stack/utils/constans.dart';
@@ -20,25 +19,30 @@ class LoginPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  String? _validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your email';
-    } else if (!_isValidEmail(value)) {
-      return 'Please enter a valid email address';
-    }
-    return null;
+String? _validateEmail(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter your email';
+  } else if (!_isValidEmail(value)) {
+    return 'Please enter a valid email address';
+  } else if (!_containsOnlyLowerCaseLetters(value)) {
+    return 'Email should only contain lowercase letters';
   }
+  return null;
+}
+
+bool _containsOnlyLowerCaseLetters(String value) {
+  return RegExp(r'^[a-z]+$').hasMatch(value);
+}
+
+bool _isValidEmail(String value) {
+  return RegExp(r'^[\w-]+(\.[\w-]+)*@([a-z\d-]+\.)+[a-z]{2,}$').hasMatch(value);
+}
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your password';
     }
     return null;
-  }
-
-  bool _isValidEmail(String email) {
-    return RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
-        .hasMatch(email);
   }
 
   @override

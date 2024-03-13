@@ -66,7 +66,7 @@ class DomainDesidePage extends StatelessWidget {
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                // Add functionality to send the message
+                
               },
               child: Text("Send"),
             ),

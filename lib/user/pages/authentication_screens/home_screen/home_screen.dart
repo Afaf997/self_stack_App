@@ -15,7 +15,8 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const Padding(
-                padding: EdgeInsets.only(right: 140, top: 50),
+                padding
+                : EdgeInsets.only(right: 140, top: 50),
                 child: Text("Welcome",
                   style: TextStyle(color: kwhiteModel, fontSize: 42,
                   ),

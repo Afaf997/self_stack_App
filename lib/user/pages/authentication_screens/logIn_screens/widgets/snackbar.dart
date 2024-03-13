@@ -13,7 +13,7 @@ class SnackbarUtils {
            ksizedboxA,
             Text(
               subMessages!,
-              style:const TextStyle(fontSize: 12, color:kbackgroundmodel),
+              style:const TextStyle(fontSize: 12, color:kwhiteModel),
             ),
           ],
         ),

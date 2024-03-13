@@ -12,7 +12,12 @@
           "package_name": "com.organization.selfStack"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "853468185307-l6q3lg38ct8h0hoohpst7huol7ou6u53.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAXvw9Yj1v3sUdoe1EH9l5pNyQJmb_ahQo"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "853468185307-l6q3lg38ct8h0hoohpst7huol7ou6u53.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "853468185307-j5f3iuq2i5bbnt4ckgollu5qgh0nds50.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.selfStack.RunnerTests"
+              }
+            }
+          ]
         }
       }
     }

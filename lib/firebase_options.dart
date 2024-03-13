@@ -67,6 +67,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '853468185307',
     projectId: 'organization-self-stack',
     storageBucket: 'organization-self-stack.appspot.com',
+    iosClientId: '853468185307-kbrsgko9p7qsdmvoqh5428jkpdp1aecm.apps.googleusercontent.com',
     iosBundleId: 'com.example.selfStack',
   );
 
@@ -76,6 +77,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '853468185307',
     projectId: 'organization-self-stack',
     storageBucket: 'organization-self-stack.appspot.com',
+    iosClientId: '853468185307-j5f3iuq2i5bbnt4ckgollu5qgh0nds50.apps.googleusercontent.com',
     iosBundleId: 'com.example.selfStack.RunnerTests',
   );
 }

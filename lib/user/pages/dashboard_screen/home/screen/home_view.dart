@@ -51,7 +51,8 @@ class _HomeViewState extends State<HomeView> {
                 Map<String, dynamic> userDetails = userSnapshot.data!;
                
                   if (userDetails['domain'] == 'No') {
-                  return DomainDesidePage();
+                      Navigator.push(context,
+              MaterialPageRoute(builder: (context) =>DomainDesidePage()));
                 }
                 Users dashboard = Users.fromJson(userDetails);
                 return buildHomeScreen(context, dashboard);

@@ -12,11 +12,14 @@ class getLoginservices {
 
       Response response = await dio.get(apiUrl);
       if (response.statusCode == 200) {
-      //  log(response.toString());
-        return response.data;
-      } else {
-        throw Exception("Failed to retrieve user details. Status code: ${response.statusCode}");
-      }
+  return response.data;
+} else if (response.statusCode == 404) {
+  print("User not found");
+  return {}; 
+} else {
+  throw Exception("Failed to retrieve user details. Status code: ${response.statusCode}");
+}
+
     } catch (error) {
       return Future.error(error);
     }
