@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:self_stack/advisor/response/batches_model.dart';
 import 'package:self_stack/advisor/response/domain_model.dart';
@@ -24,6 +26,7 @@ class _EditStudentPageState extends State<EditStudentPage> {
   late DomainService _domainService;
   late List<String> batchOptions;
   late List<String> domainOptions;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -54,7 +57,9 @@ class _EditStudentPageState extends State<EditStudentPage> {
     try {
       Welcome batchResponse = await _batchService.fetchData();
       setState(() {
-        batchOptions = batchResponse.batches.map((batch) => batch.batch.name).toList();
+        Set<String> batchNames = batchResponse.batches.map((batch) => batch.batch.name.toString()).toSet();
+        batchOptions = batchNames.toList();
+        log(batchOptions[0].toString());
         selectedBatch = userDetails?['user']['batch'];
       });
     } catch (error) {
@@ -66,7 +71,7 @@ class _EditStudentPageState extends State<EditStudentPage> {
     try {
       List<Domainbatch> domainList = await _domainService.DomainfetchData();
       setState(() {
-        domainOptions = domainList.map((domain) => domain.courseName).toList();
+        domainOptions = domainList.map((domain) => domain.courseName).toSet().toList();
         selectedDomain = userDetails?['domain'];
       });
     } catch (error) {
@@ -100,51 +105,57 @@ class _EditStudentPageState extends State<EditStudentPage> {
           padding: const EdgeInsets.all(16.0),
           child: userDetails == null
               ? Center(
-                  child: CircularProgressIndicator(
-                    color: kselfstackGreen,
-                  ),
-                )
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildTextField('Name', initialValue: userDetails!['user']['name']),
-                    buildTextField('Age', keyboardType: TextInputType.number, initialValue: userDetails!['user']['age'].toString()),
-                    buildTextField('Date of Birth', hintText: 'YYYY-MM-DD', initialValue: userDetails!['user']['dateOfBirth'].toString()),
-                    buildTextField('Email', keyboardType: TextInputType.emailAddress, initialValue: userDetails!['user']['email']),
-                    buildDropdownField('Batch', initialValue: selectedBatch, options: batchOptions, onChanged: (value) {
-                      setState(() {
-                        selectedBatch = value;
-                      });
-                    }),
-                    buildDropdownField('Domain', initialValue: selectedDomain, options: domainOptions, onChanged: (value) {
-                      setState(() {
-                        selectedDomain = value;
-                      });
-                    }),
-                    buildTextField('Gender', initialValue: userDetails!['user']['gender']),
-                    buildTextField('Place', initialValue: userDetails!['user']['place']),
-                    buildTextField('Address', initialValue: userDetails!['user']['address']),
-                    buildTextField('Guardian Name', initialValue: userDetails!['user']['guardian']),
-                    buildTextField('Education Qualification', initialValue: userDetails!['user']['educationQualification']),
-                    SizedBox(height: 24),
-                    Container(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Handle submit button click
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: kselfstackGreen,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                        ),
-                        child: Text('Submit', style: TextStyle(color: Colors.black)),
+            child: CircularProgressIndicator(
+              color: kselfstackGreen,
+            ),
+          )
+              : Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                buildTextField('Name', initialValue: userDetails!['user']['name']),
+                buildTextField('Age', keyboardType: TextInputType.number, initialValue: userDetails!['user']['age'].toString()),
+                buildTextField('Date of Birth', hintText: 'YYYY-MM-DD', initialValue: userDetails!['user']['dateOfBirth'].toString()),
+                buildTextField('Email', keyboardType: TextInputType.emailAddress, initialValue: userDetails!['user']['email']),
+                buildDropdownField('Batch', initialValue: selectedBatch, options: batchOptions, onChanged: (value) {
+                  setState(() {
+                    selectedBatch = value;
+                  });
+                }),
+                buildDropdownField('Domain', initialValue: selectedDomain, options: domainOptions, onChanged: (value) {
+                  setState(() {
+                    selectedDomain = value;
+                  });
+                }),
+                buildTextField('Gender', initialValue: userDetails!['user']['gender']),
+                buildTextField('Place', initialValue: userDetails!['user']['place']),
+                buildTextField('Address', initialValue: userDetails!['user']['address']),
+                buildTextField('Guardian Name', initialValue: userDetails!['user']['guardian']),
+                buildTextField('Education Qualification', initialValue: userDetails!['user']['educationQualification']),
+                SizedBox(height: 24),
+                Container(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        // If all validations pass, proceed with the submit action
+                        // Handle submit button click
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: kselfstackGreen,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
+                      padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
                     ),
-                  ],
+                    child: Text('Submit', style: TextStyle(color: Colors.black)),
+                  ),
                 ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -161,6 +172,12 @@ class _EditStudentPageState extends State<EditStudentPage> {
           style: TextStyle(color: Colors.white),
           keyboardType: keyboardType,
           initialValue: initialValue,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter $labelText';
+            }
+            return null;
+          },
           decoration: InputDecoration(
             hintText: hintText ?? 'Enter $labelText',
             hintStyle: TextStyle(color: Colors.white54),
@@ -172,60 +189,78 @@ class _EditStudentPageState extends State<EditStudentPage> {
               borderSide: BorderSide(color: Colors.white),
               borderRadius: BorderRadius.circular(8.0),
             ),
+            errorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.red), // Change border color to red on error
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.red), // Change border color to red on error
+              borderRadius: BorderRadius.circular(8.0),
+            ),
           ),
         ),
+        SizedBox(height: 8),
+        if (_formKey.currentState?.validate() ?? false)
+          Text(
+            'Please enter a valid $labelText',
+            style: TextStyle(color: Colors.red, fontSize: 12),
+          ),
         SizedBox(height: 16),
       ],
     );
   }
 
   Widget buildDropdownField(String labelText,
-    {String? initialValue, required List<String> options, required void Function(String?) onChanged}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(labelText, style: TextStyle(fontSize: 15, color: kwhiteModel)),
-      SizedBox(height: 5),
-      Container(
-        decoration: BoxDecoration(
-          color: Colors.black, // Set the background color to black
-          border: Border.all(color: kwhiteModel),
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  dropdownColor: kblackDark,
-                  value: initialValue,
-                  icon: Icon(Icons.arrow_drop_down, color: kwhiteModel),
-                  iconSize: 24,
-                  elevation: 16,
-                  style: TextStyle(color: kwhiteModel),
-                  onChanged: onChanged,
-                  items: options.map((String option) {
-                    return DropdownMenuItem<String>(    
-
-                      value: option,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          option,
-                          style: TextStyle(color: kwhiteModel),
+      {String? initialValue, required List<String> options, required void Function(String?) onChanged}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(labelText, style: TextStyle(fontSize: 15, color: kwhiteModel)),
+        SizedBox(height: 5),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.black, // Set the background color to black
+            border: Border.all(color: kwhiteModel),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    dropdownColor: kblackDark,
+                    value: initialValue,
+                    icon: Icon(Icons.arrow_drop_down, color: kwhiteModel),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: TextStyle(color: kwhiteModel),
+                    onChanged: onChanged,
+                    items: options.map((String option) {
+                      return DropdownMenuItem<String>(
+                        value: option, // Ensure each value is unique
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Text(
+                            option,
+                            style: TextStyle(color: kwhiteModel),
+                          ),
                         ),
-                      ),
-                    );
-                  }).toList(),
+                      );
+                    }).toList(),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-      SizedBox(height: 16),
-    ],
-  );
-}
-
+        SizedBox(height: 8),
+        if (_formKey.currentState?.validate() ?? false)
+          Text(
+            'Please select a valid $labelText',
+            style: TextStyle(color: Colors.red, fontSize: 12),
+          ),
+        SizedBox(height: 16),
+      ],
+    );
+  }
 }

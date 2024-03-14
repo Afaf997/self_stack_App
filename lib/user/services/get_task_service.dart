@@ -19,7 +19,7 @@ class getTaskservices {
       }
     } catch (error) {
       print('Error fetchi ang user details: $error');
-      throw Exception("Error fetching user details: $error");
+      throw Exception("Error fetching user detailsssss: $error");
     }
   }
 }

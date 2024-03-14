@@ -9,11 +9,12 @@ class AdvisorProfile extends StatelessWidget {
     return Scaffold(
       backgroundColor: kbackgroundmodel,
       appBar: AppBar(
+        automaticallyImplyLeading: false, 
         title: Text(
           'Profile',
           style: TextStyle(
             color: Colors.white,
-            
+              
           ),
         ),
         backgroundColor: kselfstackGreen,

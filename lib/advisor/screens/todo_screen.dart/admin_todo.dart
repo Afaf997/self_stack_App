@@ -41,6 +41,7 @@ class _TodoScreenState extends State<TodoAdmin> {
     return Scaffold(
       backgroundColor: kbackgroundmodel,
       appBar: AppBar(
+        automaticallyImplyLeading: false, 
         backgroundColor: kselfstackGreen,
         toolbarHeight: 80, 
         title: Text(

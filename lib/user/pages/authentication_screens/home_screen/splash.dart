@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:self_stack/advisor/screens/navigation_screen.dart/navigation_admin.dart';
 import 'package:self_stack/user/pages/authentication_screens/home_screen/home_screen.dart';
+import 'package:self_stack/user/pages/dashboard_screen/home/screen/domain_not_fixed.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/screen/navigation_bar.dart';
 import 'package:self_stack/utils/constans.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,8 +22,10 @@ class SplashScreen extends StatelessWidget {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? userId = prefs.getString('userId');
       String? userRoll = prefs.getString('roll');
-      log(userRoll.toString());
-      if (userId != null && userId.isNotEmpty && userRoll != 'Advisor') {
+      String? userDomain = prefs.getString('userdomain');
+
+      if (userId != null && userId.isNotEmpty && userRoll != 'Advisor' && userDomain!='No') {
+        log(userDomain.toString());
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => BottomNavbarScreen()),
@@ -31,6 +34,12 @@ class SplashScreen extends StatelessWidget {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => BottomNavbarAdmin()),
+        );
+      }
+      else if (userDomain == 'No') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => DomainDesidePage()),
         );
       } else {
         Navigator.pushReplacement(

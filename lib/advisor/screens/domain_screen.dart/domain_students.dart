@@ -17,6 +17,7 @@ class _AttendancePageState extends State<DomainPage> {
     return Scaffold(
       backgroundColor:kbackgroundmodel,
       appBar: AppBar(
+          automaticallyImplyLeading: false, 
         toolbarHeight: 100,
         backgroundColor:kselfstackGreen,
         shape: const ContinuousRectangleBorder(

@@ -36,6 +36,7 @@ class _BatchScreenState extends State<BatchScreen> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+              automaticallyImplyLeading: false, 
             backgroundColor: kbackgroundmodel,
             title: Padding(
               padding: const EdgeInsets.only(top: 30),
