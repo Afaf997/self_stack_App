@@ -2,25 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:self_stack/advisor/response/domain_model.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/edit_screen.dart';
+import 'package:self_stack/advisor/screens/navigation_screen.dart/navigation_admin.dart';
+import 'package:self_stack/advisor/services/batch_services.dart/delete_student.dart';
 import 'package:self_stack/advisor/services/batch_services.dart/get_batch.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class StudentsBatchScreen extends StatefulWidget {
   final int index;
-
   const StudentsBatchScreen({Key? key, required this.index}) : super(key: key);
+  
 
   @override
   _StudentsBatchScreenState createState() => _StudentsBatchScreenState();
 }
 
+
 class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
+  late DeleteStudentServices _DeleteStudentServices = DeleteStudentServices(); 
   List<StudentData> studentsList = [];
 
   @override
   void initState() {
+    
     super.initState();
     fetchDataAndUpdateList();
+    
   }
 
  Future<void> fetchDataAndUpdateList() async {
@@ -35,6 +41,7 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
         studentsList = selectedBatch.batch.studentIds
             .map((studentId) => StudentData(
                   id: studentId.id,
+                  batch: studentId.batch.toString(),
                   name: studentId.name,
                   details: "${studentId.email}",
                   avatarImage: studentId.image,
@@ -56,7 +63,9 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
     return Scaffold(
       backgroundColor: kselfstackGreen,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+        leading: IconButton(onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavbarAdmin()));
+        }, icon:Icon(Icons.arrow_back,color: kwhiteModel,)),
         toolbarHeight: 100,
         backgroundColor: kselfstackGreen,
         title: const Text(
@@ -74,7 +83,7 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
           IconButton(
             icon: const Icon(Icons.delete, color: kwhiteModel),
             onPressed: () {
-              //  showDeleteConfirmationDialog(context);
+               
             },
           ),
         ],
@@ -111,9 +120,36 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
                     backgroundColor: kredtheme,
                     icon: Icons.delete,
                     label: 'Delete',
-                    onPressed: (context) {
-                      // Handle delete action
-                    },
+  onPressed: (context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Confirm Delete"),
+        content: Text("Are you sure you want to delete this student?"),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); 
+            },
+            child: Text("Cancel"),
+          ),
+          TextButton(
+            onPressed: () {
+              _DeleteStudentServices.DeleteStudentDetails(studentsList[index].batch, studentsList[index].id);
+              setState(() {
+                studentsList.removeAt(index);
+              });
+              Navigator.of(context).pop(); 
+            },
+            child: Text("Delete"),
+          ),
+        ],
+      );
+    },
+  );
+},
+
                   ),
                 ],
               ),
@@ -208,11 +244,13 @@ class StudentData {
   final String name;
   final String details;
   final String avatarImage;
+  final String batch;
   AttendanceStatus attendanceStatus;
 
   StudentData({
     required this.id,
     required this.name,
+    required this.batch,
     required this.details,
     required this.avatarImage,
     required this.attendanceStatus,

@@ -6,7 +6,7 @@ import 'package:self_stack/user/core/links.dart';
 class BatchPutService {
   Dio dio = Dio();
 
-Future<Welcome> PutBatchData(id,name,age,dateOfBirth,email,gender,place,address,guardianName,educationQualification,phoneNumber,domain,batch) async {
+Future<bool> PutBatchData(id,name,age,dateOfBirth,email,gender,place,address,guardianName,educationQualification,phoneNumber,domain,batch) async {
    var data = {
       "name": name,
       "age":age,
@@ -31,7 +31,7 @@ Future<Welcome> PutBatchData(id,name,age,dateOfBirth,email,gender,place,address,
       );
 
       if (response.statusCode == 200) {
-        return Welcome.fromJson(response.data);
+        return true;
       } else {
         throw Exception("Failed to retrieve data. Status code: ${response.statusCode}");
       }

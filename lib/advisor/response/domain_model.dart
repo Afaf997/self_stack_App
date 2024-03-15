@@ -96,7 +96,7 @@ class StudentId {
     int? phone;
     Roll roll;
     String image;
-    Domain domain;
+    String domain;
     List<TasksStarted> tasksStarted;
     List<dynamic> tasksCompleted;
     DateTime createdAt;
@@ -151,7 +151,7 @@ class StudentId {
         phone: json["phone"],
         roll: rollValues.map[json["roll"]]!,
         image: json["image"],
-        domain: domainValues.map[json["domain"]]!,
+        domain: json["domain"]!,
         tasksStarted: List<TasksStarted>.from(json["tasksStarted"].map((x) => TasksStarted.fromJson(x))),
         tasksCompleted: List<dynamic>.from(json["tasksCompleted"].map((x) => x)),
         createdAt: DateTime.parse(json["createdAt"]),
@@ -177,7 +177,7 @@ class StudentId {
         "phone": phone,
         "roll": rollValues.reverse[roll],
         "image": image,
-        "domain": domainValues.reverse[domain],
+        "domain": domain,
         "tasksStarted": List<dynamic>.from(tasksStarted.map((x) => x.toJson())),
         "tasksCompleted": List<dynamic>.from(tasksCompleted.map((x) => x)),
         "createdAt": createdAt.toIso8601String(),
@@ -196,15 +196,7 @@ class StudentId {
     };
 }
 
-enum Domain {
-    NO,
-    SELF_STACK_COURSES_0695_BC56_F8_BD_4984_BB5_C_FFF79474_DA46
-}
 
-final domainValues = EnumValues({
-    "No": Domain.NO,
-    "self-stack-courses-0695bc56-f8bd-4984-bb5c-fff79474da46": Domain.SELF_STACK_COURSES_0695_BC56_F8_BD_4984_BB5_C_FFF79474_DA46
-});
 
 enum Roll {
     ADVISOR,

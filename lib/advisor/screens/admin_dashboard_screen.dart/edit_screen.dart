@@ -1,11 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
- // Import BatchPutService
 import 'package:self_stack/advisor/response/batches_model.dart';
 import 'package:self_stack/advisor/response/domain_model.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/functions/delete_popup.dart';
- // Import BatchService
+import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/list_of_students.dart';
 import 'package:self_stack/advisor/services/batch_services.dart/domain_service.dart';
 import 'package:self_stack/advisor/services/batch_services.dart/get_batch.dart';
 import 'package:self_stack/advisor/services/batch_services.dart/put_batch.dart';
@@ -16,20 +13,21 @@ class EditStudentPage extends StatefulWidget {
   final String userId;
 
   EditStudentPage({Key? key, required this.userId}) : super(key: key);
-
   @override
   _EditStudentPageState createState() => _EditStudentPageState();
 }
 
 class _EditStudentPageState extends State<EditStudentPage> {
-  late BatchPutService _batchPutService; // Declare BatchPutService instance
-  late BatchService _batchService; // Declare BatchService instance
+  late BatchPutService _batchPutService;
+  late BatchService _batchService;
   late DomainService _domainService;
   Map<String, dynamic>? userDetails;
   String? selectedBatch;
   String? selectedDomain;
   late List<String> batchOptions;
+  late List<String> batchIDs;
   late List<String> domainOptions;
+  late List<String> domainIDs;
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController _nameController = TextEditingController();
@@ -47,8 +45,8 @@ class _EditStudentPageState extends State<EditStudentPage> {
   @override
   void initState() {
     super.initState();
-    _batchPutService = BatchPutService(); // Initialize BatchPutService
-    _batchService = BatchService(); // Initialize BatchService
+    _batchPutService = BatchPutService();
+    _batchService = BatchService();
     _domainService = DomainService();
     batchOptions = [];
     domainOptions = [];
@@ -64,7 +62,6 @@ class _EditStudentPageState extends State<EditStudentPage> {
         userDetails = details;
         selectedBatch = userDetails!['user']['batch'];
         selectedDomain = userDetails!['domain'];
-
         _nameController.text = userDetails!['user']['name'];
         _idController.text = userDetails!['user']['_id'];
         _ageController.text = userDetails!['user']['age'].toString();
@@ -87,6 +84,7 @@ class _EditStudentPageState extends State<EditStudentPage> {
       Welcome batchResponse = await _batchService.fetchData();
       setState(() {
         Set<String> batchNames = batchResponse.batches.map((batch) => batch.batch.name.toString()).toSet();
+        batchIDs = batchResponse.batches.map((batch) => batch.batch.id.toString()).toSet().toList();
         batchOptions = batchNames.toList();
         selectedBatch = userDetails?['user']['batch'];
       });
@@ -100,10 +98,8 @@ class _EditStudentPageState extends State<EditStudentPage> {
       List<Domainbatch> domainList = await _domainService.DomainfetchData();
       setState(() {
         domainOptions = domainList.map((domain) => domain.courseName).toSet().toList();
+        domainIDs = domainList.map((domain) => domain.id).toSet().toList();
         selectedDomain = userDetails?['domain'];
-       
-
-
       });
     } catch (error) {
       print('Error fetching domain options: $error');
@@ -123,10 +119,13 @@ class _EditStudentPageState extends State<EditStudentPage> {
       String guardianName = _guardianNameController.text;
       String educationQualification = _educationQualificationController.text;
       String phoneNumber = _phoneNumberController.text;
-      
-      _batchPutService.PutBatchData(id,name,age,dateOfBirth,email,gender,place,address,guardianName,educationQualification,phoneNumber,selectedDomain,selectedBatch)
-      .then((response) {
-        Navigator.pop(context);
+      String selectedDomainID = domainIDs[domainOptions.indexOf(selectedDomain.toString())];
+      String selectedBatchID = batchIDs[batchOptions.indexOf(selectedBatch.toString())];
+      _batchPutService
+          .PutBatchData(
+              id, name, age, dateOfBirth, email, gender, place, address, guardianName, educationQualification, phoneNumber, selectedDomainID, selectedBatchID)
+          .then((response) {
+        return Navigator.push(context, MaterialPageRoute(builder: (context) => StudentsBatchScreen(index: 0)));
       }).catchError((error) {
         print('Error updating batch data: $error');
       });
@@ -184,7 +183,15 @@ class _EditStudentPageState extends State<EditStudentPage> {
                       }),
                       buildTextField('Gender', controller: _genderController),
                       buildTextField('Place', controller: _placeController),
-                      buildTextField('Phone Number', controller: _phoneNumberController),
+                      buildTextField('Phone Number', controller: _phoneNumberController, validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a phone number';
+                        }
+                        if (value.length != 10) {
+                          return 'Phone number must be 10 digits';
+                        }
+                        return null;
+                      }),
                       buildTextField('Address', controller: _addressController),
                       buildTextField('Guardian Name', controller: _guardianNameController),
                       buildTextField('Education Qualification', controller: _educationQualificationController),
@@ -212,7 +219,7 @@ class _EditStudentPageState extends State<EditStudentPage> {
   }
 
   Widget buildTextField(String labelText,
-      {TextInputType? keyboardType, String? hintText, TextEditingController? controller}) {
+      {TextInputType? keyboardType, String? hintText, TextEditingController? controller, String? Function(String?)? validator}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -222,12 +229,7 @@ class _EditStudentPageState extends State<EditStudentPage> {
           style: TextStyle(color: Colors.white),
           keyboardType: keyboardType,
           controller: controller,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter $labelText';
-            }
-            return null;
-          },
+          validator: validator,
           decoration: InputDecoration(
             hintText: hintText ?? 'Enter $labelText',
             hintStyle: TextStyle(color: Colors.white54),
@@ -252,7 +254,7 @@ class _EditStudentPageState extends State<EditStudentPage> {
         SizedBox(height: 8),
         if (_formKey.currentState?.validate() ?? false)
           Text(
-            'Please enter a valid $labelText',
+            validator != null ? validator(controller!.text) ?? '' : '',
             style: TextStyle(color: Colors.red, fontSize: 12),
           ),
         SizedBox(height: 16),
@@ -306,7 +308,7 @@ class _EditStudentPageState extends State<EditStudentPage> {
         SizedBox(height: 8),
         if (_formKey.currentState?.validate() ?? false)
           Text(
-            'Please select a valid $labelText',
+            '',
             style: TextStyle(color: Colors.red, fontSize: 12),
           ),
         SizedBox(height: 16),

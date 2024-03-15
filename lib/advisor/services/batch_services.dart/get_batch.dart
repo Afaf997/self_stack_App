@@ -16,7 +16,7 @@ class BatchService {
         throw Exception("Failed to retrieve data. Status code: ${response.statusCode}");
       }
     } catch (error) {
-      print('Error fetching data: $error');
+      print('Error fetching rtgdata: $error');
       throw Exception("Error fetching data: $error");
     }
   }
