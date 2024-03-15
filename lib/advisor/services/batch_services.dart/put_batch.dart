@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:self_stack/advisor/response/domain_model.dart';
 import 'package:self_stack/user/core/links.dart';
@@ -7,10 +6,29 @@ import 'package:self_stack/user/core/links.dart';
 class BatchPutService {
   Dio dio = Dio();
 
-Future<Welcome> PutBatchData() async {
+Future<Welcome> PutBatchData(id,name,age,dateOfBirth,email,gender,place,address,guardianName,educationQualification,phoneNumber,domain,batch) async {
+   var data = {
+      "name": name,
+      "age":age,
+      "dateOfBirth":dateOfBirth,
+      "email":email,
+       "gender":gender,
+       "place":place,
+       "address":address,
+       "guardian":guardianName,
+       "phone":phoneNumber,
+       "educationQualification":educationQualification,
+       "domain":domain,
+       "batch":batch
+    };
     try {
-      String apiUrl = "$loginApi/users/$apikey";
-      Response response = await dio.put(apiUrl);
+      Response response = await dio.put(
+        "$loginApi/users/$id$apikey",
+        data: jsonEncode(data),
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+        ),
+      );
 
       if (response.statusCode == 200) {
         return Welcome.fromJson(response.data);
