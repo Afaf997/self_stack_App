@@ -32,7 +32,6 @@ Future<void> loadTaskDetails() async {
         });
       }
     } catch (e) {
-      // Handle the error
     }
   }
 

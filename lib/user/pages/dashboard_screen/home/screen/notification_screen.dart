@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/functions/notification_function.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/screen/navigation_bar.dart';
@@ -146,104 +147,109 @@ Widget build(BuildContext context) {
         ),
       ),
     ),
-    body: Padding(
-      padding: const EdgeInsets.all(15),
-      child: FutureBuilder<Notification_model>(
-        future: fetchNotificationDetails(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text('Error: ${snapshot.error}'),
-            );
-          } else if (!snapshot.hasData) {
-            return Center(
-              child: Text('No notification data available.'),
-            );
-          } else {
-            Notification_model notification = snapshot.data!;
-
-       return  ListView.builder(
-  itemCount: notification.notifications.length,
-  itemBuilder: (context, index) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => NotificationDetailScreen(
-              notificationHeading: notification.notifications[index].title,
-              notificationSubtitle: notification.notifications[index].body,
-              id: notification.notifications[index].id,
-            ),
+ body: Padding(
+  padding: const EdgeInsets.all(15),
+  child: FutureBuilder<Notification_model>(
+    future: fetchNotificationDetails(),
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      } else if (snapshot.hasError) {
+        return Center(
+          child: Text('Error: ${snapshot.error}'),
+        );
+      } else if (!snapshot.hasData || snapshot.data!.notifications.isEmpty) {
+        return Center(
+          child: Lottie.asset(
+            'assets/lottie/box.json',
+            width: 200,
+            height: 200,
+            fit: BoxFit.contain,
           ),
         );
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ListTile(
-            title: Text(
-              notification.notifications[index].title,
-              maxLines: 1,
-              style: TextStyle(
-                color: kselfstackGreen,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-            ),
-            subtitle: Text(
-              notification.notifications[index].body,
-              maxLines: 2,
-              style: TextStyle(
-                color: kwhiteModel,
-                fontSize: 14,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                '${DateTime.now().toString().split(".")[0].split(" ")[1]}',
-                style: TextStyle(
-                  color: kwhiteModel,
-                  fontSize: 13,
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                '${DateTime.now().toString().split(" ")[0]}',
-                style: TextStyle(
-                  color: kyellow,
-                  fontSize: 13,
-                ),
-              ),
-            ),
-          ),
-          Divider(
-            color: kwhiteModel,
-            thickness: 0.2,
-          ),
-        ],
-      ),
-    );
-  },
-);
+      } else {
+        Notification_model notification = snapshot.data!;
 
-          }
-        },
-      ),
-    ),
+        return ListView.builder(
+          itemCount: notification.notifications.length,
+          itemBuilder: (context, index) {
+            return InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NotificationDetailScreen(
+                      notificationHeading: notification.notifications[index].title,
+                      notificationSubtitle: notification.notifications[index].body,
+                      id: notification.notifications[index].id,
+                    ),
+                  ),
+                );
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListTile(
+                    title: Text(
+                      notification.notifications[index].title,
+                      maxLines: 1,
+                      style: TextStyle(
+                        color: kselfstackGreen,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    subtitle: Text(
+                      notification.notifications[index].body,
+                      maxLines: 2,
+                      style: TextStyle(
+                        color: kwhiteModel,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        '${DateTime.now().toString().split(".")[0].split(" ")[1]}',
+                        style: TextStyle(
+                          color: kwhiteModel,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        '${DateTime.now().toString().split(" ")[0]}',
+                        style: TextStyle(
+                          color: kyellow,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    color: kwhiteModel,
+                    thickness: 0.2,
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      }
+    },
+  ),
+),
+
   );
 }
 }

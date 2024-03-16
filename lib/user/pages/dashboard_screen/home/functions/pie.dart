@@ -2,19 +2,22 @@
 
 List<GDPData> getChartData(Map<String, dynamic> apiData) {
   final List<GDPData> chartData = [];
+
+if (apiData == null || apiData['reviewStatusCounts'] == null) {
+    return chartData;
+  }
   
-  // Convert keys to a list and sort them
   List<String> sortedKeys = apiData['reviewStatusCounts'].keys.toList()
     ..sort();
 
   sortedKeys.forEach((key) {
-    String taskValue = apiData['reviewStatusCounts'][key].toString(); // Convert value to string
+    String taskValue = apiData['reviewStatusCounts'][key].toString(); 
   
 
     chartData.add(
       GDPData(
         continent: key,
-        taskValue: int.parse(taskValue), // Convert taskValue back to int
+        taskValue: int.parse(taskValue),
       ),
     );
   });

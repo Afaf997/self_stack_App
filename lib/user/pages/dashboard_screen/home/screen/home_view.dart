@@ -1,6 +1,7 @@
 // ignore_for_file: unused_label
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:self_stack/user/blocs/dashboard/bloc/dash_board_bloc.dart';
 import 'package:self_stack/user/pages/authentication_screens/logIn_screens/Screens/login.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/functions/fetch_user_details.dart';
@@ -265,43 +266,50 @@ class _HomeViewState extends State<HomeView> {
       },
     );
   }
-
-  Widget buildCircularChart(List<GDPData> chatdata, double screenWidth) {
-    if (chatdata.isNotEmpty) {
-      return SfCircularChart(
-        palette: [
-          kyellow,
-          kblueTheme,
-          korange,
-          kselfstackGreen,
-          kredtheme,
-        ],
-        title: ChartTitle(
-          text: "Status Of Review",
-          textStyle: TextStyle(
-            color: kwhiteModel,
-            fontWeight: FontWeight.bold,
-            fontSize: screenWidth * 0.04,
-          ),
+Widget buildCircularChart(List<GDPData> chatdata, double screenWidth) {
+  if (chatdata.isNotEmpty) {
+    return SfCircularChart(
+      palette: [
+        kyellow,
+        kblueTheme,
+        korange,
+        kselfstackGreen,
+        kredtheme,
+      ],
+      title: ChartTitle(
+        text: "Status Of Review",
+        textStyle: TextStyle(
+          color: kwhiteModel,
+          fontWeight: FontWeight.bold,
+          fontSize: screenWidth * 0.04,
         ),
-        legend: Legend(
-          isVisible: true,
-          overflowMode: LegendItemOverflowMode.scroll,
-          textStyle: TextStyle(color: kwhiteModel),
+      ),
+      legend: Legend(
+        isVisible: true,
+        overflowMode: LegendItemOverflowMode.scroll,
+        textStyle: TextStyle(color: kwhiteModel),
+      ),
+      tooltipBehavior: TooltipBehavior(enable: true),
+      series: <CircularSeries>[
+        DoughnutSeries<GDPData, String>(
+          dataSource: chatdata,
+          xValueMapper: (GDPData data, _) => data.continent,
+          yValueMapper: (GDPData data, _) => data.taskValue,
+          dataLabelSettings: DataLabelSettings(isVisible: true),
+          enableTooltip: true,
         ),
-        tooltipBehavior: TooltipBehavior(enable: true),
-        series: <CircularSeries>[
-          DoughnutSeries<GDPData, String>(
-            dataSource: chatdata,
-            xValueMapper: (GDPData data, _) => data.continent,
-            yValueMapper: (GDPData data, _) => data.taskValue,
-            dataLabelSettings: DataLabelSettings(isVisible: true),
-            enableTooltip: true,
-          ),
-        ],
-      );
-    } else {
-      return CircularProgressIndicator();
-    }
+      ],
+    );
+  } else {
+    return Center(
+      child: Lottie.asset(
+        'assets/lottie/box.json',
+        width: 200,
+        height: 200,
+        fit: BoxFit.contain,
+      ),
+    );
   }
+}
+
 }

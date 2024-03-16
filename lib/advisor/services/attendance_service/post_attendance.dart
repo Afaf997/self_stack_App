@@ -7,15 +7,15 @@ import 'package:self_stack/user/core/links.dart';
 class AttendancePostService {
   final Dio dio = Dio();
 
-  Future<bool> PostAttendanceDetails(String name, DateTime startDate) async {
+  Future<bool> PostAttendanceDetails(String id, String status) async {
     var data = {
-      "name": name,
-      "startDate": startDate.millisecondsSinceEpoch,
+      "status":status ,
+      "studentId":id
     };
 
     try {
       final response = await dio.post(
-        "$loginApi/batch$apikey",
+        "$loginApi/attendance/$apikey",
         data: jsonEncode(data),
         options: Options(
           headers: {'Content-Type': 'application/json'},
