@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:self_stack/utils/constans.dart';
 
 class ReviewUpdatingPage extends StatefulWidget {
   @override
@@ -21,11 +20,11 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
           children: [
             AppBar(
               toolbarHeight: 100,
-              backgroundColor: kselfstackGreen,
+              backgroundColor: const Color.fromARGB(255, 82, 203, 86),
               title: const Text(
                 'Review Updating',
                 style: TextStyle(
-                  color: kwhiteModel,
+                  color: Colors.white,
                   fontSize: 27,
                 ),
               ),
@@ -36,7 +35,7 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   decoration: const BoxDecoration(
-                    color:kbackgroundmodel,
+                    color: Colors.black,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(35),
                       topRight: Radius.circular(35),
@@ -270,7 +269,7 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                           // Replace the placeholder content with a TextField
                           TextField(
                             controller: pendingTopicsController,
-                            maxLines: null, 
+                            maxLines: null, // Allow multiple lines
                             style: const TextStyle(color: Colors.white),
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),

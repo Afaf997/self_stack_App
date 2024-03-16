@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:self_stack/advisor/services/notification/post_notification.dart';
+import 'package:self_stack/utils/constans.dart';
 
 class NotificationScreen extends StatelessWidget {
-  const NotificationScreen({Key? key}) : super(key: key);
+  final List<dynamic> Ids;
+  final NotificationPostService notificationPostService = NotificationPostService();
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+
+  NotificationScreen({Key? key, required this.Ids}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,56 +19,84 @@ class NotificationScreen extends StatelessWidget {
         backgroundColor: Colors.green,
         title: Text('Notification Screen', style: TextStyle(color: Colors.white)),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Title',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-            ),
-            TextField(
-              maxLines: null, // Allow multiline input
-              style: TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                hintText: 'Enter title...',
-                hintStyle: TextStyle(color: Colors.white),
-                contentPadding: EdgeInsets.all(10),
-                border: OutlineInputBorder(), // Add border to the TextField
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  height: 200,
+                  child: Lottie.asset(
+                    'assets/lottie/notification.json',
+                    fit: BoxFit.contain,
+                  ),
+                ),
               ),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Notification',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-            ),
-            TextField(
-              maxLines: null, // Allow multiline input
-              style: TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                hintText: 'Enter body...',
-                hintStyle: TextStyle(color: Colors.white),
-                contentPadding: EdgeInsets.all(10),
-                border: OutlineInputBorder(), // Add border to the TextField
+              SizedBox(height: 36),
+              Text(
+                'Title',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
               ),
-            ),
-            SizedBox(height: 16),
-            Align(
-              alignment: Alignment.centerRight,
-              child: ElevatedButton(
+              TextField(
+                controller: titleController,
+                maxLines: null,
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  hintText: 'Enter title',
+                  hintStyle: TextStyle(color: kgreymodel),
+                  contentPadding: EdgeInsets.all(10),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10), // Add border radius
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Notification',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+              ),
+              TextField(
+                controller: descriptionController,
+                maxLines: null,
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  hintText: 'Enter Description',
+                  hintStyle: TextStyle(color: kgreymodel),
+                  contentPadding: EdgeInsets.all(10),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10), // Add border radius
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
                 onPressed: () {
-                  print('Notification submitted!');
+                  String title = titleController.text;
+                  String description = descriptionController.text;
+                  notificationPostService.PostNotificationDetails(title, description, Ids);
+                  titleController.clear();
+                  descriptionController.clear();
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green, // Set button color
-                  onPrimary: Colors.white, // Set text color
-                  fixedSize: Size(60, 60), // Set button size to be a square
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // Remove border radius
+                  ),
+                  backgroundColor: kselfstackGreen,
                 ),
-                child: Icon(Icons.arrow_forward, size: 30), // You can replace this icon with your own
+                child: Container(
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Submit',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

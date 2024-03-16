@@ -1,35 +1,22 @@
-
 import 'package:flutter/material.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/review_updating.dart';
-import 'package:self_stack/advisor/screens/notification_screen/notification_page.dart';
-import 'package:self_stack/utils/constans.dart';
 
 class StatusOfStudent extends StatelessWidget {
-  final String id;
-
-  const StatusOfStudent({super.key, required this.id});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Scaffold(
-        backgroundColor:kselfstackGreen,
+        backgroundColor: const Color.fromARGB(255, 82, 203, 86),
         appBar: AppBar(
           toolbarHeight: 100,
-          backgroundColor: kselfstackGreen,
+          backgroundColor: Color.fromARGB(255, 82, 203, 86),
           title: const Text(
             'Status of Students',
             style: TextStyle(
-              color: kwhiteModel,
+              color: Colors.white,
               fontSize: 27,
             ),
           ),
-            actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications, color: kwhiteModel),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen(Ids: [id],)));
-            },
-          ),]
         ),
         body: Container(
           decoration: const BoxDecoration(
@@ -39,6 +26,7 @@ class StatusOfStudent extends StatelessWidget {
               topRight: Radius.circular(35),
             ),
           ),
+          // Your StatusOfStudent screen content goes here
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -50,8 +38,8 @@ class StatusOfStudent extends StatelessWidget {
             );
           },
           child: Icon(Icons.add),
-          backgroundColor:kblackDark,
-          foregroundColor:kwhiteModel,
+          backgroundColor: Color.fromARGB(255, 60, 59, 59),
+          foregroundColor: Colors.white,
         ),
       ),
     );

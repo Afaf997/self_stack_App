@@ -307,9 +307,7 @@ class _EditStudentPageState extends State<EditStudentPage> {
         ),
         SizedBox(height: 8),
         if (_formKey.currentState?.validate() ?? false)
-          Text(
-            '',
-            style: TextStyle(color: Colors.red, fontSize: 12),
+          Text('',style: TextStyle(color: Colors.red, fontSize: 12),
           ),
         SizedBox(height: 16),
       ],

@@ -7,7 +7,6 @@ import 'package:self_stack/user/pages/dashboard_screen/home/screen/navigation_ba
 import 'package:self_stack/user/pages/dashboard_screen/home/screen/notification_details.dart';
 import 'package:self_stack/user/response/notification_model.dart';
 import 'package:self_stack/user/response/push_notification.dart';
-import 'package:self_stack/user/services/todo_service.dart';
 import 'package:self_stack/utils/constans.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -68,7 +67,7 @@ class _Notification_ScreenState extends State<Notification_Screen> {
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       print('User granted permission');
 
-      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      FirebaseMessaging.onMessage.listen((RemoteMessage message)async {
         print(
           'Message title: ${message.notification?.title}, body: ${message.notification?.body}, data: ${message.data},',
         );

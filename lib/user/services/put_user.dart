@@ -2,24 +2,12 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:self_stack/user/core/links.dart';
 
-class BatchPutService {
+class UserPutService {
   Dio dio = Dio();
 
-Future<bool> PutBatchData(id,name,age,dateOfBirth,email,gender,place,address,guardianName,educationQualification,phoneNumber,domain,batch) async {
+Future<bool> PutUserData(notifyId,id) async {
    var data = {
-      "name": name,
-      "age":age,
-      "dateOfBirth":dateOfBirth,
-      "email":email,
-       "gender":gender,
-       "place":place,
-       "address":address,
-       "guardian":guardianName,
-       "phone":phoneNumber,
-       "educationQualification":educationQualification,
-       "domain":domain,
-       "batch":batch
-    };
+      "notifyId":notifyId};
     try {
       Response response = await dio.put(
         "$loginApi/users/$id$apikey",
