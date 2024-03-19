@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:self_stack/user/response/about_us.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactInformation extends StatelessWidget {
   final AboutUs userDetails;
@@ -15,8 +16,8 @@ class ContactInformation extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text( 
-               userDetails.phoneNumber,
+            Text(
+              userDetails.phoneNumber,
               style: TextStyle(color: Colors.white),
             ),
             SizedBox(
@@ -30,8 +31,10 @@ class ContactInformation extends StatelessWidget {
         ),
         SizedBox(height: 10),
         InkWell(
-          onTap: () {
-
+          onTap: () async {
+            const url =
+                'https://github.com/Afaf997/self_stack_App/blob/main/lib/privacy%20policy.txt';
+            launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
           },
           child: Text(
             'Privacy Policy',
@@ -45,4 +48,3 @@ class ContactInformation extends StatelessWidget {
     );
   }
 }
-
