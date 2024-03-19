@@ -40,44 +40,25 @@ class _TodoScreenState extends State<TodoScreen> {
     return Scaffold(
       backgroundColor: kbackgroundmodel,
       appBar: AppBar(
-        backgroundColor: kselfstackGreen,
-        toolbarHeight: 80, 
-        title: Text(
-          "work log management",
-          style: TextStyle(
-              color: kwhiteModel, fontSize: 22, fontWeight: FontWeight.bold),
-        ),
-        leading: IconButton(
-          onPressed: (){
-               Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavbarScreen()));
-          },
-          icon: Icon(
-            Icons.arrow_circle_left_outlined,
-            color: kwhiteModel,
-          ),
-        ),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                isPublic = !isPublic;
-              });
-            },
-            child: Container(
-              margin: EdgeInsets.only(right: 16.0),
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: isPublic ? kselfstackGreen : kselfstackGreen,
-                borderRadius: BorderRadius.circular(4.0),
-              ),
-              child: Icon(
-                isPublic ? Icons.public : Icons.lock,
-                color: kwhiteModel,
-              ),
-            ),
-          ),
-        ],
-      ),
+        centerTitle: true,
+  backgroundColor: kselfstackGreen,
+  toolbarHeight: 80, 
+  title: Text(
+    "WorkTrack",
+    style: TextStyle(
+        color: kwhiteModel, fontSize: 22, fontWeight: FontWeight.bold),
+  ),
+  leading: IconButton(
+    onPressed: (){
+         Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavbarScreen()));
+    },
+    icon: Icon(
+      Icons.arrow_circle_left_outlined,
+      color: kwhiteModel,
+    ),
+  ),
+),
+
       body: BlocProvider(
         create: (context) => todoBloc,
         child: BlocBuilder<TodoBloc, TodoState>(
@@ -171,7 +152,9 @@ class _TodoScreenState extends State<TodoScreen> {
                           );
                         }
                       } else {
-                        return Lottie.asset('assets/lottie/box.json');
+                        return Lottie.asset('assets/lottie/box.json',    width: 300,
+        height: 300,
+        fit: BoxFit.contain,);
                       }
                     },
                   ),
@@ -193,6 +176,7 @@ class _TodoScreenState extends State<TodoScreen> {
             color: Colors.white,
             width: 1.0,
           ),
+          borderRadius: BorderRadius.circular(15),
           color: kblackDark,
         ),
         child: FloatingActionButton(

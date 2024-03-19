@@ -28,7 +28,7 @@ def keystoreProperties = new Properties()
 }
 android {
     namespace "com.organization.selfStack"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {

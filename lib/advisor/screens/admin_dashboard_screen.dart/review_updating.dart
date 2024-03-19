@@ -1,6 +1,11 @@
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:self_stack/advisor/services/review/get_review.dart';
+import 'package:self_stack/user/repository/shared_preference.dart';
 import 'package:self_stack/utils/constans.dart';
+import 'package:self_stack/user/response/task_model.dart'; // Import TaskModel
+
 
 class ReviewUpdatingPage extends StatefulWidget {
   @override
@@ -10,7 +15,28 @@ class ReviewUpdatingPage extends StatefulWidget {
 class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
   String selectedMark = '';
   String selectedReviewStatus = '';
+  String selectedTask = ''; 
   TextEditingController pendingTopicsController = TextEditingController();
+  List<Task> tasksList = []; 
+
+  @override
+  void initState() {
+    super.initState();
+    fetchTasks(); 
+  }
+
+  void fetchTasks() async {
+    String? userId = await getUserId();
+    try {
+      TaskModel tasksData = await ReviewService().ReviewfetchData(userId ?? '');
+      setState(() {
+        tasksList = tasksData.userTasks.expand((userTask) => userTask.tasks).toList();
+        selectedTask = tasksList.isNotEmpty ? tasksList.first.taskName : ''; // Select the first task by default
+      });
+    } catch (error) {
+      print('Error fetching tasks: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,19 +56,63 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                 ),
               ),
             ),
-            
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   decoration: const BoxDecoration(
-                    color:kbackgroundmodel,
+                    color: kbackgroundmodel,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(35),
                       topRight: Radius.circular(35),
                     ),
                   ),
                   child: Column(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Task',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                          DropdownButtonFormField<String>(
+                            dropdownColor:kbackgroundmodel, // Change dropdown color to white
+                            value: selectedTask,
+                            onChanged: (String? value) {
+                              setState(() {
+                                selectedTask = value!;
+                              });
+                            },
+                            items: tasksList.map((task) {
+                              return DropdownMenuItem<String>(
+                                value: task.taskName,
+                                child: Text(
+                                  task.taskName,
+                                  style: const TextStyle(color: kwhiteModel),
+                                ),
+                              );
+                            }).toList(),
+  decoration: InputDecoration(
+    labelStyle: const TextStyle(color:kwhiteModel),
+    focusedBorder: OutlineInputBorder(
+      borderSide: const BorderSide(color: Colors.white),
+      borderRadius: BorderRadius.circular(15.0),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderSide: const BorderSide(color: Colors.white),
+      borderRadius: BorderRadius.circular(15.0),
+    ),
+  ),
+),
+
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                Column(
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -267,7 +337,7 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                             ),
                           ),
                           const SizedBox(height: 10),
-                          // Replace the placeholder content with a TextField
+  
                           TextField(
                             controller: pendingTopicsController,
                             maxLines: null, 
@@ -298,10 +368,10 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                       ),
                     ],
                   ),
-                ),
+            ]  ),
               ),
             ),
-          ],
+         ) ],
         ),
       ),
     );

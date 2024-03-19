@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:self_stack/advisor/screens/navigation_screen.dart/navigation_admin.dart';
 import 'package:self_stack/user/blocs/to_do/bloc/todo_bloc.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/screen/custom_progress_bar.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/screen/navigation_bar.dart';
@@ -14,10 +13,10 @@ class TodoAdmin extends StatefulWidget {
   TodoAdmin({Key? key}) : super(key: key);
 
   @override
-  _TodoScreenState createState() => _TodoScreenState();
+  _TodoAdminState createState() => _TodoAdminState();
 }
 
-class _TodoScreenState extends State<TodoAdmin> {
+class _TodoAdminState extends State<TodoAdmin> {
   TextEditingController titleController = TextEditingController();
   TextEditingController subtitleController = TextEditingController();
 
@@ -41,45 +40,24 @@ class _TodoScreenState extends State<TodoAdmin> {
     return Scaffold(
       backgroundColor: kbackgroundmodel,
       appBar: AppBar(
-        automaticallyImplyLeading: false, 
-        backgroundColor: kselfstackGreen,
-        toolbarHeight: 80, 
-        title: Text(
-          "To_Do List",
-          style: TextStyle(
-              color: kwhiteModel, fontSize: 22, fontWeight: FontWeight.bold),
-        ),
-        leading: IconButton(
-          onPressed: (){
-               Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavbarAdmin()));
-          },
-          icon: Icon(
-            Icons.arrow_circle_left_outlined,
-            color: kwhiteModel,
-          ),
-        ),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                isPublic = !isPublic;
-              });
-            },
-            child: Container(
-              margin: EdgeInsets.only(right: 16.0),
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: isPublic ? kselfstackGreen : kselfstackGreen,
-                borderRadius: BorderRadius.circular(4.0),
-              ),
-              child: Icon(
-                isPublic ? Icons.public : Icons.lock,
-                color: kwhiteModel,
-              ),
-            ),
-          ),
-        ],
-      ),
+  backgroundColor: kselfstackGreen,
+  toolbarHeight: 80, 
+  title: Text(
+    "work log management",
+    style: TextStyle(
+        color: kwhiteModel, fontSize: 22, fontWeight: FontWeight.bold),
+  ),
+  leading: IconButton(
+    onPressed: (){
+         Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavbarScreen()));
+    },
+    icon: Icon(
+      Icons.arrow_circle_left_outlined,
+      color: kwhiteModel,
+    ),
+  ),
+),
+
       body: BlocProvider(
         create: (context) => todoBloc,
         child: BlocBuilder<TodoBloc, TodoState>(
@@ -106,7 +84,10 @@ class _TodoScreenState extends State<TodoAdmin> {
                         List<TodoModel> todoList = snapshot.data!;
 
                         if (todoList.isEmpty) {
-                          return Center(child: Lottie.asset('assets/lottie/box.json'));
+                          return Center(child: Lottie.asset('assets/lottie/box.json',
+                              width: 200,
+        height: 200,
+        fit: BoxFit.contain,));
                         } else {
                           return Padding(
                             padding: const EdgeInsets.only(
@@ -195,6 +176,7 @@ class _TodoScreenState extends State<TodoAdmin> {
             color: Colors.white,
             width: 1.0,
           ),
+          borderRadius: BorderRadius.circular(15),
           color: kblackDark,
         ),
         child: FloatingActionButton(

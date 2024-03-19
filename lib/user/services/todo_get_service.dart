@@ -10,7 +10,7 @@ class GetTodoServices {
   try {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userId = prefs.getString('userId') ?? '';
-    String apiUrl = "$loginApi/todo/user/public/$userId$apikey";
+    String apiUrl = "$loginApi/todo/user/$userId$apikey";
 
     Response response = await dio.get(apiUrl);
     if (response.statusCode == 200) {
