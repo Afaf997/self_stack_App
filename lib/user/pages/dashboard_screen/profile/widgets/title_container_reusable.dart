@@ -3,22 +3,15 @@ import 'package:self_stack/user/pages/dashboard_screen/profile/widgets/reusable_
 import 'package:self_stack/utils/constans.dart';
 
 class ReusableContainerWithTitle extends StatelessWidget {
-  final String title;
   final List<UserDetailsTile> userDetailsTiles;
 
-  ReusableContainerWithTitle({required this.title, required this.userDetailsTiles});
+  ReusableContainerWithTitle({ required this.userDetailsTiles});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 280),
-          child: Text(
-            title,
-            style: TextStyle(color: kwhiteModel, fontSize: 18),
-          ),
-        ),
+    
         Center(
           child: Container(
             width: 340,

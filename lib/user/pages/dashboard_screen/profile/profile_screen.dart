@@ -1,4 +1,9 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:self_stack/user/response/dashboard_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/functions/function_edit.dart';
+import 'package:self_stack/user/blocs/dashboard/bloc/dash_board_bloc.dart';
 import 'package:self_stack/user/pages/authentication_screens/logIn_screens/Screens/login.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/functions/fetch_user_details.dart';
 import 'package:self_stack/user/pages/dashboard_screen/profile/widgets/alert.dart';
@@ -24,6 +29,8 @@ class ProfileScreen extends StatelessWidget {
               if (userSnapshot.connectionState == ConnectionState.done) {
                 Map<String, dynamic> userDetails = userSnapshot.data!;
 
+                Users user = Users.fromJson(userDetails);
+
                 return Scaffold(
                   backgroundColor: kselfstackGreen,
                   body: Column(
@@ -34,7 +41,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         child: ListTile(
                           title: Text(
-                            userDetails['user']['name'],
+                            user.user.name!,
                             style: TextStyle(
                               color: kwhiteModel,
                               fontSize: 22,
@@ -42,7 +49,7 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                           subtitle: Text(
-                            userDetails['user']['email'],
+                            user.user.email!,
                             style: TextStyle(
                               color: kwhiteModel,
                               fontSize: 16.0,
@@ -52,7 +59,7 @@ class ProfileScreen extends StatelessWidget {
                             radius: 40,
                             child: ClipOval(
                               child: Image.network(
-                                userDetails['user']['image'],
+                                user.user.image!,
                                 width: 55,
                                 height: 55,
                                 fit: BoxFit.cover,
@@ -112,82 +119,73 @@ class ProfileScreen extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       ReusableContainerWithTitle(
-                                        title: 'Title 1',
                                         userDetailsTiles: [
                                           UserDetailsTile(
                                             icon: Icons.category,
                                             title: 'Batch',
-                                            value: userDetails['user']['batch'],
+                                            value: user.user.batch!,
                                           ),
                                           UserDetailsTile(
                                             icon: Icons.domain,
                                             title: 'Domain',
-                                            value: userDetails['domain'],
+                                            value: user.domain!,
                                           ),
                                         ],
                                       ),
                                       ReusableContainerWithTitle(
-                                        title: 'Title 2',
                                         userDetailsTiles: [
                                           UserDetailsTile(
                                             icon: Icons.people,
                                             title: 'Gender',
-                                            value: userDetails['user']['gender'],
+                                            value: user.user.gender!,
                                           ),
                                           UserDetailsTile(
                                             icon: Icons.access_time,
                                             title: 'Age',
-                                            value:
-                                                userDetails['user']['age'].toString(),
+                                            value: user.user.age.toString(),
                                           ),
                                           UserDetailsTile(
                                             icon: Icons.calendar_today,
                                             title: 'Date Of Birth',
-                                            value: userDetails['user']['dateOfBirth'],
+                                            value: user.user.dateOfBirth.toString(),
                                           ),
                                         ],
                                       ),
                                       ReusableContainerWithTitle(
-                                        title: 'Title 2',
                                         userDetailsTiles: [
                                           UserDetailsTile(
                                             icon: Icons.cast_for_education,
                                             title: 'Education Qualification',
-                                            value: userDetails['user'][
-                                                'educationQualification'],
+                                            value: user.user.educationQualification!,
                                           ),
                                           UserDetailsTile(
                                             icon: Icons.work,
                                             title: 'Work Experiance',
-                                            value:
-                                                userDetails['user']['workExperience'],
+                                            value: user.user.workExperience!,
                                           ),
                                         ],
                                       ),
                                       ReusableContainerWithTitle(
-                                        // title: 'Personal Details',
-                                        title: "title",
                                         userDetailsTiles: [
                                           UserDetailsTile(
                                             icon: Icons.people_alt,
                                             title: 'Guardian Name',
-                                            value: userDetails['user']['guardian'],
+                                            value: user.user.guardian!,
                                           ),
                                           UserDetailsTile(
                                             icon: Icons.phone,
                                             title: 'Phone',
-                                            value:
-                                                userDetails['user']['phone'].toString(),
+                                            value: user.user.phone.toString(),
                                           ),
                                           UserDetailsTile(
                                             icon: Icons.place,
                                             title: 'Place',
-                                            value: userDetails['user']['place'],
+                                            value: user.user.place!,
                                           ),
                                           UserDetailsTile(
                                             icon: Icons.location_city,
                                             title: 'Address',
-                                            value: userDetails['user']['address'],
+                                            value: user.user.address!,
                                           ),
                                         ],
                                       ),

@@ -1,4 +1,6 @@
 // ignore_for_file: unused_label
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -42,24 +44,27 @@ class _HomeViewState extends State<HomeView> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           String? userId = snapshot.data;
+          log(userId.toString());
 
-          return FutureBuilder<Map<String, dynamic>>(
-            future: fetchUserDetails(userId!),
-            builder: (context, userSnapshot) {
-              if (userSnapshot.connectionState == ConnectionState.done) {
-                Map<String, dynamic> userDetails = userSnapshot.data!;
-               
 
-                Users dashboard = Users.fromJson(userDetails);
-                return buildHomeScreen(context, dashboard);
-                
-                
-              } else {
-                return buildLoadingWidget(kselfstackGreen);
-              }
-            },
-          );
-        } else {
+         return FutureBuilder<Map<String, dynamic>>(
+  future: fetchUserDetails(userId),
+  builder: (context, userSnapshot) {
+    if (userSnapshot.connectionState == ConnectionState.done) {
+      if (userSnapshot.hasData) {
+        Map<String, dynamic> userDetails = userSnapshot.data!;
+        Users dashboard = Users.fromJson(userDetails);      
+         return buildHomeScreen(context, dashboard);
+      } else if (userSnapshot.hasError) {
+        return buildLoadingWidget(kselfstackGreen);
+      } else {
+        return buildLoadingWidget(kselfstackGreen);
+      }
+    } else {
+      return buildLoadingWidget(kselfstackGreen);
+    }
+  },
+);} else {
           return buildLoadingWidget(kselfstackGreen);
         }
       },
@@ -70,10 +75,15 @@ class _HomeViewState extends State<HomeView> {
     dashBoardbloc.add(InitialEvent());
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    String onlineText = dashboard.attendance.isNotEmpty
-        ? dashboard.attendance[0]['status']
-        : 'Offline';
-    Color onlineColor;
+String onlineText = 'Offline'; 
+if (dashboard.attendance != null && dashboard.attendance!.isNotEmpty) {
+  var firstAttendance = dashboard.attendance![0]; 
+
+  if (firstAttendance['status'] != null) {
+    onlineText = firstAttendance['status'];
+  }
+}
+ Color onlineColor;
     switch (AttendanceEnum.fromString(onlineText)) {
       case AttendanceEnum.Present:
         onlineColor = kselfstackGreen;
@@ -147,7 +157,7 @@ class _HomeViewState extends State<HomeView> {
                         radius: 14,
                         child: ClipOval(
                           child: Image.network(
-                            dashboard.user.image,
+                            dashboard.user.image.toString(),
                             fit: BoxFit.cover,
                           ),
                         ),
