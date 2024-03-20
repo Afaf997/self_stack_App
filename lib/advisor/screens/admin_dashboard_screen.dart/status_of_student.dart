@@ -45,7 +45,7 @@ class StatusOfStudent extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ReviewUpdatingPage(),
+                builder: (context) => ReviewUpdatingPage(id: id,),
               ),
             );
           },

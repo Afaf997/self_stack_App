@@ -1,13 +1,15 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:self_stack/advisor/services/review/get_review.dart';
-import 'package:self_stack/user/repository/shared_preference.dart';
+import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/functions/task_fetch.dart';
 import 'package:self_stack/utils/constans.dart';
-import 'package:self_stack/user/response/task_model.dart'; // Import TaskModel
+import 'package:self_stack/user/response/task_model.dart';
 
 
 class ReviewUpdatingPage extends StatefulWidget {
+    final String id;
+
+  const ReviewUpdatingPage({super.key, required this.id});
   @override
   _ReviewUpdatingPageState createState() => _ReviewUpdatingPageState();
 }
@@ -15,47 +17,35 @@ class ReviewUpdatingPage extends StatefulWidget {
 class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
   String selectedMark = '';
   String selectedReviewStatus = '';
-  String selectedTask = ''; 
+    String? selectedTask; 
   TextEditingController pendingTopicsController = TextEditingController();
+  TextEditingController markController = TextEditingController(); 
+  TextEditingController reviewerController = TextEditingController();
+  
+  DateTime? selectedDate; 
   List<Task> tasksList = []; 
 
   @override
   void initState() {
     super.initState();
-    fetchTasks(); 
+     _fetchTasks();
+  }
+   Future<void> _fetchTasks() async {
+    List<Task> fetchedTasks = await TaskServiceFunction().fetchTasks();
+    setState(() {
+      tasksList = fetchedTasks;
+      selectedTask = tasksList.isNotEmpty ? tasksList.first.taskName : '';
+    });
   }
 
-  void fetchTasks() async {
-    String? userId = await getUserId();
-    try {
-      TaskModel tasksData = await ReviewService().ReviewfetchData(userId ?? '');
-      setState(() {
-        tasksList = tasksData.userTasks.expand((userTask) => userTask.tasks).toList();
-        selectedTask = tasksList.isNotEmpty ? tasksList.first.taskName : ''; // Select the first task by default
-      });
-    } catch (error) {
-      print('Error fetching tasks: $error');
-    }
-  }
-
-  @override
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: const Color.fromARGB(255, 82, 203, 86),
+        color: kselfstackGreen,
         child: Column(
           children: [
-            AppBar(
-              toolbarHeight: 100,
-              backgroundColor: kselfstackGreen,
-              title: const Text(
-                'Review Updating',
-                style: TextStyle(
-                  color: kwhiteModel,
-                  fontSize: 27,
-                ),
-              ),
-            ),
+            // Your existing code
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
@@ -69,51 +59,51 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                   ),
                   child: Column(
                     children: [
+                      // Your existing code
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Task',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                          DropdownButtonFormField<String>(
-                            dropdownColor:kbackgroundmodel, // Change dropdown color to white
-                            value: selectedTask,
-                            onChanged: (String? value) {
-                              setState(() {
-                                selectedTask = value!;
-                              });
-                            },
-                            items: tasksList.map((task) {
-                              return DropdownMenuItem<String>(
-                                value: task.taskName,
-                                child: Text(
-                                  task.taskName,
-                                  style: const TextStyle(color: kwhiteModel),
-                                ),
-                              );
-                            }).toList(),
-  decoration: InputDecoration(
-    labelStyle: const TextStyle(color:kwhiteModel),
-    focusedBorder: OutlineInputBorder(
-      borderSide: const BorderSide(color: Colors.white),
-      borderRadius: BorderRadius.circular(15.0),
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    const Text(
+      'Task',
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 16,
+      ),
     ),
-    enabledBorder: OutlineInputBorder(
-      borderSide: const BorderSide(color: Colors.white),
-      borderRadius: BorderRadius.circular(15.0),
+    DropdownButtonFormField<String>(
+      dropdownColor: kbackgroundmodel,
+      value: selectedTask,
+      onChanged: (String? value) {
+        setState(() {
+          selectedTask = value;
+        });
+      },
+      hint: const Text('Select your task'), // Hint text for the dropdown
+      decoration: InputDecoration(
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.white),
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.white),
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+      ),
+      items: tasksList.map((task) {
+        return DropdownMenuItem<String>(
+          value: task.taskName,
+          child: Text(
+            task.taskName,
+            style: const TextStyle(color: kwhiteModel),
+          ),
+        );
+      }).toList(),
+             
     ),
-  ),
+  ],
 ),
 
-                        ],
-                      ),
                       const SizedBox(height: 16),
-                Column(
-                    children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -125,9 +115,10 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                             ),
                           ),
                           TextField(
+                            controller: reviewerController,
                             decoration: InputDecoration(
                               labelText: 'Enter reviewer name',
-                              labelStyle: const TextStyle(color: Colors.white),
+                              labelStyle: const TextStyle(color: kgreymodel),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(color: Colors.white),
                                 borderRadius: BorderRadius.circular(15.0),
@@ -156,7 +147,7 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                               Expanded(
                                 child: TextField(
                                   onTap: () async {
-                                    DateTime? selectedDate = await showDatePicker(
+                                    selectedDate = await showDatePicker(
                                       context: context,
                                       initialDate: DateTime.now(),
                                       firstDate: DateTime(2000),
@@ -164,12 +155,15 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                                     );
 
                                     if (selectedDate != null) {
-                                      // Update the TextField or perform any other actions
+                                      setState(() {});
                                     }
                                   },
+                                  readOnly: true, 
+                                  controller: TextEditingController(text: selectedDate != null ? selectedDate.toString() : ''),
+                                  style: TextStyle(color: Colors.white),
                                   decoration: InputDecoration(
-                                    labelText: 'Enter date',
-                                    labelStyle: const TextStyle(color: Colors.white),
+                                    labelText: 'Select date',
+                                    labelStyle: const TextStyle(color:kgreymodel),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: const BorderSide(color: Colors.white),
                                       borderRadius: BorderRadius.circular(15.0),
@@ -180,15 +174,15 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                                     ),
                                     suffixIcon: GestureDetector(
                                       onTap: () async {
-                                        DateTime? selectedDate = await showDatePicker(
+                                        selectedDate = await showDatePicker(
                                           context: context,
                                           initialDate: DateTime.now(),
-                                          firstDate: DateTime(2000),
+                                          firstDate: DateTime(2018),
                                           lastDate: DateTime(2101),
                                         );
 
                                         if (selectedDate != null) {
-                                          // Update the TextField or perform any other actions
+                                          setState(() {}); 
                                         }
                                       },
                                       child: const Icon(
@@ -218,57 +212,18 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                           Row(
                             children: [
                               Expanded(
-                                child: TextFormField(
-                                  readOnly: true,
-                                  onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: const Text('Select Mark'),
-                                          content: Column(
-                                            children: [
-                                              ListTile(
-                                                title: const Text(
-                                                  'Option 1',
-                                                  style: TextStyle(color: Colors.white),
-                                                ),
-                                                tileColor: Colors.red,
-                                                onTap: () {
-                                                  setState(() {
-                                                    selectedMark = 'Option 1';
-                                                  });
-                                                  Navigator.pop(context);
-                                                },
-                                              ),
-                                              ListTile(
-                                                title: const Text(
-                                                  'Option 2',
-                                                  style: TextStyle(color: Colors.white),
-                                                ),
-                                                tileColor: Colors.green,
-                                                onTap: () {
-                                                  setState(() {
-                                                    selectedMark = 'Option 2';
-                                                  });
-                                                  Navigator.pop(context);
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
+                                child: TextField(
+                                  keyboardType: TextInputType.number,
+                                  controller: markController,
                                   decoration: InputDecoration(
-                                    labelText: 'Select mark',
-                                    labelStyle: const TextStyle(color: Colors.white),
+                                    labelText: 'Enter mark',
+                                    labelStyle: const TextStyle(color:kgreymodel),
                                     focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(color: Colors.white),
+                                      borderSide: const BorderSide(color:kwhiteModel),
                                       borderRadius: BorderRadius.circular(15.0),
                                     ),
                                     enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(color: Colors.white),
+                                      borderSide: const BorderSide(color: kwhiteModel),
                                       borderRadius: BorderRadius.circular(15.0),
                                     ),
                                     suffixIcon: const Icon(
@@ -276,7 +231,7 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                                       color: Colors.white,
                                     ),
                                   ),
-                                  controller: TextEditingController(text: selectedMark),
+                                  style: const TextStyle(color: Colors.white),
                                 ),
                               ),
                             ],
@@ -298,7 +253,7 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                             shrinkWrap: true,
                             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              childAspectRatio: 3,
+                              childAspectRatio: 2.6,
                               mainAxisSpacing: 10.0,
                               crossAxisSpacing: 10.0, 
                             ),
@@ -307,9 +262,12 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                               return Container(
                                 color: getReviewStatusColor1(index),
                                 child: RadioListTile<String>(
-                                  title: Text(
-                                    getReviewStatusText(index),
-                                    style: const TextStyle(color: Colors.white),
+                                  title: Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: Text(
+                                      getReviewStatusText(index),
+                                      style: const TextStyle(color: Colors.white,fontSize: 13),
+                                    ),
                                   ),
                                   value: getReviewStatusText(index),
                                   groupValue: selectedReviewStatus,
@@ -333,7 +291,7 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                             'Pending Topics',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 22,
+                              fontSize: 17,
                             ),
                           ),
                           const SizedBox(height: 10),
@@ -353,7 +311,18 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                             alignment: Alignment.centerRight,
                             child: ElevatedButton(
                               onPressed: () {
-                                // Navigator.push(context, MaterialPageRoute(builder: (context)=>DomainPage()));
+                                 String reviewer = reviewerController.text;
+  String mark = markController.text;
+  String date = selectedDate != null ? selectedDate.toString() : '';
+
+  log('Reviewer: $reviewer');
+  log('Task: $selectedTask');
+  log('Date: $date');
+  log('Mark: $mark');
+  log('Task Status: $selectedReviewStatus');
+  log('Pending Topics: ${pendingTopicsController.text}');
+   log('Id: ${widget.id}');
+                                
                               },
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
@@ -368,14 +337,11 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                       ),
                     ],
                   ),
-            ]  ),
+        )   ),
               ),
-            ),
-         ) ],
-        ),
-      ),
-    );
-  }
+          ])  )
+      
+  );}
 
   String getReviewStatusText(int index) {
     switch (index) {
@@ -414,4 +380,8 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
         return Colors.transparent;
     }
   }
+
+
 }
+
+
