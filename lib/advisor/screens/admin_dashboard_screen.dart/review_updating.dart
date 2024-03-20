@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/functions/task_fetch.dart';
+import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/status_of_student.dart';
+import 'package:self_stack/advisor/services/review/post_review.dart';
 import 'package:self_stack/utils/constans.dart';
 import 'package:self_stack/user/response/task_model.dart';
 
@@ -15,12 +17,15 @@ class ReviewUpdatingPage extends StatefulWidget {
 }
 
 class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
+  
   String selectedMark = '';
   String selectedReviewStatus = '';
-    String? selectedTask; 
+  String? selectedTask; 
   TextEditingController pendingTopicsController = TextEditingController();
+  TextEditingController remarksController = TextEditingController();
   TextEditingController markController = TextEditingController(); 
   TextEditingController reviewerController = TextEditingController();
+  ReviewPostService reviewPostService=ReviewPostService();
   
   DateTime? selectedDate; 
   List<Task> tasksList = []; 
@@ -41,6 +46,11 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
 @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
+        toolbarHeight: 80,
+        backgroundColor: kselfstackGreen,
+      ),
       body: Container(
         color: kselfstackGreen,
         child: Column(
@@ -78,7 +88,7 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
           selectedTask = value;
         });
       },
-      hint: const Text('Select your task'), // Hint text for the dropdown
+      hint: const Text('Select your task'),
       decoration: InputDecoration(
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.white),
@@ -291,7 +301,7 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                             'Pending Topics',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 17,
+                              fontSize: 15,
                             ),
                           ),
                           const SizedBox(height: 10),
@@ -299,40 +309,77 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                           TextField(
                             controller: pendingTopicsController,
                             maxLines: null, 
-                            style: const TextStyle(color: Colors.white),
+                            style: const TextStyle(color: kwhiteModel),
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              hintText: 'Enter pending topics...',
-                              hintStyle: TextStyle(color: Colors.white70),
+                              hintText: 'Enter pending topics',
+                              hintStyle: TextStyle(color:kgreymodel),
                             ),
                           ),
                          const SizedBox(height: 16),
-                          Container(
-                            alignment: Alignment.centerRight,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                 String reviewer = reviewerController.text;
-  String mark = markController.text;
-  String date = selectedDate != null ? selectedDate.toString() : '';
-
-  log('Reviewer: $reviewer');
-  log('Task: $selectedTask');
-  log('Date: $date');
-  log('Mark: $mark');
-  log('Task Status: $selectedReviewStatus');
-  log('Pending Topics: ${pendingTopicsController.text}');
-   log('Id: ${widget.id}');
-                                
-                              },
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ), 
-                                backgroundColor: const Color.fromARGB(255, 64, 64, 64),
-                              ),
-                              child: const Text('Submit',style: TextStyle(color:Colors.white),),
+                          const Text(
+                            'Remarks',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
                             ),
                           ),
+                          const SizedBox(height: 10),
+  
+                          TextField(
+                            controller: remarksController,
+                            maxLines: null, 
+                            style: const TextStyle(color: kwhiteModel),
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Enter Remarks.',
+                              hintStyle: TextStyle(color:kgreymodel),
+                            ),
+                          ),
+                         const SizedBox(height: 16),
+                    Container(
+  width: double.infinity, // Ensures the container takes up the full width
+  child: Column(
+    children: [
+Container(
+  width: double.infinity, 
+  alignment: Alignment.center,
+  child: GestureDetector(
+    onTap: () {
+      String reviewer = reviewerController.text;
+      String remarks=remarksController.text;
+      int mark = int.parse(markController.text);
+      String pendingTopics =pendingTopicsController.text;
+     DateTime? date = selectedDate != null ? selectedDate : DateTime.now(); 
+      int selectedIndex = tasksList.indexWhere((task) => task.taskName == selectedTask);
+      if (selectedIndex != -1) {
+        String selectedTask = tasksList[selectedIndex].id;
+      } else {
+        log('Selected task not found');
+      }   
+      reviewPostService.PostReviewDetails(selectedTask.toString(), date!, reviewer, selectedReviewStatus, pendingTopics, mark, remarks,widget.id); 
+           Navigator.push(context, MaterialPageRoute(builder: (context)=>StatusOfStudent(id:widget.id,)));
+    },
+    child: Container(
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.0),
+        color: kblackDark,
+      ),
+      padding: EdgeInsets.symmetric(vertical: 12.0), 
+      child: const Text(
+        'Submit',
+        style: TextStyle(color:kwhiteModel,fontWeight: FontWeight.bold,fontSize: 16),
+      ),
+    ),
+  ),
+),
+
+
+    ],
+  ),
+),
+
                         ],
                       ),
                     ],
@@ -348,9 +395,9 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
       case 0:
         return 'Task Completed';
       case 1:
-        return 'Not Completed';
+              return 'Need Improvement';
       case 2:
-        return 'Need Improvement';
+           return 'Not Completed';
       case 3:
         return 'Not Attended';
       case 4:
@@ -373,7 +420,7 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
       case 3:
         return Colors.blue;
       case 4:
-        return Colors.pink;
+        return Colors.red;
       case 5:
         return const Color.fromARGB(255, 237, 133, 168);
       default:

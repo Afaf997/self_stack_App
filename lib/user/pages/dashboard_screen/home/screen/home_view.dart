@@ -262,7 +262,7 @@ if (dashboard.attendance != null && dashboard.attendance!.isNotEmpty) {
                       if (state is InitaialState) {
                         List<GDPData> chatdata = state.chatdata;
                         print(state.chatdata);
-                        return buildCircularChart(chatdata, screenWidth);
+                        return buildChartSection( screenWidth,state);
                       } else {
                         return CircularProgressIndicator();
                       }
@@ -276,16 +276,18 @@ if (dashboard.attendance != null && dashboard.attendance!.isNotEmpty) {
       },
     );
   }
-Widget buildCircularChart(List<GDPData> chatdata, double screenWidth) {
-  if (chatdata.isNotEmpty) {
+Widget buildChartSection(double screenWidth, DashBoardState state) {
+  late TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
+  
+  if (state is InitaialState) {
+    List<GDPData> chatData = state.chatdata;
+    List<Color> colors = []; // Store colors dynamically
+    for (var data in chatData) {
+      colors.add(_getColorForReviewStatus(data.continent));
+    }
+    
     return SfCircularChart(
-      palette: [
-        kyellow,
-        kblueTheme,
-        korange,
-        kselfstackGreen,
-        kredtheme,
-      ],
+      palette: colors,
       title: ChartTitle(
         text: "Status Of Review",
         textStyle: TextStyle(
@@ -299,10 +301,10 @@ Widget buildCircularChart(List<GDPData> chatdata, double screenWidth) {
         overflowMode: LegendItemOverflowMode.scroll,
         textStyle: TextStyle(color: kwhiteModel),
       ),
-      tooltipBehavior: TooltipBehavior(enable: true),
+      tooltipBehavior: _tooltipBehavior,
       series: <CircularSeries>[
         DoughnutSeries<GDPData, String>(
-          dataSource: chatdata,
+          dataSource: chatData,
           xValueMapper: (GDPData data, _) => data.continent,
           yValueMapper: (GDPData data, _) => data.taskValue,
           dataLabelSettings: DataLabelSettings(isVisible: true),
@@ -311,15 +313,28 @@ Widget buildCircularChart(List<GDPData> chatdata, double screenWidth) {
       ],
     );
   } else {
-    return Center(
-      child: Lottie.asset(
-        'assets/lottie/box.json',
-        width: 200,
-        height: 200,
-        fit: BoxFit.contain,
-      ),
-    );
+    return CircularProgressIndicator();
   }
 }
+
+Color _getColorForReviewStatus(String status) {
+  switch (status.toLowerCase()) {
+    case 'not attended':
+      return Colors.blue;
+    case 'task completed':
+      return Colors.green;
+    case 'not completed':
+      return Colors.orange;
+    case 'need improvement':
+      return Colors.yellow;
+    case 'review repeat':
+      return Colors.red;
+    case 'scheduled':
+      return Color.fromARGB(255, 215, 123, 154);
+    default:
+      return Colors.transparent; 
+  }
+}
+
 
 }

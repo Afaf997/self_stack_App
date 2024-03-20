@@ -11,9 +11,9 @@ class StatusOfStudent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Scaffold(
-        backgroundColor:kselfstackGreen,
-        appBar: AppBar(
+      backgroundColor: kselfstackGreen,
+         appBar: AppBar(
+          
           toolbarHeight: 100,
           backgroundColor: kselfstackGreen,
           title: const Text(
@@ -30,16 +30,46 @@ class StatusOfStudent extends StatelessWidget {
               Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen(Ids: [id],)));
             },
           ),]
-        ),
-        body: Container(
-          decoration: const BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(35),
-              topRight: Radius.circular(35),
-            ),
+        ),  
+     body: Container(
+      width: double.infinity,
+  decoration: const BoxDecoration(
+    color: kbackgroundmodel,
+    borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(35),
+      topRight: Radius.circular(35),
+    ),
+  ),
+  child: Padding(
+    padding: const EdgeInsets.all(20),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Add your nested containers here
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
+          margin: const EdgeInsets.only(bottom: 20),
+          decoration: BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Nested Container 1',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+            ],
           ),
         ),
+      ],
+    ),
+  ),
+),
+
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(
@@ -52,8 +82,6 @@ class StatusOfStudent extends StatelessWidget {
           child: Icon(Icons.add),
           backgroundColor:kblackDark,
           foregroundColor:kwhiteModel,
-        ),
-      ),
-    );
+        ));
   }
 }

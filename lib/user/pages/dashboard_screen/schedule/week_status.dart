@@ -8,9 +8,6 @@ import 'package:self_stack/user/pages/dashboard_screen/schedule/widgets/status_c
 import 'package:self_stack/user/pages/dashboard_screen/schedule/widgets/task_compleated.dart';
 import 'package:self_stack/user/pages/dashboard_screen/schedule/widgets/title_container.dart';
 import 'package:self_stack/utils/constans.dart';
-import 'package:color/color.dart';
-
-// Existing imports...
 
 class TaskStatusScreen extends StatelessWidget {
   final String userId;
@@ -56,16 +53,18 @@ class TaskStatusScreen extends StatelessWidget {
                     children: [
                       SizedBox(height: 20),
                       TaskStatusCard(
+                        statusOfReview: taskDetails != null && taskDetails.containsKey('reviewDetails') && taskDetails['reviewDetails'] is List && taskDetails['reviewDetails'].isNotEmpty ? taskDetails['reviewDetails'][0]["status"].toString() : 'Unknown',
+
+
                         title: 'Week ${index + 1}',
                         subtitle:
-                            'Task ${taskDetails['reviewDetails'][0]['color']}',
+                            '${taskDetails['taskId']}',
                       ),
                       ksizedboxA,
                       buildTaskCompletionText(taskDetails['daysTaken']),
                       ksizedboxA,
                       InfoCard(labels: [
-                        'Reviewer: ${taskDetails['reviewver']}',
-                        'Advisor: ${taskDetails['advisor']}'
+                        'Reviewer : ${taskDetails['reviewver']}',
                       ], backgroundColor: kblackDark),
                       ksizedboxA,
                       Row(

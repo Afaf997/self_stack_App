@@ -33,7 +33,7 @@ class ContactInformation extends StatelessWidget {
         InkWell(
           onTap: () async {
             const url =
-                'https://github.com/Afaf997/self_stack_App/blob/main/lib/privacy%20policy.txt';
+              'https://github.com/Afaf997/self_stack_App/blob/main/lib/privacy%20policy.txt';
             launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
           },
           child: Text(

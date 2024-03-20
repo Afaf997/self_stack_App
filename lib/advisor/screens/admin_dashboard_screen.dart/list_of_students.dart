@@ -105,7 +105,7 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => StatusOfStudent(id:studentsList[index].id),
+                    builder: (context) => StatusOfStudent(id:studentsList[index].id,),
                   ),
                 );
               },
