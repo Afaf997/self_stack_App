@@ -1,24 +1,23 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/functions/task_fetch.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/status_of_student.dart';
 import 'package:self_stack/advisor/services/review/post_review.dart';
+import 'package:self_stack/advisor/services/student_review/put_student.dart';
 import 'package:self_stack/utils/constans.dart';
 import 'package:self_stack/user/response/task_model.dart';
-
-
 class ReviewUpdatingPage extends StatefulWidget {
-    final String id;
+  final String id;
+  final dynamic reviewDetails;
 
-  const ReviewUpdatingPage({super.key, required this.id});
+  const ReviewUpdatingPage({Key? key, required this.id, required this.reviewDetails}) : super(key: key);
+
   @override
   _ReviewUpdatingPageState createState() => _ReviewUpdatingPageState();
 }
 
 class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
-  
-  String selectedMark = '';
+  int selectedMark = 0;
   String selectedReviewStatus = '';
   String? selectedTask; 
   TextEditingController pendingTopicsController = TextEditingController();
@@ -26,27 +25,54 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
   TextEditingController markController = TextEditingController(); 
   TextEditingController reviewerController = TextEditingController();
   ReviewPostService reviewPostService=ReviewPostService();
-  
+  StudentReviewPutService studentReviewPutService=StudentReviewPutService();
   DateTime? selectedDate; 
   List<Task> tasksList = []; 
 
   @override
   void initState() {
     super.initState();
-     _fetchTasks();
+    _fetchTasks();
+    _initializeFields();
   }
-   Future<void> _fetchTasks() async {
+
+  Future<void> _fetchTasks() async {
     List<Task> fetchedTasks = await TaskServiceFunction().fetchTasks();
     setState(() {
       tasksList = fetchedTasks;
       selectedTask = tasksList.isNotEmpty ? tasksList.first.taskName : '';
     });
+    _initializeFields();
   }
+
+void _initializeFields() {
+  if (widget.reviewDetails != null&& widget.reviewDetails is Map<String, dynamic>) {
+    selectedTask = widget.reviewDetails['taskId'] ?? '';
+    reviewerController.text = widget.reviewDetails['reviewver'] ?? '';
+    selectedDate = widget.reviewDetails['scheduleDate'] != null ? DateTime.parse(widget.reviewDetails['scheduleDate']) : null;
+    selectedReviewStatus = widget.reviewDetails['reviewDetails'] != null && widget.reviewDetails['reviewDetails'].isNotEmpty ? widget.reviewDetails['reviewDetails'][0]['status'] : '';
+    pendingTopicsController.text = widget.reviewDetails['pendingTopics'] ?? '';
+    remarksController.text = widget.reviewDetails['remarks'] ?? '';
+    markController.text = widget.reviewDetails['points'] != null ? widget.reviewDetails['points'].toString() : '';
+    
+    int selectedIndex = tasksList.indexWhere((task) => task.taskName == selectedTask);
+    if (selectedIndex != -1) {
+      setState(() {
+        selectedTask = tasksList[selectedIndex].taskName;
+      });
+    } else {
+      log('Selected task not found');
+    }
+  }
+}
 
 @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+                leading: IconButton(onPressed: (){
+         Navigator.push(context, MaterialPageRoute(builder: (context)=>StatusOfStudent(id:widget.id,)));
+        }, icon:Icon(Icons.arrow_back,color: kwhiteModel,)),
         iconTheme: IconThemeData(color: Colors.white),
         toolbarHeight: 80,
         backgroundColor: kselfstackGreen,
@@ -69,7 +95,6 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                   ),
                   child: Column(
                     children: [
-                      // Your existing code
                       Column(
   crossAxisAlignment: CrossAxisAlignment.start,
   children: [
@@ -124,11 +149,14 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                               fontSize: 16,
                             ),
                           ),
+                          
                           TextField(
                             controller: reviewerController,
+                            style: TextStyle(color: kwhiteModel,fontSize: 16),
                             decoration: InputDecoration(
                               labelText: 'Enter reviewer name',
                               labelStyle: const TextStyle(color: kgreymodel),
+                              
                               focusedBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(color: Colors.white),
                                 borderRadius: BorderRadius.circular(15.0),
@@ -355,21 +383,51 @@ Container(
   width: double.infinity, 
   alignment: Alignment.center,
   child: GestureDetector(
-    onTap: () {
-      String reviewer = reviewerController.text;
-      String remarks=remarksController.text;
-      int mark = int.parse(markController.text);
-      String pendingTopics =pendingTopicsController.text;
-     DateTime? date = selectedDate != null ? selectedDate : DateTime.now(); 
-      int selectedIndex = tasksList.indexWhere((task) => task.taskName == selectedTask);
-      if (selectedIndex != -1) {
-        String selectedTask = tasksList[selectedIndex].id;
-      } else {
-        log('Selected task not found');
-      }   
-      reviewPostService.PostReviewDetails(selectedTask.toString(), date!, reviewer, selectedReviewStatus, pendingTopics, mark, remarks,widget.id); 
-           Navigator.push(context, MaterialPageRoute(builder: (context)=>StatusOfStudent(id:widget.id)));
-    },
+onTap: () {
+  String reviewer = reviewerController.text;
+  String remarks = remarksController.text;
+  int mark = int.tryParse(markController.text) ?? 0;
+  String pendingTopics = pendingTopicsController.text;
+  DateTime date = selectedDate ?? DateTime.now();
+  String selectedTaskId = '';
+
+  int selectedIndex = tasksList.indexWhere((task) => task.taskName == selectedTask);
+  if (selectedIndex != -1) {
+    selectedTaskId = tasksList[selectedIndex].taskName;
+  } else {
+    log('Selected task not found');
+  }
+
+  if (widget.reviewDetails is Map<String, dynamic> && widget.reviewDetails.containsKey('reviewId')) {
+    // Update existing review
+    log("put");
+    studentReviewPutService.PutStudentReviewDetails(
+      widget.reviewDetails['reviewId'],
+      selectedTaskId,
+      date,
+      reviewer,
+      selectedReviewStatus,
+      pendingTopics,
+      mark,
+      remarks,
+      widget.id,
+    );
+  } else {
+    log("jhjhjh");
+    reviewPostService.PostReviewDetails(
+      selectedTaskId,
+      date,
+      reviewer,
+      selectedReviewStatus,
+      pendingTopics,
+      mark,
+      remarks,
+      widget.id,
+    );
+  }
+  Navigator.push(context, MaterialPageRoute(builder: (context) => StatusOfStudent(id: widget.id)));
+},
+
     child: Container(
       alignment: Alignment.center,
       decoration: BoxDecoration(
