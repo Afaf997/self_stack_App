@@ -25,7 +25,6 @@ class SplashScreen extends StatelessWidget {
       String? userDomain = prefs.getString('userdomain');
 
       if (userId != null && userId.isNotEmpty && userRoll != 'Advisor' && userDomain!='No') {
-        log(userDomain.toString());
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => BottomNavbarScreen()),

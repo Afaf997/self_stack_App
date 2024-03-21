@@ -146,7 +146,7 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Date',
+                            'Next Review Date',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
@@ -259,38 +259,48 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
                               fontSize: 22,
                             ),
                           ),
-                          GridView.builder(
-                            shrinkWrap: true,
-                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 2.6,
-                              mainAxisSpacing: 10.0,
-                              crossAxisSpacing: 10.0, 
-                            ),
-                            itemCount: 6,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                color: getReviewStatusColor1(index),
-                                child: RadioListTile<String>(
-                                  title: Padding(
-                                    padding: const EdgeInsets.only(right: 10),
-                                    child: Text(
-                                      getReviewStatusText(index),
-                                      style: const TextStyle(color: Colors.white,fontSize: 13),
-                                    ),
-                                  ),
-                                  value: getReviewStatusText(index),
-                                  groupValue: selectedReviewStatus,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      selectedReviewStatus = value!;
-                                    });
-                                  },
-                                  tileColor: Colors.transparent,
-                                ),
-                              );
-                            },
-                          ),
+    GridView.builder(
+  shrinkWrap: true,
+  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 2,
+    childAspectRatio:4,
+    mainAxisSpacing: 10,
+    crossAxisSpacing: 7 
+  ),
+  itemCount: 6,
+  itemBuilder: (BuildContext context, int index) {
+    return Center(
+      child: Container(
+        decoration: BoxDecoration(
+          color: getReviewStatusColor1(index),
+          borderRadius: BorderRadius.circular(13.0),
+        ),
+        child: RadioListTile<String>(
+          title: Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Text(
+              getReviewStatusText(index),
+              style: TextStyle(color: Colors.white, fontSize: 12), // Adjust font size here
+            ),
+          ),
+          value: getReviewStatusText(index),
+          groupValue: selectedReviewStatus,
+          onChanged: (String? value) {
+            setState(() {
+              selectedReviewStatus = value!;
+            });
+          },
+          tileColor: Colors.transparent,
+          dense: true, // Reduces the space around the radio button
+          contentPadding: EdgeInsets.zero,
+          controlAffinity: ListTileControlAffinity.trailing,
+        ),
+      ),
+    );
+  },
+),
+
+
                         ],
                       ),
                       const SizedBox(height: 16),
@@ -358,7 +368,7 @@ Container(
         log('Selected task not found');
       }   
       reviewPostService.PostReviewDetails(selectedTask.toString(), date!, reviewer, selectedReviewStatus, pendingTopics, mark, remarks,widget.id); 
-           Navigator.push(context, MaterialPageRoute(builder: (context)=>StatusOfStudent(id:widget.id,)));
+           Navigator.push(context, MaterialPageRoute(builder: (context)=>StatusOfStudent(id:widget.id)));
     },
     child: Container(
       alignment: Alignment.center,

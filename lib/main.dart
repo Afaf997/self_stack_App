@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:self_stack/advisor/bloc/dashboard/bloc/batch_bloc.dart';
+import 'package:self_stack/advisor/bloc/internet_bloc/bloc/internet_bloc.dart';
 import 'package:self_stack/advisor/bloc/navigation/bloc/navbar_admin_bloc.dart';
 import 'package:self_stack/firebase_options.dart';
 import 'package:self_stack/user/blocs/dashboard/bloc/dash_board_bloc.dart';
@@ -93,6 +94,9 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider<BatchBloc>(
               create: (context) => BatchBloc(),
+            ),
+            BlocProvider<InternetBloc>(
+              create: (context) => InternetBloc(),
             ),
           ],
           child: MaterialApp(
