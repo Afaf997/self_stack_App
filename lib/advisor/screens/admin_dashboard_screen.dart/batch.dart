@@ -137,8 +137,8 @@ class _BatchScreenState extends State<BatchScreen> {
   }
 
   Future<void> _showAddDialog(BuildContext context) async {
-    String batchNumber = '';
-    DateTime? startDate;
+    // String batchNumber = '';
+    // DateTime? startDate;
     showDialog(
       context: context,
       builder: (BuildContext context) {

@@ -23,6 +23,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   ) async {
     try {
       bool success = await signupService.signUpModel(
+        
         event.name,
         event.email,
         event.password,

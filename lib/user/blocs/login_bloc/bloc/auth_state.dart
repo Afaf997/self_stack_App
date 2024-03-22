@@ -4,7 +4,7 @@ part of 'auth_bloc.dart';
 @immutable
 abstract class AuthState {
   static error(String ?e){
-    log(e??"gfd");
+    log(e??"failed");
   }
   
 }

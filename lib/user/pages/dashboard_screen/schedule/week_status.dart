@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/functions/indicater.dart';
 import 'package:self_stack/user/pages/dashboard_screen/schedule/function/get_weekdetails_function.dart';
+import 'package:self_stack/user/pages/dashboard_screen/schedule/schedule_screen.dart';
 import 'package:self_stack/user/pages/dashboard_screen/schedule/widgets/build_card_row.dart';
 import 'package:self_stack/user/pages/dashboard_screen/schedule/widgets/statcard.dart';
 import 'package:self_stack/user/pages/dashboard_screen/schedule/widgets/status_card.dart';
@@ -20,6 +21,16 @@ class TaskStatusScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+        backgroundColor: kselfstackGreen, 
+        elevation: 0, 
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,color: kwhiteModel,),
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>ScheduleScreen()));
+          },
+        ),
+      ),
       backgroundColor: kselfstackGreen,
       body: Padding(
         padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),

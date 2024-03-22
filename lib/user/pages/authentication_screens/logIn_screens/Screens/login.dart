@@ -59,7 +59,6 @@ bool _isValidEmail(String value) {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => SignUp()));
         } else if (state is LoginSuccessState) {
-          log("message");
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => SplashScreen(delaySeconds: 0,)));
           SnackbarUtils.showSuccessSnackbar(context, 'Login successful!',

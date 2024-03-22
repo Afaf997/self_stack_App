@@ -11,7 +11,7 @@ class StudentReviewPutService {
       "taskId": task,
       "completedDte": startDate.millisecondsSinceEpoch,
       'reviewver':reviewer,
-      "reviewDetails":[{"status":statusOfReview,"color":statusOfReview == 'Not attended' ? "blue" : statusOfReview == "Task Completed"? "green"
+      "reviewDetails":[{"status":statusOfReview,"color":statusOfReview == 'Not Attended' ? "blue" : statusOfReview == "Task Completed"? "green"
        :statusOfReview == "Not Completed" ? "orange" :statusOfReview == "Need Improvement" ? "yellow" :statusOfReview == "Review Repeat" ? "red"
        : statusOfReview == "Next Review" ? "pink" : ''}],
       "pendingTopics":PendingTopics,

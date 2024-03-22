@@ -278,44 +278,49 @@ if (dashboard.attendance != null && dashboard.attendance!.isNotEmpty) {
   }
 Widget buildChartSection(double screenWidth, DashBoardState state) {
   late TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
-  
+
   if (state is InitaialState) {
     List<GDPData> chatData = state.chatdata;
-    List<Color> colors = []; // Store colors dynamically
+    List<Color> colors = [];
     for (var data in chatData) {
       colors.add(_getColorForReviewStatus(data.continent));
     }
-    
-    return SfCircularChart(
-      palette: colors,
-      title: ChartTitle(
-        text: "Status Of Review",
-        textStyle: TextStyle(
-          color: kwhiteModel,
-          fontWeight: FontWeight.bold,
-          fontSize: screenWidth * 0.04,
+
+    if (chatData.isNotEmpty) {
+      return SfCircularChart(
+        palette: colors,
+        title: ChartTitle(
+          text: "Status Of Review",
+          textStyle: TextStyle(
+            color: kwhiteModel,
+            fontWeight: FontWeight.bold,
+            fontSize: screenWidth * 0.04,
+          ),
         ),
-      ),
-      legend: Legend(
-        isVisible: true,
-        overflowMode: LegendItemOverflowMode.scroll,
-        textStyle: TextStyle(color: kwhiteModel),
-      ),
-      tooltipBehavior: _tooltipBehavior,
-      series: <CircularSeries>[
-        DoughnutSeries<GDPData, String>(
-          dataSource: chatData,
-          xValueMapper: (GDPData data, _) => data.continent,
-          yValueMapper: (GDPData data, _) => data.taskValue,
-          dataLabelSettings: DataLabelSettings(isVisible: true),
-          enableTooltip: true,
+        legend: Legend(
+          isVisible: true,
+          overflowMode: LegendItemOverflowMode.scroll,
+          textStyle: TextStyle(color: kwhiteModel),
         ),
-      ],
-    );
+        tooltipBehavior: _tooltipBehavior,
+        series: <CircularSeries>[
+          DoughnutSeries<GDPData, String>(
+            dataSource: chatData,
+            xValueMapper: (GDPData data, _) => data.continent,
+            yValueMapper: (GDPData data, _) => data.taskValue,
+            dataLabelSettings: DataLabelSettings(isVisible: true),
+            enableTooltip: true,
+          ),
+        ],
+      );
+    } else {
+      return Center(child: Lottie.asset('assets/lottie/box.json'));
+    }
   } else {
     return CircularProgressIndicator();
   }
 }
+
 
 Color _getColorForReviewStatus(String status) {
   switch (status.toLowerCase()) {

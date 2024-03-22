@@ -234,19 +234,19 @@ class _EditStudentPageState extends State<EditStudentPage> {
             hintText: hintText ?? 'Enter $labelText',
             hintStyle: TextStyle(color: Colors.white54),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
+              borderSide: BorderSide(color: kwhiteModel),
               borderRadius: BorderRadius.circular(8.0),
             ),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
+              borderSide: BorderSide(color: kwhiteModel),
               borderRadius: BorderRadius.circular(8.0),
             ),
             errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.red),
+              borderSide: BorderSide(color: kredtheme),
               borderRadius: BorderRadius.circular(8.0),
             ),
             focusedErrorBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.red),
+              borderSide: BorderSide(color:kredtheme),
               borderRadius: BorderRadius.circular(8.0),
             ),
           ),
@@ -255,7 +255,7 @@ class _EditStudentPageState extends State<EditStudentPage> {
         if (_formKey.currentState?.validate() ?? false)
           Text(
             validator != null ? validator(controller!.text) ?? '' : '',
-            style: TextStyle(color: Colors.red, fontSize: 12),
+            style: TextStyle(color: kredtheme, fontSize: 12),
           ),
         SizedBox(height: 16),
       ],
@@ -307,7 +307,7 @@ class _EditStudentPageState extends State<EditStudentPage> {
         ),
         SizedBox(height: 8),
         if (_formKey.currentState?.validate() ?? false)
-          Text('',style: TextStyle(color: Colors.red, fontSize: 12),
+          Text('',style: TextStyle(color: kredtheme, fontSize: 12),
           ),
         SizedBox(height: 16),
       ],

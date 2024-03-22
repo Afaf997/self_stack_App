@@ -399,8 +399,6 @@ onTap: () {
   }
 
   if (widget.reviewDetails is Map<String, dynamic> && widget.reviewDetails.containsKey('reviewId')) {
-    // Update existing review
-    log("put");
     studentReviewPutService.PutStudentReviewDetails(
       widget.reviewDetails['reviewId'],
       selectedTaskId,
@@ -413,7 +411,6 @@ onTap: () {
       widget.id,
     );
   } else {
-    log("jhjhjh");
     reviewPostService.PostReviewDetails(
       selectedTaskId,
       date,
@@ -480,19 +477,19 @@ onTap: () {
   Color getReviewStatusColor1(int index) {
     switch (index) {
       case 0:
-        return Colors.green;
+        return kselfstackGreen;
       case 1:
-        return Colors.yellow;
+        return kyellow;
       case 2:
-        return Colors.orange;
+        return korange;
       case 3:
-        return Colors.blue;
+        return kblueTheme;
       case 4:
-        return Colors.red;
+        return kredtheme;
       case 5:
         return const Color.fromARGB(255, 237, 133, 168);
       default:
-        return Colors.transparent;
+        return kgreymodel;
     }
   }
 

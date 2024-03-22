@@ -10,7 +10,6 @@ class getweekservices {
 
       Response response = await dio.get(apiUrl);
       if (response.statusCode == 200) {
-        // log(response.toString());
         return response.data;
       } else {
         throw Exception("Failed to retrieve user details. Status code: ${response.statusCode}");

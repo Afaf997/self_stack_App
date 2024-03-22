@@ -1,9 +1,6 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:self_stack/user/response/dashboard_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/functions/function_edit.dart';
-import 'package:self_stack/user/blocs/dashboard/bloc/dash_board_bloc.dart';
 import 'package:self_stack/user/pages/authentication_screens/logIn_screens/Screens/login.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/functions/fetch_user_details.dart';
 import 'package:self_stack/user/pages/dashboard_screen/profile/widgets/alert.dart';
@@ -12,7 +9,6 @@ import 'package:self_stack/user/pages/dashboard_screen/profile/widgets/reusable_
 import 'package:self_stack/user/pages/dashboard_screen/profile/widgets/title_container_reusable.dart';
 import 'package:self_stack/user/repository/shared_preference.dart';
 import 'package:self_stack/utils/constans.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -28,9 +24,7 @@ class ProfileScreen extends StatelessWidget {
             builder: (context, userSnapshot) {
               if (userSnapshot.connectionState == ConnectionState.done) {
                 Map<String, dynamic> userDetails = userSnapshot.data!;
-
                 Users user = Users.fromJson(userDetails);
-
                 return Scaffold(
                   backgroundColor: kselfstackGreen,
                   body: Column(

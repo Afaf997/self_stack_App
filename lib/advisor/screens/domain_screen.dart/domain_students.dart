@@ -1,25 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:self_stack/advisor/response/domain.dart';
+import 'package:self_stack/advisor/screens/domain_screen.dart/list_of_domain_student.dart';
+import 'package:self_stack/advisor/services/domain_service/get_domain.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class DomainPage extends StatefulWidget {
-  const DomainPage({Key? key}) : super(key: key);
+  DomainPage({Key? key}) : super(key: key);
 
   @override
-  _AttendancePageState createState() => _AttendancePageState();
+  _DomainPageState createState() => _DomainPageState();
 }
 
-class _AttendancePageState extends State<DomainPage> {
-  List<ContainerData> containerDataList = [];
-  final TextEditingController textController = TextEditingController();
+class _DomainPageState extends State<DomainPage> {
+  late Future<List<Domain>> _domainDataFuture;
 
+  @override
+  void initState() {
+    super.initState();
+    _domainDataFuture = _fetchDomainData();
+  }
+
+  Future<List<Domain>> _fetchDomainData() async {
+    try {
+      final service = DomainStudentService();
+      final data = await service.DomainStudentData();
+      return List<Domain>.from(data.map((domainJson) => Domain.fromJson(domainJson)));
+    } catch (error) {
+      print('Error fetching domain data: $error');
+      throw Exception("Error fetching domain data: $error");
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:kbackgroundmodel,
+      backgroundColor: kbackgroundmodel,
       appBar: AppBar(
-          automaticallyImplyLeading: false, 
+        automaticallyImplyLeading: false,
         toolbarHeight: 100,
-        backgroundColor:kselfstackGreen,
+        backgroundColor: kselfstackGreen,
         shape: const ContinuousRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomRight: Radius.circular(55.0),
@@ -34,112 +52,95 @@ class _AttendancePageState extends State<DomainPage> {
         ),
         centerTitle: true,
       ),
-      body: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 10.0,
-          mainAxisSpacing: 10.0,
-        ),
-        itemCount: containerDataList.length,
-        itemBuilder: (context, index) {
-          return _buildImageContainer(
-            containerDataList[index].title,
-            containerDataList[index].text,
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _showAddDialog(context);
-        },
-        child:  Icon(Icons.add),
-        backgroundColor:kselfstackGreen,
-      ),
-    );
-  }
-
-  Widget _buildImageContainer(String title, String description) {
-    return Container(
-      margin: const EdgeInsets.all(10.0),
-      padding: const EdgeInsets.all(10.0),
-      decoration: BoxDecoration(
-        color: Color.fromARGB(255, 66, 65, 65), 
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Column(
-        children: [
-          SizedBox(height: 20,),
-          Image.asset(
-            'assets/image/domain.png',
-            height: 70,
-            width: 70,
-            fit: BoxFit.cover,
-          ),
-          const SizedBox(height: 10.0),
-          Text(
-            description,
-            style: const TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-              color:kwhiteModel, 
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _showAddDialog(BuildContext context) async {
-    String text = '';
-
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Add Container',style: TextStyle(color: Colors.white),),
-          backgroundColor: Color.fromARGB(255, 56, 56, 56), // Set background color of the dialog
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0), // Set border radius of the dialog
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min, // Adjust the size of the dialog
-            children: [
-              TextField(
-                controller: textController,
-                decoration: const InputDecoration(labelText: 'Text',labelStyle: TextStyle(color: Colors.white)),
-                onChanged: (value) {
-                  text = value;
-                },
+      body: FutureBuilder<List<Domain>>(
+        future: _domainDataFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (snapshot.hasData) {
+            return GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.8,
               ),
-            ],
-          ),
-          actions: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                _addNewContainer(text);
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                final   domain = snapshot.data![index];
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DomainStudent(domain:domain ,)),
+                    );
+                  },
+                  child: Container(
+                    margin: EdgeInsets.all(10.0),
+                    padding: EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      color: kblackDark,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Image.network(
+                          domain.image.toString(),
+                          width: double.infinity,
+                          height: 100,
+                          fit: BoxFit.cover,
+                        ),
+                        SizedBox(height: 10.0),
+                        Center(
+                          child: Text(
+                            '${domain.courseName}',
+                            maxLines: 2,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0,
+                              color: kwhiteModel,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10.0),
+                        Row(
+                          children: [
+                            Text(
+                              'Number of Tasks: ',
+                              style: TextStyle(
+                                fontSize: 13.0,
+                                color: kwhiteModel,
+                              ),
+                            ),
+                            Text(
+                              '${domain.tasks!.length.toString()}',
+                              style: TextStyle(
+                                fontSize: 13.0,
+                                color: kredtheme,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          'Number Of Students: ${domain.students!.length}',
+                          style: TextStyle(
+                            fontSize: 13.0,
+                            color: kwhiteModel,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
               },
-              child: const Text('Add'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green, // Set button color
-              ),
-            ),
-          ],
-        );
-      },
+            );
+          } else {
+            return Center(child: Text('No data available'));
+          }
+        },
+      ),
     );
   }
-
-  void _addNewContainer(String text) {
-    setState(() {
-      containerDataList.add(ContainerData(title: text, text: text));
-    });
-  }
-}
-
-class ContainerData {
-  final String title;
-  final String text;
-
-  ContainerData({required this.title, required this.text});
 }

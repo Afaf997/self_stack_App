@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +53,6 @@ void main() async {
   if (callCount < 3) {
     String? fcmToken = await FirebaseMessaging.instance.getToken();
     String? userId = await getUserId();
-    log("User ID: $userId");
 
     if (fcmToken != null && userId != null) {
       userPutService.PutUserData(fcmToken, userId);

@@ -9,9 +9,12 @@ class SignUpButtonEvent extends SignUpEvent{
   String name;
   String email;
   String password;
+  
 
   SignUpButtonEvent({required this.name, required this.email,required this.password});
   
 }
 
-class LoginScreenNavigationevent extends SignUpEvent{}
+class LoginScreenNavigationevent extends SignUpEvent{
+  
+}

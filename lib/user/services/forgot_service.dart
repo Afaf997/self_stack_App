@@ -20,7 +20,6 @@ class ForgotService {
           headers: {'Content-Type': 'application/json'},
         ),
       );
-
       log(response.statusCode.toString());
       print(response.statusCode);
 
