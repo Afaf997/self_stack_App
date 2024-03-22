@@ -1,11 +1,10 @@
 part of 'navbar_admin_bloc.dart';
 
 @immutable
-sealed class NavbarAdminEvent {
+abstract class NavbarAdminEvent {}
 
-}
-class NavbarIndex extends NavbarAdminEvent{
-   final int indexnum;
+class NavbarIndex extends NavbarAdminEvent {
+  final int indexnum;
 
-   NavbarIndex(this.indexnum);
+  NavbarIndex(this.indexnum);
 }

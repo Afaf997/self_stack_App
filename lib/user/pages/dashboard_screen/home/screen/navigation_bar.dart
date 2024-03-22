@@ -17,10 +17,11 @@ class BottomNavbarScreen extends StatelessWidget {
       create: (context) => BottomNavigationBarBloc(),
       child: BlocBuilder<BottomNavigationBarBloc, BottomNavigationBarState>(
         builder: (context, state) {
+          final currentIndex = (state as BottomNavigationBarInitial).tabIndex;
           return Scaffold(
             backgroundColor: kbackgroundmodel,
             body: IndexedStack(
-              index: (state as BottomNavigationBarInitial).tabIndex,
+              index: currentIndex,
               children: [
                 HomeView(),
                 TaskScreen(),
@@ -66,7 +67,6 @@ class BottomNavbarScreen extends StatelessWidget {
                       textColor: kselfstackGreen,
                       iconActiveColor: kselfstackGreen,
                     ),
-                    
                     GButton(
                       icon: Icons.person_2_outlined,
                       text: 'Person',
@@ -75,7 +75,7 @@ class BottomNavbarScreen extends StatelessWidget {
                       iconActiveColor: kselfstackGreen,
                     ),
                   ],
-                  selectedIndex: (state as BottomNavigationBarInitial).tabIndex,
+                  selectedIndex: currentIndex,
                   onTabChange: (index) {
                     context.read<BottomNavigationBarBloc>().add(ChangeTabIndexEvent(index));
                   },

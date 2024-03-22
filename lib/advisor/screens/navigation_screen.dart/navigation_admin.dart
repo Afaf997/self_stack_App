@@ -4,7 +4,6 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:self_stack/advisor/bloc/navigation/bloc/navbar_admin_bloc.dart';
 import 'package:self_stack/advisor/bloc/navigation/bloc/navbar_admin_state.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/batch.dart';
-import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/status_of_student.dart';
 import 'package:self_stack/advisor/screens/domain_screen.dart/domain_students.dart';
 import 'package:self_stack/advisor/screens/profile_screen.dart/profile_admin.dart';
 import 'package:self_stack/advisor/screens/todo_screen.dart/admin_todo.dart';
@@ -19,10 +18,11 @@ class BottomNavbarAdmin extends StatelessWidget {
       create: (context) => NavbarAdminBloc(),
       child: BlocBuilder<NavbarAdminBloc, NavbarAdminState>(
         builder: (context, state) {
+          final currentIndex = (state as NavbarAdminInitial).tabIndex;
           return Scaffold(
             backgroundColor: kbackgroundmodel,
             body: IndexedStack(
-              index: (state as NavbarAdminInitial).tabIndex,
+              index: currentIndex,
               children: [
                 BatchScreen(),
                 TodoAdmin(),           
@@ -68,7 +68,6 @@ class BottomNavbarAdmin extends StatelessWidget {
                       textColor: kselfstackGreen,
                       iconActiveColor: kselfstackGreen,
                     ),
-                    
                     GButton(
                       icon: Icons.person,
                       text: 'Profile',
@@ -77,10 +76,9 @@ class BottomNavbarAdmin extends StatelessWidget {
                       iconActiveColor: kselfstackGreen,
                     ),
                   ],
-                  selectedIndex: (state as NavbarAdminInitial).tabIndex,
+                  selectedIndex: currentIndex,
                   onTabChange: (index) {
-                    context.read<NavbarAdminBloc>().add(NavbarIndex(index)); 
-
+                    context.read<NavbarAdminBloc>().add(NavbarIndex(index));
                   },
                 ),
               ),
