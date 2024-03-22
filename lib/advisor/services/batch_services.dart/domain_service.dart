@@ -1,18 +1,17 @@
 import 'package:dio/dio.dart';
-import 'package:self_stack/advisor/response/batches_model.dart';
+import 'package:self_stack/advisor/response/domain.dart';
 import 'package:self_stack/user/core/links.dart';
 
 class DomainService {
   Dio dio = Dio();
 
-  Future<List<Domainbatch>> DomainfetchData() async {
+  Future<List<Domain>> DomainfetchData() async {
     try {
       String apiUrl = "$loginApi/tasks$apikey";
       Response response = await dio.get(apiUrl);
 
       if (response.statusCode == 200) {
-        // Assuming the response is a list of Domainbatch
-        List<Domainbatch> domainList = (response.data as List).map((item) => Domainbatch.fromJson(item)).toList();
+        List<Domain> domainList = (response.data as List).map((item) => Domain.fromJson(item)).toList();
         return domainList;
       } else {
         throw Exception("Failed to retrieve data. Status code: ${response.statusCode}");

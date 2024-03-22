@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:self_stack/advisor/response/batches_model.dart';
-import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/widget/review_submit.dart';
+import 'package:self_stack/user/response/task_model.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class TaskDropdown extends StatelessWidget {
@@ -34,7 +33,7 @@ class TaskDropdown extends StatelessWidget {
             return DropdownMenuItem<String>(
               value: task.taskName,
               child: Text(
-                task.taskName,
+                task.taskName.toString(),
                 style: const TextStyle(color: kwhiteModel),
               ),
             );

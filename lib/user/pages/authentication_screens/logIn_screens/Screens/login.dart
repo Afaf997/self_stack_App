@@ -139,6 +139,7 @@ bool _isValidEmail(String value) {
                   controller: _passwordController,
                   obscureText: true,
                   validator: _validatePassword,
+                  
                 ),
                 const SizedBox(height: 20),
                 GestureDetector(

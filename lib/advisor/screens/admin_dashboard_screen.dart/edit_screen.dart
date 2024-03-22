@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:self_stack/advisor/response/batches_model.dart';
+import 'package:self_stack/advisor/response/domain.dart';
 import 'package:self_stack/advisor/response/domain_model.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/functions/delete_popup.dart';
+import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/functions/validation.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/list_of_students.dart';
+import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/widget/build_textfield.dart';
+import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/widget/dropdown_textfield.dart';
 import 'package:self_stack/advisor/services/batch_services.dart/domain_service.dart';
 import 'package:self_stack/advisor/services/batch_services.dart/get_batch.dart';
 import 'package:self_stack/advisor/services/batch_services.dart/put_batch.dart';
@@ -95,10 +98,10 @@ class _EditStudentPageState extends State<EditStudentPage> {
 
   Future<void> loadDomainOptions() async {
     try {
-      List<Domainbatch> domainList = await _domainService.DomainfetchData();
+      List<Domain> domainList = await _domainService.DomainfetchData();
       setState(() {
-        domainOptions = domainList.map((domain) => domain.courseName).toSet().toList();
-        domainIDs = domainList.map((domain) => domain.id).toSet().toList();
+        domainOptions = domainList.map((domain) => domain.courseName.toString()).toSet().toList();
+        domainIDs = domainList.map((domain) => domain.id.toString()).toSet().toList();
         selectedDomain = userDetails?['domain'];
       });
     } catch (error) {
@@ -167,34 +170,25 @@ class _EditStudentPageState extends State<EditStudentPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      buildTextField('Name', controller: _nameController),
-                      buildTextField('Age', keyboardType: TextInputType.number, controller: _ageController),
-                      buildTextField('Date of Birth', hintText: 'YYYY-MM-DD', controller: _dateOfBirthController),
-                      buildTextField('Email', keyboardType: TextInputType.emailAddress, controller: _emailController),
-                      buildDropdownField('Batch', initialValue: selectedBatch, options: batchOptions, onChanged: (value) {
+                      buildTextField('Name', controller: _nameController,  validator: FormValidator.nameValidator,formKey: _formKey, ),
+                      buildTextField('Age', keyboardType: TextInputType.number, controller: _ageController,  validator: FormValidator.ageValidator,formKey: _formKey, ),
+                      buildTextField('Date of Birth', hintText: 'YYYY-MM-DD', controller: _dateOfBirthController, validator: FormValidator.dateOfBirthValidator,formKey: _formKey, ),
+                      buildTextField('Email', keyboardType: TextInputType.emailAddress, controller: _emailController, validator: FormValidator.emailValidator,formKey: _formKey, ),
+                      buildDropdownField('Batch', initialValue: selectedBatch,formKey: _formKey,options: batchOptions, onChanged: (value) {
                         setState(() {
                           selectedBatch = value;
-                        });
-                      }),
-                      buildDropdownField('Domain', initialValue: selectedDomain, options: domainOptions, onChanged: (value) {
+                        });},),
+                      buildDropdownField('Domain', initialValue: selectedDomain, options: domainOptions,formKey: _formKey, onChanged: (value) {
                         setState(() {
                           selectedDomain = value;
                         });
                       }),
-                      buildTextField('Gender', controller: _genderController),
-                      buildTextField('Place', controller: _placeController),
-                      buildTextField('Phone Number', controller: _phoneNumberController, validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a phone number';
-                        }
-                        if (value.length != 10) {
-                          return 'Phone number must be 10 digits';
-                        }
-                        return null;
-                      }),
-                      buildTextField('Address', controller: _addressController),
-                      buildTextField('Guardian Name', controller: _guardianNameController),
-                      buildTextField('Education Qualification', controller: _educationQualificationController),
+                      buildTextField('Gender', controller: _genderController,validator:FormValidator.GenderValidator,formKey: _formKey, ),
+                      buildTextField('Place', controller: _placeController,validator: FormValidator.PlaceValidator,formKey: _formKey, ),
+                      buildTextField('Phone Number', controller: _phoneNumberController,keyboardType:TextInputType.number, validator:FormValidator.PhoneValidator,formKey: _formKey, ),
+                      buildTextField('Address', controller: _addressController, validator:FormValidator.AddressValidator,formKey: _formKey, ),
+                      buildTextField('Guardian Name', controller: _guardianNameController,validator:FormValidator.GuardianValidator,formKey: _formKey, ),
+                      buildTextField('Education Qualification', controller: _educationQualificationController,validator:FormValidator.EducationValidator,formKey: _formKey, ),
                       SizedBox(height: 24),
                       Container(
                         width: double.infinity,
@@ -215,102 +209,6 @@ class _EditStudentPageState extends State<EditStudentPage> {
                 ),
         ),
       ),
-    );
-  }
-
-  Widget buildTextField(String labelText,
-      {TextInputType? keyboardType, String? hintText, TextEditingController? controller, String? Function(String?)? validator}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(labelText, style: TextStyle(fontSize: 15, color: Colors.white)),
-        SizedBox(height: 5),
-        TextFormField(
-          style: TextStyle(color: Colors.white),
-          keyboardType: keyboardType,
-          controller: controller,
-          validator: validator,
-          decoration: InputDecoration(
-            hintText: hintText ?? 'Enter $labelText',
-            hintStyle: TextStyle(color: Colors.white54),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: kwhiteModel),
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: kwhiteModel),
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: kredtheme),
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderSide: BorderSide(color:kredtheme),
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-          ),
-        ),
-        SizedBox(height: 8),
-        if (_formKey.currentState?.validate() ?? false)
-          Text(
-            validator != null ? validator(controller!.text) ?? '' : '',
-            style: TextStyle(color: kredtheme, fontSize: 12),
-          ),
-        SizedBox(height: 16),
-      ],
-    );
-  }
-
-  Widget buildDropdownField(String labelText,
-      {String? initialValue, required List<String> options, required void Function(String?) onChanged}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(labelText, style: TextStyle(fontSize: 15, color: kwhiteModel)),
-        SizedBox(height: 5),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.black,
-            border: Border.all(color: kwhiteModel),
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    dropdownColor: kblackDark,
-                    value: initialValue,
-                    icon: Icon(Icons.arrow_drop_down, color: kwhiteModel),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: TextStyle(color: kwhiteModel),
-                    onChanged: onChanged,
-                    items: options.map((String option) {
-                      return DropdownMenuItem<String>(
-                        value: option,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Text(
-                            option,
-                            style: TextStyle(color: kwhiteModel),
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: 8),
-        if (_formKey.currentState?.validate() ?? false)
-          Text('',style: TextStyle(color: kredtheme, fontSize: 12),
-          ),
-        SizedBox(height: 16),
-      ],
     );
   }
 }
