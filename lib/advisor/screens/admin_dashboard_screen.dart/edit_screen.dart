@@ -14,7 +14,6 @@ import 'package:self_stack/utils/constans.dart';
 
 class EditStudentPage extends StatefulWidget {
   final String userId;
-
   EditStudentPage({Key? key, required this.userId}) : super(key: key);
   @override
   _EditStudentPageState createState() => _EditStudentPageState();
@@ -56,6 +55,8 @@ class _EditStudentPageState extends State<EditStudentPage> {
     loadUserDetails();
     loadBatchOptions();
     loadDomainOptions();
+    _ageController.text = '';
+  _dateOfBirthController.text = 'YYYY-MM-DD'; 
   }
 
   Future<void> loadUserDetails() async {
@@ -171,8 +172,8 @@ class _EditStudentPageState extends State<EditStudentPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       buildTextField('Name', controller: _nameController,  validator: FormValidator.nameValidator,formKey: _formKey, ),
-                      buildTextField('Age', keyboardType: TextInputType.number, controller: _ageController,  validator: FormValidator.ageValidator,formKey: _formKey, ),
-                      buildTextField('Date of Birth', hintText: 'YYYY-MM-DD', controller: _dateOfBirthController, validator: FormValidator.dateOfBirthValidator,formKey: _formKey, ),
+                      buildTextField('Age',keyboardType: TextInputType.number,controller: _ageController,validator: FormValidator.ageValidator,formKey: _formKey,),
+                      buildTextField('Date of Birth',hintText: 'YYYY-MM-DD',controller: _dateOfBirthController,validator: FormValidator.dateOfBirthValidator,formKey: _formKey,),
                       buildTextField('Email', keyboardType: TextInputType.emailAddress, controller: _emailController, validator: FormValidator.emailValidator,formKey: _formKey, ),
                       buildDropdownField('Batch', initialValue: selectedBatch,formKey: _formKey,options: batchOptions, onChanged: (value) {
                         setState(() {

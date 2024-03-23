@@ -81,7 +81,6 @@ void _initializeFields() {
         color: kselfstackGreen,
         child: Column(
           children: [
-            // Your existing code
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
@@ -284,14 +283,14 @@ void _initializeFields() {
                             'Review Status',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 22,
+                              fontSize: 19,
                             ),
                           ),
     GridView.builder(
   shrinkWrap: true,
   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
     crossAxisCount: 2,
-    childAspectRatio:4,
+    childAspectRatio:3,
     mainAxisSpacing: 10,
     crossAxisSpacing: 7 
   ),

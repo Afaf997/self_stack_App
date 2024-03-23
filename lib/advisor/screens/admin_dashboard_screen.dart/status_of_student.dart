@@ -79,13 +79,13 @@ class _StatusOfStudentState extends State<StatusOfStudent> with SingleTickerProv
           },
           icon: Icon(Icons.arrow_back, color: kwhiteModel),
         ),
-        toolbarHeight: 100,
+        toolbarHeight: 80,
         backgroundColor: kselfstackGreen,
         title: const Text(
           'Status of Students',
           style: TextStyle(
             color: kwhiteModel,
-            fontSize: 27,
+            fontSize: 22,
           ),
         ),
         actions: [

@@ -13,6 +13,8 @@ class BottomNavbarScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return BlocProvider(
       create: (context) => BottomNavigationBarBloc(),
       child: BlocBuilder<BottomNavigationBarBloc, BottomNavigationBarState>(
@@ -39,13 +41,13 @@ class BottomNavbarScreen extends StatelessWidget {
                 ],
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: GNav(
-                  gap: 8,
+                  gap: 5,
                   iconSize: 24,
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  duration: const Duration(milliseconds: 400),
-                  tabs: const [
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                  duration: Duration(milliseconds: 400),
+                  tabs: [
                     GButton(
                       icon: Icons.home_outlined,
                       text: 'Home',
@@ -62,7 +64,7 @@ class BottomNavbarScreen extends StatelessWidget {
                     ),
                     GButton(
                       icon: Icons.schedule_send_outlined,
-                      text: 'Schedule',
+                      text: 'Weeky',
                       iconColor: kwhiteModel,
                       textColor: kselfstackGreen,
                       iconActiveColor: kselfstackGreen,

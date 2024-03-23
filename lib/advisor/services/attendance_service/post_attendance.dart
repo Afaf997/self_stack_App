@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:self_stack/user/core/links.dart';
 
@@ -9,8 +8,9 @@ class AttendancePostService {
 
   Future<bool> PostAttendanceDetails(String id, String status) async {
     var data = {
-      "status":status ,
-      "studentId":id
+      "status": status.split('.')[1],
+      "studentId": id,
+      "date": DateTime.now().toIso8601String(),
     };
 
     try {
@@ -22,7 +22,6 @@ class AttendancePostService {
         ),
       );
 
-
       if (response.statusCode == 201) {
         return true;
       } else if (response.statusCode == 401) {
@@ -31,7 +30,7 @@ class AttendancePostService {
         }
       }
       return false;
-    } on DioException catch (e) {
+    } on DioError catch (e) {
       if (e.response != null) {
         log(e.response!.statusCode.toString());
       }

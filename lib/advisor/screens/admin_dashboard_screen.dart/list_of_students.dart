@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:self_stack/advisor/response/domain_model.dart';
+import 'package:self_stack/advisor/response/student_data.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/edit_screen.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/status_of_student.dart';
+import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/widget/attendance_color.dart';
 import 'package:self_stack/advisor/screens/navigation_screen.dart/navigation_admin.dart';
 import 'package:self_stack/advisor/screens/notification_screen/notification_page.dart';
+import 'package:self_stack/advisor/services/attendance_service/post_attendance.dart';
 import 'package:self_stack/advisor/services/batch_services.dart/delete_student.dart';
 import 'package:self_stack/advisor/services/batch_services.dart/get_batch.dart';
 import 'package:self_stack/utils/constans.dart';
@@ -19,6 +22,7 @@ class StudentsBatchScreen extends StatefulWidget {
 
 class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
   late DeleteStudentServices _DeleteStudentServices = DeleteStudentServices();
+  AttendancePostService attendancePostService=AttendancePostService();
   List<StudentData> studentsList = [];
 
   @override
@@ -72,7 +76,7 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
           'Students Batch',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 27,
+            fontSize: 22,
           ),
         ),
         actions: [
@@ -181,13 +185,24 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
                           iconSize: 24,
                           elevation: 16,
                           style: const TextStyle(color: kwhiteModel),
-                          onChanged: (AttendanceStatus? newValue) {
-                            if (newValue != null) {
-                              setState(() {
-                                studentsList[index].attendanceStatus = newValue;
-                              });
-                            }
-                          },
+                       onChanged: (AttendanceStatus? newValue) async {
+  if (newValue != null) {
+    try {
+      bool attendance = await attendancePostService.PostAttendanceDetails(
+        studentsList[index].id,
+        newValue.toString(),
+      );
+      if (attendance) {
+        setState(() {
+          studentsList[index].attendanceStatus = newValue;
+        });
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+},
+
                           items: AttendanceStatus.values.map<DropdownMenuItem<AttendanceStatus>>((AttendanceStatus value) {
                             return DropdownMenuItem<AttendanceStatus>(
                               value: value,
@@ -215,54 +230,7 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
     );
   }
 
-  Color getAttendanceColor(AttendanceStatus status) {
-    switch (status) {
-      case AttendanceStatus.present:
-        return kselfstackGreen;
-      case AttendanceStatus.absent:
-        return kredtheme;
-      case AttendanceStatus.halfDay:
-        return kblueTheme;
-      case AttendanceStatus.offline:
-        return kblackLight;
-    }
-  }
-
-  String getStatusText(AttendanceStatus status) {
-    switch (status) {
-      case AttendanceStatus.present:
-        return 'Present';
-      case AttendanceStatus.absent:
-        return 'Absent';
-      case AttendanceStatus.halfDay:
-        return 'Half Day';
-      case AttendanceStatus.offline:
-        return 'Offline';
-    }
-  }
+  
 }
 
-class StudentData {
-  final String id;
-  final String name;
-  final String details;
-  final String avatarImage;
-  final String batch;
-  AttendanceStatus attendanceStatus;
 
-  StudentData({
-    required this.id,
-    required this.name,
-    required this.batch,
-    required this.details,
-    required this.avatarImage,
-    required this.attendanceStatus,
-  });
-}
-
-enum AttendanceStatus {
-  present,
-  absent,
-  halfDay,
-  offline,
-}

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:self_stack/user/core/links.dart';
 
@@ -22,11 +21,7 @@ class SignupService {
           headers: {'Content-Type': 'application/json'},
         ),
       );
-
-      log(response.statusCode.toString());
-      print(response.statusCode);
-
-      if (response.statusCode == 401) {
+    if (response.statusCode == 401) {
         String error = 'Something went wrong';
         if (response.data != null &&
             response.data['error'] == 'Invalid username or password') {
