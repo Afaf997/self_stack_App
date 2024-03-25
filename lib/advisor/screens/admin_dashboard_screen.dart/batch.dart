@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/advisor/bloc/dashboard/bloc/batch_bloc.dart';
 import 'package:self_stack/advisor/response/domain_model.dart';
+import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/feedback_screen.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/widget/add_batch_dialog.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/widget/batch_list.dart';
 import 'package:self_stack/advisor/screens/navigation_screen.dart/navigation_admin.dart';
@@ -39,30 +40,22 @@ class _BatchScreenState extends State<BatchScreen> {
               automaticallyImplyLeading: false, 
             backgroundColor: kbackgroundmodel,
             title: Padding(
-              padding: const EdgeInsets.only(top: 30),
+              padding: const EdgeInsets.only(top: 30,left:20),
               child: Text("All Batches",style: TextStyle(color: kwhiteModel,fontWeight: FontWeight.bold,fontSize: 25),),
             ),
+            actions: [Padding(
+              padding: const EdgeInsets.only(top: 25,right: 10),
+              child: IconButton(onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>FeedbackScreen()));
+              }, icon: Icon(Icons.feedback,color: kwhiteModel,)),
+            )],
           ),
+          
           backgroundColor: kbackgroundmodel,
-          body: _buildBody(),
-          floatingActionButton: _buildFloatingActionButton(),
-        );
-      },
-    );
-  }
-
-
-  Widget _buildBody() {
-    return Padding(
+          body: Padding(
       padding: EdgeInsets.only(top: 20),
       child: Container(
-        child: _buildFutureBuilder(),
-      ),
-    );
-  }
-
-  FutureBuilder<Welcome> _buildFutureBuilder() {
-    return FutureBuilder<Welcome>(
+        child: FutureBuilder<Welcome>(
       future: future,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -76,9 +69,14 @@ class _BatchScreenState extends State<BatchScreen> {
           return BatchList(welcome: welcome);
         }
       },
+    ),
+      ),
+    ),
+          floatingActionButton: _buildFloatingActionButton(),
+        );
+      },
     );
   }
-
   Widget _buildLoadingWidget() {
     return Center(
       child: CircularProgressIndicator(
@@ -124,7 +122,7 @@ class _BatchScreenState extends State<BatchScreen> {
             color: kblackLight,
             child: Center(
               child: Text(
-                '${batch.batch.studentIds?.length ?? 0} Students',
+                '${batch.batch.studentIds.length} Students',
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -137,8 +135,7 @@ class _BatchScreenState extends State<BatchScreen> {
   }
 
   Future<void> _showAddDialog(BuildContext context) async {
-    // String batchNumber = '';
-    // DateTime? startDate;
+
     showDialog(
       context: context,
       builder: (BuildContext context) {

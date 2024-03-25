@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:self_stack/advisor/response/domain_model.dart';
 import 'package:self_stack/advisor/response/student_data.dart';
+import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/batch.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/edit_screen.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/status_of_student.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/widget/attendance_color.dart';
@@ -14,7 +15,9 @@ import 'package:self_stack/utils/constans.dart';
 
 class StudentsBatchScreen extends StatefulWidget {
   final int index;
-  const StudentsBatchScreen({Key? key, required this.index}) : super(key: key);
+  String batchId;
+
+   StudentsBatchScreen({Key? key, required this.index,required this.batchId}) : super(key: key);
 
   @override
   _StudentsBatchScreenState createState() => _StudentsBatchScreenState();
@@ -22,8 +25,8 @@ class StudentsBatchScreen extends StatefulWidget {
 
 class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
   late DeleteStudentServices _DeleteStudentServices = DeleteStudentServices();
-  AttendancePostService attendancePostService=AttendancePostService();
-  List<StudentData> studentsList = [];
+  AttendancePostService attendancePostService = AttendancePostService();
+  List<AttendanceStudentUser> studentsList = [];
 
   @override
   void initState() {
@@ -35,27 +38,24 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
     try {
       BatchService batchService = BatchService();
       Welcome batchData = await batchService.fetchData();
-
       if (widget.index >= 0 && widget.index < batchData.batches.length) {
         BatchElement selectedBatch = batchData.batches[widget.index];
-
         setState(() {
-          studentsList = selectedBatch.batch.studentIds
-              .map((studentId) => StudentData(
-                    id: studentId.id,
-                    batch: studentId.batch.toString(),
-                    name: studentId.name,
-                    details: "${studentId.email}",
-                    avatarImage: studentId.image,
-                    attendanceStatus: AttendanceStatus.offline,
-                  ))
-              .toList();
+          studentsList = selectedBatch.batch.studentIds.map((studentId) {
+            return AttendanceStudentUser(
+              Studentuser: StudentUser(
+                id: studentId.id,
+                name: studentId.name,
+                email: studentId.email,
+                image: studentId.image,
+              ),
+              attendance: [],
+            );
+          }).toList();
         });
-      } else {
-        print('Invalid index provided');
       }
-    } catch (error) {
-      print('Error fetching and updating data: $error');
+    } catch (e) {
+      print('Error fetching data: $e');
     }
   }
 
@@ -66,7 +66,8 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNavbarAdmin()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => BottomNavbarAdmin()));
           },
           icon: Icon(Icons.arrow_back, color: kwhiteModel),
         ),
@@ -75,21 +76,51 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
         title: const Text(
           'Students Batch',
           style: TextStyle(
-            color: Colors.white,
+            color: kwhiteModel,
             fontSize: 22,
           ),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications, color: kwhiteModel),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen(Ids: ["j"],)));
-            },
-          ),
+  icon: const Icon(Icons.notifications, color: kwhiteModel),
+  onPressed: () {
+    List<String> allIds = studentsList.map((student) => student.Studentuser.id ?? '').toList();
+    Navigator.push( context, MaterialPageRoute(   builder: (context) => NotificationScreen(Ids: allIds,
+        ),
+      ),
+    );
+  },
+),
+
           IconButton(
             icon: const Icon(Icons.delete, color: kwhiteModel),
-            onPressed: () {},
-          ),
+            onPressed: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Delete Confirmation"),
+              content: Text("Are you sure you want to delete?"),
+              actions: [
+                TextButton(
+          onPressed: () {
+            Navigator.of(context).pop(); 
+          },
+          child: Text('Cancel',style: TextStyle(color: kwhiteModel),),
+        ),
+                TextButton(
+                  child: Text("Delete"),
+                  onPressed: () {
+                    _DeleteStudentServices.BatchRemoveDetails(widget.batchId);
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavbarAdmin()));
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
+    )
         ],
       ),
       body: Container(
@@ -109,53 +140,63 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => StatusOfStudent(id:studentsList[index].id,),
+                    builder: (context) => StatusOfStudent(
+                        id: studentsList[index].Studentuser.id ?? ''),
                   ),
                 );
               },
               child: Slidable(
-                key: ValueKey(studentsList[index].id),
-                endActionPane: ActionPane(
-                  motion: const DrawerMotion(),
-                  children: [
-                    SlidableAction(
-                      backgroundColor: kblueTheme,
-                      icon: Icons.edit,
-                      label: 'Edit',
-                      onPressed: (context) => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditStudentPage(userId: studentsList[index].id),
-                        ),
-                      ),
-                    ),
-                    SlidableAction(
-                      backgroundColor: kredtheme,
-                      icon: Icons.delete,
-                      label: 'Delete',
-                      onPressed: (context) {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text("Confirm Delete"),
-                              content: Text("Are you sure you want to delete this student?"),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text("Cancel"),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    _DeleteStudentServices.DeleteStudentDetails(studentsList[index].batch, studentsList[index].id);
-                                    setState(() {
-                                      studentsList.removeAt(index);
-                                    });
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text("Delete"),
+  key: ValueKey(studentsList[index].Studentuser.id),
+  endActionPane: ActionPane(
+    motion: const DrawerMotion(),
+    children: [
+      SlidableAction(
+        backgroundColor: kblueTheme,
+        icon: Icons.edit,
+        label: 'Edit',
+        onPressed: (context) => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => EditStudentPage(
+                userId: studentsList[index].Studentuser.id ?? ''),
+          ),
+        ),
+      ),
+      SlidableAction(
+        backgroundColor: kredtheme,
+        icon: Icons.delete,
+        label: 'Delete',
+        onPressed: (context) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text("Confirm Delete"),
+                content: Text(
+                    "Are you sure you want to delete this student?"),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("Cancel"),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      if(widget.index == 0) {
+                      _DeleteStudentServices.RemoveStudentDetails( studentsList[index].Studentuser.id ??'');
+                         studentsList.removeAt(index);
+                      
+                      } else {
+                        _DeleteStudentServices.DeleteStudentDetails(widget.batchId.toString(), studentsList[index].Studentuser.id ??'');
+                      }
+      
+                      setState(() {
+                        studentsList.removeAt(index);
+                      });
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("Delete"),
                                 ),
                               ],
                             );
@@ -168,42 +209,47 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
                 child: ListTile(
                   contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
                   leading: CircleAvatar(
-                    backgroundImage: NetworkImage(studentsList[index].avatarImage),
+                    backgroundImage: NetworkImage(
+                        studentsList[index].Studentuser.image ?? ''),
                   ),
-                  title: Text(studentsList[index].name, style: const TextStyle(color: kwhiteModel)),
+                  title: Text(studentsList[index].Studentuser.name ?? '',
+                      style: const TextStyle(color: kwhiteModel)),
                   subtitle: Row(
                     children: [
                       Expanded(
-                        child: Text(studentsList[index].details, style: const TextStyle(color: kwhiteModel)),
+                        child: Text(studentsList[index].Studentuser.email ?? '',
+                            style: const TextStyle(color: kwhiteModel)),
                       ),
                       const SizedBox(width: 8.0),
                       DropdownButtonHideUnderline(
                         child: DropdownButton<AttendanceStatus>(
                           dropdownColor: kblackDark,
-                          value: studentsList[index].attendanceStatus,
-                          icon: const Icon(Icons.arrow_drop_down, color: kwhiteModel),
+                          // value: studentsList[index].attendance?.isNotEmpty == true ? studentsList[index].attendance!.first.status : AttendanceStatus.offline,
+                          icon: const Icon(Icons.arrow_drop_down,
+                              color: kwhiteModel),
                           iconSize: 24,
                           elevation: 16,
                           style: const TextStyle(color: kwhiteModel),
-                       onChanged: (AttendanceStatus? newValue) async {
-  if (newValue != null) {
-    try {
-      bool attendance = await attendancePostService.PostAttendanceDetails(
-        studentsList[index].id,
-        newValue.toString(),
-      );
-      if (attendance) {
-        setState(() {
-          studentsList[index].attendanceStatus = newValue;
-        });
-      }
-    } catch (e) {
-      print('Error: $e');
-    }
-  }
-},
-
-                          items: AttendanceStatus.values.map<DropdownMenuItem<AttendanceStatus>>((AttendanceStatus value) {
+                          onChanged: (AttendanceStatus? newValue) async {
+                            if (newValue != null) {
+                              try {
+                                bool attendance = await attendancePostService
+                                    .PostAttendanceDetails(
+                                  studentsList[index].Studentuser.id ?? '',
+                                  newValue.toString());
+                                if (attendance) {
+                                  setState(() {
+                                    studentsList[index].attendanceStatus = newValue;
+                                  });
+                                }
+                              } catch (e) {
+                                print('Error: $e');
+                              }
+                            }
+                          },
+                          items: AttendanceStatus.values
+                              .map<DropdownMenuItem<AttendanceStatus>>(
+                                  (AttendanceStatus value) {
                             return DropdownMenuItem<AttendanceStatus>(
                               value: value,
                               child: Text(getStatusText(value)),
@@ -218,7 +264,7 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
                     height: 20.0,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: getAttendanceColor(studentsList[index].attendanceStatus),
+                      color: getAttendanceColor(studentsList[index].attendanceStatus), 
                     ),
                   ),
                 ),
@@ -229,8 +275,4 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
       ),
     );
   }
-
-  
 }
-
-

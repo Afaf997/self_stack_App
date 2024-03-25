@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/batch.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/list_of_students.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/review_updating.dart';
 import 'package:self_stack/advisor/screens/notification_screen/notification_page.dart';
@@ -75,7 +76,7 @@ class _StatusOfStudentState extends State<StatusOfStudent> with SingleTickerProv
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => StudentsBatchScreen(index: 0)));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => BatchScreen ()));
           },
           icon: Icon(Icons.arrow_back, color: kwhiteModel),
         ),

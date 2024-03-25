@@ -129,7 +129,7 @@ class _EditStudentPageState extends State<EditStudentPage> {
           .PutBatchData(
               id, name, age, dateOfBirth, email, gender, place, address, guardianName, educationQualification, phoneNumber, selectedDomainID, selectedBatchID)
           .then((response) {
-        return Navigator.push(context, MaterialPageRoute(builder: (context) => StudentsBatchScreen(index: 0)));
+        return Navigator.push(context, MaterialPageRoute(builder: (context) => StudentsBatchScreen(index: 0,batchId: selectedBatchID,)));
       }).catchError((error) {
         print('Error updating batch data: $error');
       });

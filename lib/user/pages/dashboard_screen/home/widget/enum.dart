@@ -1,9 +1,9 @@
 enum AttendanceEnum{
-  Present('Present'),
-  Holiday('Holiday'),
-  Absend('Absend'),
-  HalfDay('HalfDay'),
-  Offline('Offline');
+  Present('present'),
+  Holiday('holiday'),
+  Absend('absent'),
+  HalfDay('halfDay'),
+  Offline('offline');
 
   final String value;
 

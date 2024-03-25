@@ -30,7 +30,7 @@ class BatchList extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => StudentsBatchScreen(index: index,),
+                        builder: (context) => StudentsBatchScreen(index: index,batchId: welcome.batches[index].batch.id.toString(),),
                       ),
                     );
                   },
@@ -50,11 +50,6 @@ class BatchList extends StatelessWidget {
         color: kblackDark,
         // borderRadius: BorderRadius.circular(8.0), 
         borderRadius: BorderRadius.only(topLeft: Radius.circular(8.0), topRight: Radius.circular(8.0))
-        // border: Border.all(
-        //   color: kwhiteModel,
-        //   width:0.7
-        // ), 
-        // border: BorderDirectional(start: BorderSide(color: kwhiteModel),)
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,

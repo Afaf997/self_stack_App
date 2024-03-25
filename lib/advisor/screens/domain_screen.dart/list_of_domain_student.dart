@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:self_stack/advisor/response/domain.dart'; // Import your model class here
+import 'package:self_stack/advisor/screens/notification_screen/notification_page.dart';
 import 'package:self_stack/utils/constans.dart'; // Import your constants here
 
 class DomainStudent extends StatelessWidget {
@@ -30,7 +33,22 @@ class DomainStudent extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.notifications, color: kwhiteModel),
-            onPressed: () {},
+            onPressed: () {
+              final List<String> ids = [];
+              if (domain.students != null) {
+                for (var student in domain.students!) {
+                  ids.add(student?.id ?? 'self-stack-user-ba8301d1-c91e-4e40-901b-9aa5c7660dce');
+                }}
+                log(ids.toString());
+               Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => NotificationScreen(
+          Ids: ids,
+        ),
+      ),
+    );
+            },
           ),
         ],
       ),

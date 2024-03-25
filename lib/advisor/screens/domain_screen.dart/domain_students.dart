@@ -30,6 +30,7 @@ class _DomainPageState extends State<DomainPage> {
       throw Exception("Error fetching domain data: $error");
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,19 +61,15 @@ class _DomainPageState extends State<DomainPage> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (snapshot.hasData) {
-            return GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.8,
-              ),
+            return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                final   domain = snapshot.data![index];
+                final domain = snapshot.data![index];
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DomainStudent(domain:domain ,)),
+                      MaterialPageRoute(builder: (context) => DomainStudent(domain: domain)),
                     );
                   },
                   child: Container(
@@ -82,52 +79,45 @@ class _DomainPageState extends State<DomainPage> {
                       color: kblackDark,
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    child: Column(
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Image.network(
                           domain.image.toString(),
-                          width: double.infinity,
+                          width: 100,
                           height: 100,
                           fit: BoxFit.cover,
                         ),
-                        SizedBox(height: 10.0),
-                        Center(
-                          child: Text(
-                            '${domain.courseName}',
-                            maxLines: 2,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16.0,
-                              color: kwhiteModel,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10.0),
-                        Row(
-                          children: [
-                            Text(
-                              'Number of Tasks: ',
-                              style: TextStyle(
-                                fontSize: 13.0,
-                                color: kwhiteModel,
+                        SizedBox(width: 10.0),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${domain.courseName}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                  color: kselfstackGreen,
+                                ),
                               ),
-                            ),
-                            Text(
-                              '${domain.tasks!.length.toString()}',
-                              style: TextStyle(
-                                fontSize: 13.0,
-                                color: kredtheme,
-                                fontWeight: FontWeight.bold,
+                              SizedBox(height: 10.0),
+                              Text(
+                                'Number of Tasks: ${domain.tasks!.length.toString()}',
+                                style: TextStyle(
+                                  fontSize: 13.0,
+                                  color: kwhiteModel,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          'Number Of Students: ${domain.students!.length}',
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            color: kwhiteModel,
+                              SizedBox(height: 7,),
+                              Text(
+                                'Number Of Students: ${domain.students!.length}',
+                                style: TextStyle(
+                                  fontSize: 13.0,
+                                  color: kwhiteModel,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
