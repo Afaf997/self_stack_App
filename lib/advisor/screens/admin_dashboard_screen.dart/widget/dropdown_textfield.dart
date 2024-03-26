@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:self_stack/utils/constans.dart';
 
+
 Widget buildDropdownField(
   String labelText, {
   String? initialValue,
@@ -14,39 +15,38 @@ Widget buildDropdownField(
       Text(labelText, style: TextStyle(fontSize: 15, color: kwhiteModel)),
       SizedBox(height: 5),
       Container(
+        width: double.infinity, // Set width to full width
         decoration: BoxDecoration(
           color: Colors.black,
           border: Border.all(color: kwhiteModel),
           borderRadius: BorderRadius.circular(8.0),
         ),
-        child: Row(
-          children: [
-            Expanded(
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  dropdownColor: kblackDark,
-                  value: initialValue,
-                  icon: Icon(Icons.arrow_drop_down, color: kwhiteModel),
-                  iconSize: 24,
-                  elevation: 16,
-                  style: TextStyle(color: kwhiteModel),
-                  onChanged: onChanged,
-                  items: options.map((String option) {
-                    return DropdownMenuItem<String>(
-                      value: option,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          option,
-                          style: TextStyle(color: kwhiteModel),
-                        ),
-                      ),
-                    );
-                  }).toList(),
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<String>(
+            isExpanded: true, // Set isExpanded to true
+            dropdownColor: kblackDark,
+            value: initialValue,
+            icon: Icon(Icons.arrow_drop_down, color: kwhiteModel),
+            iconSize: 24,
+            elevation: 16,
+            style: TextStyle(color: kwhiteModel),
+            onChanged: onChanged,
+            items: options.map((String option) {
+              return DropdownMenuItem<String>(
+                value: option,
+                child: Container( // Use a container for full width item
+                  width: double.infinity, // Set width to full width
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      option,
+                      style: TextStyle(color: kwhiteModel),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ],
+              );
+            }).toList(),
+          ),
         ),
       ),
       SizedBox(height: 8),

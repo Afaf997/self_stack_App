@@ -6,7 +6,6 @@ import 'package:self_stack/utils/constans.dart';
 
 import '../../../../blocs/otp_bloc/bloc/otp_bloc.dart';
 
-// ignore: must_be_immutable
 class OtpScreen extends StatelessWidget {
   OtpScreen({Key? key, required this.emailController}) : super(key: key) {
     focusNodes = List.generate(6, (index) => FocusNode());
@@ -41,7 +40,7 @@ class OtpScreen extends StatelessWidget {
         return Scaffold(
           resizeToAvoidBottomInset: false,
           body: Container(
-             height: MediaQuery.of(context).size.height,
+            height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/image/background.jpg'),
@@ -122,13 +121,25 @@ class OtpScreen extends StatelessWidget {
                               onChanged: (value) {
                                 if (value.length == 1) {
                                   if (index < 5) {
-                                    FocusScope.of(context).requestFocus(focusNodes[index + 1]);
+                                    FocusScope.of(context)
+                                        .requestFocus(focusNodes[index + 1]);
                                   } else {
-                          
-                                    otpbloc.add(OtpVerifyevent(
-                                      email: emailController.text,
-                                      otp: otpControllers.map((controller) => controller.text).join(),
-                                    ));
+                                    if (otpIsValid()) {
+                                      otpbloc.add(OtpVerifyevent(
+                                        email: emailController.text,
+                                        otp: otpControllers
+                                            .map((controller) => controller.text)
+                                            .join(),
+                                      ));
+                                    } else {
+                                      clearOtpFields();
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text('Invalid OTP'),
+                                          duration: Duration(seconds: 2),
+                                        ),
+                                      );
+                                    }
                                   }
                                 }
                               },
@@ -143,7 +154,9 @@ class OtpScreen extends StatelessWidget {
                 GestureDetector(
                   onTap: () => otpbloc.add(OtpVerifyevent(
                     email: emailController.text,
-                    otp: otpControllers.map((controller) => controller.text).join(),
+                    otp: otpControllers
+                        .map((controller) => controller.text)
+                        .join(),
                   )),
                   child: Container(
                     width: 280,
@@ -184,6 +197,14 @@ class OtpScreen extends StatelessWidget {
       },
     );
   }
+
+  bool otpIsValid() {
+    return otpControllers.every((controller) => controller.text.length == 1);
+  }
+
+  void clearOtpFields() {
+    for (var controller in otpControllers) {
+      controller.clear();
+    }
+  }
 }
-
-

@@ -28,81 +28,93 @@ class AdvisorProfile extends StatelessWidget {
                 Map<String, dynamic> userDetails = userSnapshot.data!;
                 Users user = Users.fromJson(userDetails);
                 return Scaffold(
-                  backgroundColor: kbackgroundmodel,
                   appBar: AppBar(
-                    automaticallyImplyLeading: false,
-                    title: Text(
-                      'Profile',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    backgroundColor: kselfstackGreen,
+                    backgroundColor: kbackgroundmodel,
                   ),
+                  backgroundColor: kbackgroundmodel,
                   body: SingleChildScrollView(
                     padding: const EdgeInsets.all(24.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: kbackgroundmodel,
-                              radius: 50.0,
-                               child: ClipOval(
-                              child: Image.network(
-                                user.user.image!,
-                                width: 55,
-                                height: 55,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            ),
-                          ],
-                        ),
-                             SizedBox(height: 8.0),
-                        Text(
-                          user.user.name.toString(),
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            color: kwhiteModel,
-                          ),
-                        ),
-                        SizedBox(height: 8.0),
-                        Text(
-                          user.user.email.toString(),
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            color: kwhiteModel,
-                          ),
-                        ),
-              
-                        SizedBox(
-                          height: 100,
+                        Image.asset(
+                          'assets/image/selfstack.png',
+                          width: MediaQuery.of(context).size.width * 8,
+                          height: MediaQuery.of(context).size.height * 0.2,
+                          fit: BoxFit.cover,
                         ),
                         SizedBox(
                           width: double.infinity,
-                          child: ElevatedButton.icon(
-                            onPressed: () async {
-                              bool? confirmed = await showLogoutConfirmationDialog(context);
+                          height: MediaQuery.of(context).size.height * 0.5,
+                          child: Container(
+                            color: kblackDark,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: kbackgroundmodel,
+                                  radius: 70.0,
+                                  child: ClipOval(
+                                    child: Image.network(
+                                      user.user.image!,
+                                      width: 55,
+                                      height: 55,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 8.0),
+                                Text(
+                                  'Advisor: ${user.user.name.toString()}',
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    color: kwhiteModel,
+                                  ),
+                                ),
+                                SizedBox(height: 8.0),
+                                Text(
+                                  user.user.email.toString(),
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    color: kwhiteModel,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 60,
+                                ),
+                                SizedBox(
+                                  child: ElevatedButton.icon(
+                                    onPressed: () async {
+                                      bool? confirmed =
+                                          await showLogoutConfirmationDialog(
+                                              context);
 
-                              if (confirmed != null && confirmed) {
-                                SharedPreferences prefs = await SharedPreferences.getInstance();
-                                await prefs.clear();
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => LoginPage()),
-                                );
-                              }
-                            },
-                            icon: Icon(Icons.logout, color: kredtheme),
-                            label: Text('Logout', style: TextStyle(color: kwhiteModel)),
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              backgroundColor: kselfstackGreen,
+                                      if (confirmed != null && confirmed) {
+                                        SharedPreferences prefs =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        await prefs.clear();
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginPage()),
+                                        );
+                                      }
+                                    },
+                                    icon: Icon(Icons.logout, color: kredtheme),
+                                    label: Text('Logout',
+                                        style: TextStyle(color: kwhiteModel)),
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      backgroundColor: kselfstackGreen,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -111,14 +123,14 @@ class AdvisorProfile extends StatelessWidget {
                   ),
                 );
               } else {
-                // Placeholder widget while loading user data
-                return Center(child: CircularProgressIndicator());
+                return Center(
+                    child: CircularProgressIndicator(color: kselfstackGreen));
               }
             },
           );
         } else {
-          // Placeholder widget while loading user ID
-          return Center(child: CircularProgressIndicator());
+          return Center(
+              child: CircularProgressIndicator(color: kselfstackGreen));
         }
       },
     );

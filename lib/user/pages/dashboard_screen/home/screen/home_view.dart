@@ -8,6 +8,7 @@ import 'package:self_stack/user/blocs/dashboard/bloc/dash_board_bloc.dart';
 import 'package:self_stack/user/pages/authentication_screens/logIn_screens/Screens/login.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/functions/fetch_user_details.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/functions/indicater.dart';
+import 'package:self_stack/user/pages/dashboard_screen/home/functions/permition_function.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/functions/pie.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/screen/about_us.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/screen/attendence_status.dart';
@@ -36,6 +37,12 @@ class _HomeViewState extends State<HomeView> {
   DashBoardBloc dashBoardbloc = DashBoardBloc();
   late TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
   CalendarFormat _calendarFormat = CalendarFormat.twoWeeks;
+    @override
+  void initState() {
+    super.initState();
+    // Call registerNotification() from NotificationService
+    NotificationService.registerNotification();
+  }
 
   @override
   Widget build(BuildContext context) {

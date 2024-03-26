@@ -236,12 +236,22 @@ dynamic attendanceData;
                                     .PostAttendanceDetails(
                                   studentsList[index].Studentuser.id ?? '',
                                   newValue.toString());
-                                if (attendance) {
-                                  setState(() {
-                                    studentsList[index].attendanceStatus = newValue;
-                                    attendanceData['batches'][widget.index]['students'][index]['attendance']['status'] = newValue.toString().split('.')[1];
-                                  });
-                                }
+                         if (attendance) {
+  setState(() {
+    studentsList[index].attendanceStatus = newValue;
+    if (attendanceData != null &&
+        attendanceData['batches'] != null &&
+        widget.index >= 0 &&
+        widget.index < attendanceData['batches'].length &&
+        attendanceData['batches'][widget.index]['students'] != null &&
+        index >= 0 &&
+        index < attendanceData['batches'][widget.index]['students'].length &&
+        attendanceData['batches'][widget.index]['students'][index]['attendance'] != null) {
+      attendanceData['batches'][widget.index]['students'][index]['attendance']['status'] = newValue.toString().split('.')[1];
+    }
+  });
+}
+
                               } catch (e) {
                                 print('Error: $e');
                               }
@@ -264,7 +274,7 @@ dynamic attendanceData;
                     height: 20.0,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: getAttendanceColor(attendanceData['batches'][widget.index]['students'][index]['attendance']?['status'] ?? 'offline'), 
+                      color: getAttendanceColor((attendanceData?['batches']?[widget.index]?['students']?[index]?['attendance']?['status'] ?? 'offline'))
                     ),
                   ),
                 ),

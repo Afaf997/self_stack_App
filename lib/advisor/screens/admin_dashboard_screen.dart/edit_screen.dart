@@ -188,7 +188,21 @@ _dateOfBirthController.text = userDetails != null && userDetails?['user']['dateO
                           selectedDomain = value;
                         });
                       }),
-                     buildTextField('Gender',controller: _genderController,validator: FormValidator.GenderValidator,formKey: _formKey,dropdownItems: ['Male', 'Female']),
+                      buildDropdownField(
+  'Gender',
+  initialValue: userDetails != null ? userDetails!['user']['gender'] : null,
+  options: ['Male', 'Female'].toSet().toList(),
+  onChanged: (value) {
+    setState(() {
+      _genderController.text = value!;
+      userDetails!['user']['gender'] = value;
+      
+    });
+  },
+  formKey: _formKey,
+),
+
+                    //  buildTextField('Gender',controller: _genderController,validator: FormValidator.GenderValidator,formKey: _formKey,dropdownItems: ['Male', 'Female']),
                      buildTextField('Place', controller: _placeController,validator: FormValidator.PlaceValidator,formKey: _formKey, ),
                       buildTextField('Phone Number', controller: _phoneNumberController,keyboardType:TextInputType.number, validator:FormValidator.PhoneValidator,formKey: _formKey, ),
                       buildTextField('Address', controller: _addressController, validator:FormValidator.AddressValidator,formKey: _formKey, ),

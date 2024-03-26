@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class FeedbackDetailsScreen extends StatelessWidget {
@@ -32,15 +31,7 @@ class FeedbackDetailsScreen extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text(
-                    userName,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                      color: kselfstackGreen,
-                    ),
-                  ),
-                  SizedBox(width: 165,),
+                  Spacer(), // Add Spacer widget
                   Text(
                     date.split('T')[0],
                     style: TextStyle(fontSize: 13, color: kyellow),
@@ -60,15 +51,6 @@ class FeedbackDetailsScreen extends StatelessWidget {
               Text(
                 '$description',
                 style: TextStyle(fontSize: 16, color: kwhiteModel),
-              ),
-              SizedBox(height: 20),
-              Center(
-                child: Lottie.asset(
-                  'assets/lottie/box.json',
-                  width: 200,
-                  height: 200, 
-                  fit: BoxFit.cover,
-                ),
               ),
             ],
           ),

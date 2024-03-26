@@ -27,13 +27,19 @@ class FeedbackScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               ksizedboxX,
-              Text(
-                'Task Feedback...',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                children: [
+                  IconButton(onPressed: (){}, icon:Icon(Icons.arrow_back,color: kwhiteModel,)),
+                  SizedBox(width: 50,),
+                  Text(
+                    'Task Feedback...',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               ksizedboxC,
               Text(
@@ -74,7 +80,6 @@ class FeedbackScreen extends StatelessWidget {
                     hintStyle: TextStyle(color: Colors.grey),
                     border: InputBorder.none,
                   ),
-                  maxLines: 5,
                 ),
               ),
               SizedBox(height: 16.0),
