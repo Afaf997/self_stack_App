@@ -13,7 +13,7 @@ abstract class AuthState {
 
 final class AuthInitial extends AuthState {}
 
-class AuthErrorstate extends  AuthActionState{}
+class AuthErrorState extends AuthState {}
 
 class LoginSuccessState extends AuthActionState{}
 
@@ -27,7 +27,7 @@ class GoogleSuccessState extends AuthActionState{}
 
 class GoogleErrorstate extends  AuthActionState{}
 
-class statuscodeError extends AuthActionState{}
+class StatusCodeErrorState extends AuthActionState {}
 
 class EmailValidationErrorState extends AuthState {
   final String errorMessage;

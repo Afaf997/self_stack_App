@@ -5,6 +5,7 @@ class SnackbarUtils {
   static void showSuccessSnackbar(BuildContext context, String mainMessage, {String? subMessages}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        
         content: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -17,7 +18,7 @@ class SnackbarUtils {
             ),
           ],
         ),
-        backgroundColor:Color.fromARGB(255, 22, 22, 22),
+        backgroundColor:kredtheme,
       ),
     );
   }
@@ -29,16 +30,18 @@ class SnackbarUtils {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Center(child: Text(mainMessage,style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)),
-            if (subMessage != null) const SizedBox(height: 4),
+            Center(child: Text(mainMessage,style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
+            if (subMessage != null) const SizedBox(height: 6),
             if (subMessage != null)
-              Text(
-                subMessage,
-                style:const TextStyle(fontSize: 12, color: kbackgroundmodel),
+              Center(
+                child: Text(
+                  subMessage,
+                  style:const TextStyle(fontSize: 14, color: kwhiteModel),
+                ),
               ),
           ],
         ),
-        backgroundColor: kblackLight,
+        backgroundColor: kredtheme,
       ),
     );
   }

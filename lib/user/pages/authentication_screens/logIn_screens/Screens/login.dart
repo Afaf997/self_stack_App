@@ -52,26 +52,34 @@ bool _isValidEmail(String value) {
       listenWhen: (previous, current) => current is AuthActionState,
       buildWhen: (previous, current) => current is! AuthActionState,
       listener: (context, state) {
+        log("k");
+
         if (state is ForgotActionState) {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => ForgotScreen()));
+            context,
+            MaterialPageRoute(builder: (context) => ForgotScreen()),
+          );
         } else if (state is SignScreenActionState) {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => SignUp()));
+            context,
+            MaterialPageRoute(builder: (context) => SignUp()),
+          );
         } else if (state is LoginSuccessState) {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => SplashScreen(delaySeconds: 0,)));
-          SnackbarUtils.showSuccessSnackbar(context, 'Login successful!',
-              subMessages: 'You have successfully signed into your account ');
-        } else if (state is AuthErrorstate) {
-           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => LoginPage()));
-          SnackbarUtils.showErrorSnackbar(
-              context, 'Login failed. Please check your credentials.',
-              subMessage: 'Ensure your username and password are correct.');
-        } else if (state is googleAuthState) {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => SplashScreen()));
+            context,
+            MaterialPageRoute(builder: (context) => SplashScreen(delaySeconds: 0)),
+          );
+          SnackbarUtils.showSuccessSnackbar(
+            context,
+            'Login successful!',
+            subMessages: 'You have successfully signed into your account ',
+          );
+        } else if (state is StatusCodeErrorState) {
+          log('message');
+          SnackbarUtils.showErrorSnackbar(context,
+          "Login Failed",
+          subMessage: "Your email or password is wrong"
+           );
         }
       },
       builder: (context, state) {

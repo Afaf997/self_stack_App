@@ -15,22 +15,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<ForgotEvent>(forgotEvent);
     on<GoogleConnectEvent>(googleConnectEvent);
     on<SignUpNavigationEvent>(signUpNavigationEvent);
+    
   }
 
-  FutureOr<void> loginevent(Loginevent event, Emitter<AuthState> emit) async {
-    try {
-      bool authenticated =await dioservices.authenticationModel(event.email, event.password);
-      if (authenticated) {
-        emit(LoginSuccessState());
-      } else {
-        emit(AuthErrorstate());  
-      }
-    } on Exception catch (e) {
-      // ignore: unused_local_variable
-      String errormessage = (e).toString();
-      emit(AuthState.error("An error occurred. Please try again later.."));
+Future<void> loginevent(Loginevent event, Emitter<AuthState> emit) async {
+  try {
+    bool authenticated = await dioservices.authenticationModel(event.email, event.password);
+    if (authenticated) {
+      emit(LoginSuccessState());
+    } else {
+      emit(StatusCodeErrorState());  
     }
+  } catch (e) {
+    log(e.toString());
+    emit(StatusCodeErrorState()); 
   }
+}
+
+
 
   FutureOr<void> forgotEvent(ForgotEvent event, Emitter<AuthState> emit) {
     emit(ForgotActionState());
