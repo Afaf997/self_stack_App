@@ -48,7 +48,6 @@ class BatchList extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: kblackDark,
-        // borderRadius: BorderRadius.circular(8.0), 
         borderRadius: BorderRadius.only(topLeft: Radius.circular(8.0), topRight: Radius.circular(8.0))
       ),
       child: Column(

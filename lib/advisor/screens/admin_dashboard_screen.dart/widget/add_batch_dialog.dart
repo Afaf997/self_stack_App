@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:self_stack/utils/constans.dart';
 
-class AddBatchDialog extends StatelessWidget {
+class AddBatchDialog extends StatefulWidget {
   final Function(String, DateTime?) onAddPressed;
 
   const AddBatchDialog({Key? key, required this.onAddPressed}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    String batchNumber = '';
-    DateTime? startDate;
+  _AddBatchDialogState createState() => _AddBatchDialogState();
+}
 
+class _AddBatchDialogState extends State<AddBatchDialog> {
+  String batchNumber = '';
+  DateTime? startDate;
+
+  @override
+  Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('Add Batches', style: TextStyle(color: Colors.white)),
       backgroundColor: const Color.fromARGB(255, 56, 56, 56),
@@ -27,7 +32,9 @@ class AddBatchDialog extends StatelessWidget {
             ),
             style: TextStyle(color: Colors.white),
             onChanged: (value) {
-              batchNumber = value;
+              setState(() {
+                batchNumber = value;
+              });
             },
           ),
           const SizedBox(height: 16),
@@ -41,19 +48,21 @@ class AddBatchDialog extends StatelessWidget {
                 lastDate: DateTime(2101),
               );
               if (selectedDate != null && selectedDate != startDate) {
-                startDate = selectedDate;
+                setState(() {
+                  startDate = selectedDate;
+                });
               }
             },
             decoration: InputDecoration(
               labelText: 'Start Date',
               labelStyle: TextStyle(
-                color: startDate != null ? Colors.white : Colors.white,
+                color: startDate != null ? kwhiteModel : kwhiteModel,
               ),
             ),
             controller: TextEditingController(
               text: startDate != null ? "${startDate!.toLocal()}".split(' ')[0] : "",
             ),
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: startDate != null ? kwhiteModel : kwhiteModel),
           ),
         ],
       ),
@@ -66,7 +75,7 @@ class AddBatchDialog extends StatelessWidget {
         ),
         ElevatedButton(
           onPressed: () {
-            onAddPressed(batchNumber, startDate);
+            widget.onAddPressed(batchNumber, startDate);
           },
           child: Container(
             width: 70.0,
@@ -78,7 +87,7 @@ class AddBatchDialog extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
-            backgroundColor: Colors.green,
+            backgroundColor:kselfstackGreen,
           ),
         ),
       ],

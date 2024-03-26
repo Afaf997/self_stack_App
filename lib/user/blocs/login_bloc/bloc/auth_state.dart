@@ -27,6 +27,8 @@ class GoogleSuccessState extends AuthActionState{}
 
 class GoogleErrorstate extends  AuthActionState{}
 
+class statuscodeError extends AuthActionState{}
+
 class EmailValidationErrorState extends AuthState {
   final String errorMessage;
   EmailValidationErrorState(this.errorMessage);

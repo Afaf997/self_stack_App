@@ -64,6 +64,8 @@ bool _isValidEmail(String value) {
           SnackbarUtils.showSuccessSnackbar(context, 'Login successful!',
               subMessages: 'You have successfully signed into your account ');
         } else if (state is AuthErrorstate) {
+           Navigator.push(
+              context, MaterialPageRoute(builder: (context) => LoginPage()));
           SnackbarUtils.showErrorSnackbar(
               context, 'Login failed. Please check your credentials.',
               subMessage: 'Ensure your username and password are correct.');

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:self_stack/user/services/login_service.dart';
 part 'auth_event.dart';
@@ -27,7 +28,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } on Exception catch (e) {
       // ignore: unused_local_variable
       String errormessage = (e).toString();
-      emit(AuthState.error("An error occurred. Please try again later."));
+      emit(AuthState.error("An error occurred. Please try again later.."));
     }
   }
 

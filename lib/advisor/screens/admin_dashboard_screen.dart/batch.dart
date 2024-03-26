@@ -91,7 +91,7 @@ class _BatchScreenState extends State<BatchScreen> {
         BlocProvider.of<BatchBloc>(context).add(NavigationEvent());
       },
       child: Icon(Icons.add, color: kwhiteModel),
-      backgroundColor: kselfstackGreen,
+      backgroundColor: kblackDark,
     );
   }
 
