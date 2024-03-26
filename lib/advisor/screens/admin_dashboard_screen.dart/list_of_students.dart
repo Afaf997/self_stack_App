@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:self_stack/advisor/response/domain_model.dart';
 import 'package:self_stack/advisor/response/student_data.dart';
-import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/batch.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/edit_screen.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/status_of_student.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/widget/attendance_color.dart';
@@ -27,7 +26,7 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
   late DeleteStudentServices _DeleteStudentServices = DeleteStudentServices();
   AttendancePostService attendancePostService = AttendancePostService();
   List<AttendanceStudentUser> studentsList = [];
-
+dynamic attendanceData; 
   @override
   void initState() {
     super.initState();
@@ -38,6 +37,7 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
     try {
       BatchService batchService = BatchService();
       Welcome batchData = await batchService.fetchData();
+     attendanceData = await batchService.GetAttendancfetchData(); 
       if (widget.index >= 0 && widget.index < batchData.batches.length) {
         BatchElement selectedBatch = batchData.batches[widget.index];
         setState(() {
@@ -224,7 +224,6 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
                       DropdownButtonHideUnderline(
                         child: DropdownButton<AttendanceStatus>(
                           dropdownColor: kblackDark,
-                          // value: studentsList[index].attendance?.isNotEmpty == true ? studentsList[index].attendance!.first.status : AttendanceStatus.offline,
                           icon: const Icon(Icons.arrow_drop_down,
                               color: kwhiteModel),
                           iconSize: 24,
@@ -240,6 +239,7 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
                                 if (attendance) {
                                   setState(() {
                                     studentsList[index].attendanceStatus = newValue;
+                                    attendanceData['batches'][widget.index]['students'][index]['attendance']['status'] = newValue.toString().split('.')[1];
                                   });
                                 }
                               } catch (e) {
@@ -264,7 +264,7 @@ class _StudentsBatchScreenState extends State<StudentsBatchScreen> {
                     height: 20.0,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: getAttendanceColor(studentsList[index].attendanceStatus), 
+                      color: getAttendanceColor(attendanceData['batches'][widget.index]['students'][index]['attendance']?['status'] ?? 'offline'), 
                     ),
                   ),
                 ),

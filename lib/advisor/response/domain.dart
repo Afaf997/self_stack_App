@@ -93,7 +93,7 @@ class Student {
         phone: json["phone"],
         image: json["image"],
         address: json["address"],
-        age: json["age"],
+        age: json["age"] != null ? json['age']: 0,
         batch: json["batch"],
         dateOfBirth: json["dateOfBirth"] != null ? DateTime.parse(json["dateOfBirth"]) : null,
         educationQualification: json["educationQualification"],

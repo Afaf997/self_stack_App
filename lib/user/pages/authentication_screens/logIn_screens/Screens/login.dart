@@ -52,7 +52,6 @@ bool _isValidEmail(String value) {
       listenWhen: (previous, current) => current is AuthActionState,
       buildWhen: (previous, current) => current is! AuthActionState,
       listener: (context, state) {
-        log("k");
 
         if (state is ForgotActionState) {
           Navigator.push(
@@ -75,7 +74,6 @@ bool _isValidEmail(String value) {
             subMessages: 'You have successfully signed into your account ',
           );
         } else if (state is StatusCodeErrorState) {
-          log('message');
           SnackbarUtils.showErrorSnackbar(context,
           "Login Failed",
           subMessage: "Your email or password is wrong"

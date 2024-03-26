@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:self_stack/advisor/response/domain_model.dart';
 import 'package:self_stack/user/core/links.dart';
@@ -20,4 +22,19 @@ class BatchService {
       throw Exception("Error fetching data: $error");
     }
   }
+Future<dynamic> GetAttendancfetchData() async {
+  try {
+    String apiUrl = "$loginApi/batchwise$apikey";
+    Response response = await dio.get(apiUrl);
+
+    if (response.statusCode == 200) {
+      // Return the response data directly
+      return response.data;
+    } else {
+      throw Exception('Failed to fetch data');
+    }
+  } catch (e) {
+    throw Exception('Error fetching data: $e');
+  }
+}
 }

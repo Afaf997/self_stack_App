@@ -68,8 +68,12 @@ class _EditStudentPageState extends State<EditStudentPage> {
         selectedDomain = userDetails!['domain'];
         _nameController.text = userDetails!['user']['name'];
         _idController.text = userDetails!['user']['_id'];
-        _ageController.text = userDetails!['user']['age'].toString();
-        _dateOfBirthController.text = userDetails!['user']['dateOfBirth'].toString();
+  _ageController.text = userDetails != null && userDetails?['user']['age'] != null? userDetails!['user']['age'].toString(): '';
+
+_dateOfBirthController.text = userDetails != null && userDetails?['user']['dateOfBirth'] != null
+    ? userDetails!['user']['dateOfBirth'].toString()
+    : '';
+
         _emailController.text = userDetails!['user']['email'];
         _genderController.text = userDetails!['user']['gender'];
         _placeController.text = userDetails!['user']['place'];
@@ -184,8 +188,8 @@ class _EditStudentPageState extends State<EditStudentPage> {
                           selectedDomain = value;
                         });
                       }),
-                      buildTextField('Gender', controller: _genderController,validator:FormValidator.GenderValidator,formKey: _formKey, ),
-                      buildTextField('Place', controller: _placeController,validator: FormValidator.PlaceValidator,formKey: _formKey, ),
+                     buildTextField('Gender',controller: _genderController,validator: FormValidator.GenderValidator,formKey: _formKey,dropdownItems: ['Male', 'Female']),
+                     buildTextField('Place', controller: _placeController,validator: FormValidator.PlaceValidator,formKey: _formKey, ),
                       buildTextField('Phone Number', controller: _phoneNumberController,keyboardType:TextInputType.number, validator:FormValidator.PhoneValidator,formKey: _formKey, ),
                       buildTextField('Address', controller: _addressController, validator:FormValidator.AddressValidator,formKey: _formKey, ),
                       buildTextField('Guardian Name', controller: _guardianNameController,validator:FormValidator.GuardianValidator,formKey: _formKey, ),

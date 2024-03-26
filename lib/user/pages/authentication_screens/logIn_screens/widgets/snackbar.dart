@@ -18,7 +18,7 @@ class SnackbarUtils {
             ),
           ],
         ),
-        backgroundColor:kredtheme,
+        backgroundColor:kblackDark,
       ),
     );
   }
