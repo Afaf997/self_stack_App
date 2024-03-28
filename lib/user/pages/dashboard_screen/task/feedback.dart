@@ -1,5 +1,6 @@
 // ignore_for_file: unused_local_variable, must_be_immutable
 import 'package:flutter/material.dart';
+import 'package:self_stack/user/pages/dashboard_screen/task/task_details.dart';
 import 'package:self_stack/user/repository/shared_preference.dart';
 import 'package:self_stack/user/services/feedback_services.dart';
 import 'package:self_stack/utils/constans.dart';
@@ -29,7 +30,9 @@ class FeedbackScreen extends StatelessWidget {
               ksizedboxX,
               Row(
                 children: [
-                  IconButton(onPressed: (){}, icon:Icon(Icons.arrow_back,color: kwhiteModel,)),
+                  IconButton(onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailOfTask( taskId: tasksId,courseId:'',)));
+                  }, icon:Icon(Icons.arrow_back,color: kwhiteModel,)),
                   SizedBox(width: 50,),
                   Text(
                     'Task Feedback...',

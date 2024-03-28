@@ -40,7 +40,7 @@ class _HomeViewState extends State<HomeView> {
     @override
   void initState() {
     super.initState();
-    // Call registerNotification() from NotificationService
+
     NotificationService.registerNotification();
   }
 
@@ -169,61 +169,57 @@ if (dashboard.attendance != null && dashboard.attendance!.isNotEmpty) {
                           ),
                         ),
                       ),
-                      PopupMenuButton<String>(
-                        color: kbackgroundmodel,
-                        icon: Icon(
-                          Icons.more_vert,
-                          color: kwhiteModel,
-                        ),
-                        offset: Offset(0, 50),
-                        onSelected: (String value) {
-                          if (value == 'Item 1') {
-                            dashBoardbloc.add(TodoNavigationEvent());
-                          } else if (value == 'Item 2') {
-                            dashBoardbloc.add(AboutNavigationEvent());
-                          } else if (value == 'Item 3') {
-                            onPressed: () async {
-                              bool? confirmed =
-                                  await showLogoutConfirmationDialog(context);
-                              if (confirmed != null && confirmed) {
-                                SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                await prefs.clear();
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginPage()),
-                                );
-                              }
-                            };
-                          }
-                        },
-                        itemBuilder: (BuildContext context) {
-                          return [
-                            PopupMenuItem<String>(
-                              value: 'Item 1',
-                              child: Text(
-                                'ToDo',
-                                style: TextStyle(color: kselfstackGreen),
-                              ),
-                            ),
-                            PopupMenuItem<String>(
-                              value: 'Item 2',
-                              child: Text(
-                                'About Us',
-                                style: TextStyle(color: kselfstackGreen),
-                              ),
-                            ),
-                            PopupMenuItem<String>(
-                              value: 'Item 3',
-                              child: Text(
-                                'Logout',
-                                style: TextStyle(color: kselfstackGreen),
-                              ),
-                            ),
-                          ];
-                        },
-                      ),
+                    PopupMenuButton<String>(
+  color: kbackgroundmodel,
+  icon: Icon(
+    Icons.more_vert,
+    color: kwhiteModel,
+  ),
+  offset: Offset(0, 50),
+  onSelected: (String value) async{
+    if (value == 'Item 1') {
+      dashBoardbloc.add(TodoNavigationEvent());
+    } else if (value == 'Item 2') {
+      dashBoardbloc.add(AboutNavigationEvent());
+    } else if (value == 'Item 3') {
+      bool? confirmed = await showLogoutConfirmationDialog(context);
+      if (confirmed != null && confirmed) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.clear();
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+      }
+    }
+  },
+  itemBuilder: (BuildContext context) {
+    return [
+      PopupMenuItem<String>(
+        value: 'Item 1',
+        child: Text(
+          'ToDo',
+          style: TextStyle(color: kselfstackGreen),
+        ),
+      ),
+      PopupMenuItem<String>(
+        value: 'Item 2',
+        child: Text(
+          'About Us',
+          style: TextStyle(color: kselfstackGreen),
+        ),
+      ),
+      PopupMenuItem<String>(
+        value: 'Item 3',
+        child: Text(
+          'Logout',
+          style: TextStyle(color: kselfstackGreen),
+        ),
+      ),
+    ];
+  },
+),
+
                     ],
                   ),
                   Row(

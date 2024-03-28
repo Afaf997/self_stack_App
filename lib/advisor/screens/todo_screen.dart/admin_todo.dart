@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/advisor/screens/navigation_screen.dart/navigation_admin.dart';
 import 'package:self_stack/user/blocs/to_do/bloc/todo_bloc.dart';
-import 'package:self_stack/user/pages/dashboard_screen/home/screen/custom_progress_bar.dart';
-import 'package:self_stack/user/pages/dashboard_screen/home/screen/navigation_bar.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/screen/todo_details_screen.dart';
 import 'package:self_stack/user/response/todo_model.dart';
 import 'package:self_stack/user/services/todo_service.dart';
@@ -47,15 +45,6 @@ class _TodoAdminState extends State<TodoAdmin> {
     "work log management",
     style: TextStyle(
         color: kwhiteModel, fontSize: 22, fontWeight: FontWeight.bold),
-  ),
-  leading: IconButton(
-    onPressed: (){
-         Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavbarAdmin()));
-    },
-    icon: Icon(
-      Icons.arrow_circle_left_outlined,
-      color: kwhiteModel,
-    ),
   ),
 ),
 
@@ -138,14 +127,6 @@ class _TodoAdminState extends State<TodoAdmin> {
                                         SizedBox(
                                           width: 10,
                                         ),
-                                        // Padding(
-                                        //   padding: const EdgeInsets.only(top: 10),
-                                        //   child: CustomRoundProgressBar(
-                                        //     percentage: todo.percentage,
-                                        //     status: todo.status,
-                                        //     todo: todo,
-                                        //   ),
-                                        // ),
                                       ],
                                     ),
                                   ),
