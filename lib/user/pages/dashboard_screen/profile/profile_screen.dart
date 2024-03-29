@@ -141,7 +141,7 @@ class ProfileScreen extends StatelessWidget {
                                           UserDetailsTile(
                                             icon: Icons.calendar_today,
                                             title: 'Date Of Birth',
-                                            value: user.user.dateOfBirth.toString(),
+                                            value: user.user.dateOfBirth.toString().split(' ')[0],
                                           ),
                                         ],
                                       ),

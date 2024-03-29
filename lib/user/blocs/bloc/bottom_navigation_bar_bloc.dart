@@ -8,7 +8,6 @@ class BottomNavigationBarBloc extends Bloc<BottomNavigationBarEvent, BottomNavig
   BottomNavigationBarBloc() : super(BottomNavigationBarInitial(tabIndex: 0)) {
     on<ChangeTabIndexEvent>(_onChangeTabIndexEvent);
   }
-
   void _onChangeTabIndexEvent(ChangeTabIndexEvent event, Emitter<BottomNavigationBarState> emit) {
     emit(BottomNavigationBarInitial(tabIndex: event.index));
   }

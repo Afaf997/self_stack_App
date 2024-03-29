@@ -158,7 +158,7 @@ class _BatchScreenState extends State<BatchScreen> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to add batch. Please try again.'),
+            content: Text('Failed to add batch. Please try again.',style: TextStyle(color: kredtheme),),
           ),
         );
       }
@@ -166,7 +166,8 @@ class _BatchScreenState extends State<BatchScreen> {
       print('Error: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('An error occurred. Please try again later.$e'),
+          backgroundColor: kblackDark,
+          content: Text('Failed to add batch and Time . Please add batch and date.',style: TextStyle(color: kredtheme),),
         ),
       );
     }

@@ -64,7 +64,7 @@ bool _isValidEmail(String value) {
             MaterialPageRoute(builder: (context) => SignUp()),
           );
         } else if (state is LoginSuccessState) {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => SplashScreen(delaySeconds: 0)),
           );

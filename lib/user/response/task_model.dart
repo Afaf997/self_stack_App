@@ -28,16 +28,16 @@ class UserData {
     String id;
     String email;
     String name;
+    String password;
     String roll;
-    String googleId;
     String image;
     String domain;
+    String workExperience;
     List<TasksStarted> tasksStarted;
     List<dynamic> tasksCompleted;
     DateTime createdAt;
     DateTime updatedAt;
     int v;
-    String password;
     String address;
     int age;
     String batch;
@@ -45,25 +45,24 @@ class UserData {
     String educationQualification;
     String gender;
     String guardian;
-    String place;
-    String workExperience;
     int phone;
+    String place;
     String notifyId;
 
     UserData({
         required this.id,
         required this.email,
         required this.name,
+        required this.password,
         required this.roll,
-        required this.googleId,
         required this.image,
         required this.domain,
+        required this.workExperience,
         required this.tasksStarted,
         required this.tasksCompleted,
         required this.createdAt,
         required this.updatedAt,
         required this.v,
-        required this.password,
         required this.address,
         required this.age,
         required this.batch,
@@ -71,9 +70,8 @@ class UserData {
         required this.educationQualification,
         required this.gender,
         required this.guardian,
-        required this.place,
-        required this.workExperience,
         required this.phone,
+        required this.place,
         required this.notifyId,
     });
 
@@ -85,16 +83,16 @@ class UserData {
         id: json["_id"],
         email: json["email"],
         name: json["name"],
+        password: json["password"],
         roll: json["roll"],
-        googleId: json["googleId"],
         image: json["image"],
         domain: json["domain"],
+        workExperience: json["workExperience"],
         tasksStarted: List<TasksStarted>.from(json["tasksStarted"].map((x) => TasksStarted.fromJson(x))),
         tasksCompleted: List<dynamic>.from(json["tasksCompleted"].map((x) => x)),
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         v: json["__v"],
-        password: json["password"],
         address: json["address"],
         age: json["age"],
         batch: json["batch"],
@@ -102,9 +100,8 @@ class UserData {
         educationQualification: json["educationQualification"],
         gender: json["gender"],
         guardian: json["guardian"],
-        place: json["place"],
-        workExperience: json["workExperience"],
         phone: json["phone"],
+        place: json["place"],
         notifyId: json["notifyId"],
     );
 
@@ -112,16 +109,16 @@ class UserData {
         "_id": id,
         "email": email,
         "name": name,
+        "password": password,
         "roll": roll,
-        "googleId": googleId,
         "image": image,
         "domain": domain,
+        "workExperience": workExperience,
         "tasksStarted": List<dynamic>.from(tasksStarted.map((x) => x.toJson())),
         "tasksCompleted": List<dynamic>.from(tasksCompleted.map((x) => x)),
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
         "__v": v,
-        "password": password,
         "address": address,
         "age": age,
         "batch": batch,
@@ -129,9 +126,8 @@ class UserData {
         "educationQualification": educationQualification,
         "gender": gender,
         "guardian": guardian,
-        "place": place,
-        "workExperience": workExperience,
         "phone": phone,
+        "place": place,
         "notifyId": notifyId,
     };
 }
@@ -170,6 +166,7 @@ class UserTask {
     List<String> students;
     List<Task> tasks;
     int v;
+    String image;
 
     UserTask({
         required this.id,
@@ -177,6 +174,7 @@ class UserTask {
         required this.students,
         required this.tasks,
         required this.v,
+        required this.image,
     });
 
     factory UserTask.fromRawJson(String str) => UserTask.fromJson(json.decode(str));
@@ -189,6 +187,7 @@ class UserTask {
         students: List<String>.from(json["students"].map((x) => x)),
         tasks: List<Task>.from(json["tasks"].map((x) => Task.fromJson(x))),
         v: json["__v"],
+        image: json["image"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -197,6 +196,7 @@ class UserTask {
         "students": List<dynamic>.from(students.map((x) => x)),
         "tasks": List<dynamic>.from(tasks.map((x) => x.toJson())),
         "__v": v,
+        "image": image,
     };
 }
 

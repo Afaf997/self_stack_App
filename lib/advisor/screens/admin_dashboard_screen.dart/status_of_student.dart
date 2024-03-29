@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/batch.dart';
-import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/list_of_students.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/review_updating.dart';
+import 'package:self_stack/advisor/screens/navigation_screen.dart/navigation_admin.dart';
 import 'package:self_stack/advisor/screens/notification_screen/notification_page.dart';
 import 'package:self_stack/advisor/services/student_review/get_student.dart';
 import 'package:self_stack/utils/constans.dart';
@@ -71,121 +70,129 @@ class _StatusOfStudentState extends State<StatusOfStudent> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kselfstackGreen,
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => BatchScreen ()));
-          },
-          icon: Icon(Icons.arrow_back, color: kwhiteModel),
-        ),
-        toolbarHeight: 80,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).popUntil(ModalRoute.withName('/StudentsBatchScreen'));
+        return false;
+      },
+      child: Scaffold(
         backgroundColor: kselfstackGreen,
-        title: const Text(
-          'Status of Students',
-          style: TextStyle(
-            color: kwhiteModel,
-            fontSize: 22,
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications, color: kwhiteModel),
+        appBar: AppBar(
+          leading: IconButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen(Ids: [widget.id])));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNavbarAdmin()));
             },
+            icon: Icon(Icons.arrow_back, color: kwhiteModel),
           ),
-        ],
-      ),
-      body: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          color: kbackgroundmodel,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(35),
-            topRight: Radius.circular(35),
+          toolbarHeight: 80,
+          backgroundColor: kselfstackGreen,
+          title: const Text(
+            'Status of Students',
+            style: TextStyle(
+              color: kwhiteModel,
+              fontSize: 22,
+            ),
           ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.notifications, color: kwhiteModel),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen(Ids: [widget.id])));
+              },
+            ),
+          ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: _reviews.isEmpty
-              ? Center(
-                  child: Lottie.asset('assets/lottie/box.json'),
-                )
-              : ListView.builder(
-                  shrinkWrap: false,
-                  itemCount: _reviews.length,
-                  itemBuilder: (context, index) {
-                    var review = _reviews[index];
-                    Color color = getColorFromValue(review['reviewDetails'][0]['color'].toString());
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ReviewUpdatingPage(id: widget.id, reviewDetails: review),
-                          ),
-                        );
-                      },
-                      child: SlideTransition(
-                        position: Tween<Offset>(
-                          begin: Offset(-1, 0),
-                          end: Offset.zero,
-                        ).animate(_controller),
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(16),
-                          margin: const EdgeInsets.only(bottom: 20),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(color: color,width: 2), 
-                            // Set border color
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    '${review['taskId']}',
-                                    style: TextStyle(fontSize: 17, color: kwhiteModel),
-                                  ),
-                                  SizedBox(
-                                    width: 250,
-                                  ),
-                                  Text(
-                                    '${review['points'].toString()}',
-                                    style: TextStyle(fontSize: 16, color: kwhiteModel),
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                'Reviewer: ${review['reviewver']}',
-                                style: TextStyle(fontSize: 16, color: kwhiteModel),
-                              ),
-                              SizedBox(height: 10),
-                            ],
-                          ),
-                        ),
+        body: Container(
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            color: kbackgroundmodel,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(35),
+              topRight: Radius.circular(35),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: _reviews.isEmpty
+                ? Center(
+              child: Lottie.asset('assets/lottie/box.json'),
+            )
+                : ListView.builder(
+              shrinkWrap: false,
+              itemCount: _reviews.length,
+              itemBuilder: (context, index) {
+                var review = _reviews[index];
+                Color color = getColorFromValue(review['reviewDetails'][0]['color'].toString());
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ReviewUpdatingPage(id: widget.id, reviewDetails: review),
                       ),
                     );
                   },
-                ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ReviewUpdatingPage(id: widget.id, reviewDetails: []),
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                      begin: Offset(-1, 0),
+                      end: Offset.zero,
+                    ).animate(_controller),
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(16),
+                      margin: const EdgeInsets.only(bottom: 20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: color,width: 2),
+                        // Set border color
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '${review['taskId']}',
+                                style: TextStyle(fontSize: 17, color: kwhiteModel),
+                              ),
+                              Expanded(
+                                child: Container(),
+                              ),
+                              Text(
+                                '${review['points'].toString()}',
+                                style: TextStyle(fontSize: 16, color: kwhiteModel),
+                              ),
+                            ],
+                          ),
+
+                          Text(
+                            'Reviewer: ${review['reviewver']}',
+                            style: TextStyle(fontSize: 16, color: kwhiteModel),
+                          ),
+                          SizedBox(height: 10),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
-          );
-        },
-        child: Icon(Icons.add),
-        backgroundColor: kblackDark,
-        foregroundColor: kwhiteModel,
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ReviewUpdatingPage(id: widget.id, reviewDetails: []),
+              ),
+            );
+          },
+          child: Icon(Icons.add),
+          backgroundColor: kblackDark,
+          foregroundColor: kwhiteModel,
+        ),
       ),
     );
   }

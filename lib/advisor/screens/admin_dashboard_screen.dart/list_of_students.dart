@@ -112,7 +112,7 @@ dynamic attendanceData;
                   child: Text("Delete"),
                   onPressed: () {
                     _DeleteStudentServices.BatchRemoveDetails(widget.batchId);
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavbarAdmin()));
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNavbarAdmin()));
                   },
                 ),
               ],
@@ -189,9 +189,7 @@ dynamic attendanceData;
                       
                       } else {
                         _DeleteStudentServices.DeleteStudentDetails(widget.batchId.toString(), studentsList[index].Studentuser.id ??'');
-                      }
-      
-                      setState(() {
+                      }setState(() {
                         studentsList.removeAt(index);
                       });
                       Navigator.of(context).pop();
@@ -229,35 +227,33 @@ dynamic attendanceData;
                           iconSize: 24,
                           elevation: 16,
                           style: const TextStyle(color: kwhiteModel),
-                          onChanged: (AttendanceStatus? newValue) async {
-                            if (newValue != null) {
-                              try {
-                                bool attendance = await attendancePostService
-                                    .PostAttendanceDetails(
-                                  studentsList[index].Studentuser.id ?? '',
-                                  newValue.toString());
-                         if (attendance) {
-  setState(() {
-    studentsList[index].attendanceStatus = newValue;
-    if (attendanceData != null &&
-        attendanceData['batches'] != null &&
-        widget.index >= 0 &&
-        widget.index < attendanceData['batches'].length &&
-        attendanceData['batches'][widget.index]['students'] != null &&
-        index >= 0 &&
-        index < attendanceData['batches'][widget.index]['students'].length &&
-        attendanceData['batches'][widget.index]['students'][index]['attendance'] != null) {
-      attendanceData['batches'][widget.index]['students'][index]['attendance']['status'] = newValue.toString().split('.')[1];
+               onChanged: (AttendanceStatus? newValue) async {
+  if (newValue != null) {
+    try {
+      bool attendance = await attendancePostService.PostAttendanceDetails(
+        studentsList[index].Studentuser.id ?? '',
+        newValue.toString()
+      );
+ if (attendance) {
+        setState(() {
+          studentsList[index].attendanceStatus = newValue;
+          if (attendanceData != null &&
+              attendanceData['batches'] != null &&
+              widget.index >= 0 &&
+              widget.index < attendanceData['batches'].length &&
+              attendanceData['batches'][widget.index]['students'] != null &&
+              index >= 0 &&
+              index < attendanceData['batches'][widget.index]['students'].length &&
+              attendanceData['batches'][widget.index]['students'][index]['attendance'] != null) {
+            attendanceData['batches'][widget.index]['students'][index]['attendance']['status'] = newValue.toString().split('.')[1];
+          }
+        });
+      }
+    } catch (e) {
+      print('Error: $e');
     }
-  });
-}
-
-                              } catch (e) {
-                                print('Error: $e');
-                              }
-                            }
-                          },
-                          items: AttendanceStatus.values
+  }
+},                            items: AttendanceStatus.values
                               .map<DropdownMenuItem<AttendanceStatus>>(
                                   (AttendanceStatus value) {
                             return DropdownMenuItem<AttendanceStatus>(

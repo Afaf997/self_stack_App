@@ -155,7 +155,8 @@ class User {
         gender: json["gender"] ?? "dummy",
         guardian: json["guardian"] ?? "dummy",
         place: json["place"] ?? "dummy",
-        workExperience: json["workExperience"] ?? "dummy", phone: null,
+        workExperience: json["workExperience"] ?? "dummy",
+         phone:json['phone']?? null,
       );
 
   Map<String, dynamic> toJson() => {

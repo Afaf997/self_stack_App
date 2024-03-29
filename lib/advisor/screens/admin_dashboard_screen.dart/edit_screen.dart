@@ -9,6 +9,7 @@ import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/widget/dr
 import 'package:self_stack/advisor/services/batch_services.dart/domain_service.dart';
 import 'package:self_stack/advisor/services/batch_services.dart/get_batch.dart';
 import 'package:self_stack/advisor/services/batch_services.dart/put_batch.dart';
+import 'package:self_stack/user/pages/authentication_screens/network.dart/net_connection.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/functions/fetch_user_details.dart';
 import 'package:self_stack/utils/constans.dart';
 
@@ -142,90 +143,92 @@ _dateOfBirthController.text = userDetails != null && userDetails?['user']['dateO
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 100,
-        backgroundColor: kselfstackGreen,
-        iconTheme: IconThemeData(color: Colors.white),
-        title: Text(
-          'Edit Profile',
-          style: TextStyle(color: kwhiteModel, fontWeight: FontWeight.bold),
+    return InternetConnectivitySystem(
+      child: Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 100,
+          backgroundColor: kselfstackGreen,
+          iconTheme: IconThemeData(color: Colors.white),
+          title: Text(
+            'Edit Profile',
+            style: TextStyle(color: kwhiteModel, fontWeight: FontWeight.bold),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                showDeleteConfirmationDialog(context);
+              },
+              icon: Icon(Icons.delete),
+            )
+          ],
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              showDeleteConfirmationDialog(context);
-            },
-            icon: Icon(Icons.delete),
-          )
-        ],
+        backgroundColor: Colors.black,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: userDetails == null
+                ? Center(
+                    child: CircularProgressIndicator(
+                      color: kselfstackGreen,
+                    ),
+                  )
+                : Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        buildTextField('Name', controller: _nameController,  validator: FormValidator.nameValidator,formKey: _formKey, ),
+                        buildTextField('Age',keyboardType: TextInputType.number,controller: _ageController,validator: FormValidator.ageValidator,formKey: _formKey,),
+                        buildTextField('Date of Birth',hintText: 'YYYY-MM-DD',controller: _dateOfBirthController,validator: FormValidator.dateOfBirthValidator,formKey: _formKey,),
+                        buildTextField('Email', keyboardType: TextInputType.emailAddress, controller: _emailController, validator: FormValidator.emailValidator,formKey: _formKey, ),
+                        buildDropdownField('Batch', initialValue: selectedBatch,formKey: _formKey,options: batchOptions, onChanged: (value) {
+                          setState(() {
+                            selectedBatch = value;
+                          });},),
+                        buildDropdownField('Domain', initialValue: selectedDomain, options: domainOptions,formKey: _formKey, onChanged: (value) {
+                          setState(() {
+                            selectedDomain = value;
+                          });
+                        }),
+                        buildDropdownField(
+        'Gender',
+        initialValue: userDetails != null ? userDetails!['user']['gender'] : null,
+        options: ['Male', 'Female'].toSet().toList(),
+        onChanged: (value) {
+      setState(() {
+        _genderController.text = value!;
+        userDetails!['user']['gender'] = value;
+        
+      });
+        },
+        formKey: _formKey,
       ),
-      backgroundColor: Colors.black,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: userDetails == null
-              ? Center(
-                  child: CircularProgressIndicator(
-                    color: kselfstackGreen,
-                  ),
-                )
-              : Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildTextField('Name', controller: _nameController,  validator: FormValidator.nameValidator,formKey: _formKey, ),
-                      buildTextField('Age',keyboardType: TextInputType.number,controller: _ageController,validator: FormValidator.ageValidator,formKey: _formKey,),
-                      buildTextField('Date of Birth',hintText: 'YYYY-MM-DD',controller: _dateOfBirthController,validator: FormValidator.dateOfBirthValidator,formKey: _formKey,),
-                      buildTextField('Email', keyboardType: TextInputType.emailAddress, controller: _emailController, validator: FormValidator.emailValidator,formKey: _formKey, ),
-                      buildDropdownField('Batch', initialValue: selectedBatch,formKey: _formKey,options: batchOptions, onChanged: (value) {
-                        setState(() {
-                          selectedBatch = value;
-                        });},),
-                      buildDropdownField('Domain', initialValue: selectedDomain, options: domainOptions,formKey: _formKey, onChanged: (value) {
-                        setState(() {
-                          selectedDomain = value;
-                        });
-                      }),
-                      buildDropdownField(
-  'Gender',
-  initialValue: userDetails != null ? userDetails!['user']['gender'] : null,
-  options: ['Male', 'Female'].toSet().toList(),
-  onChanged: (value) {
-    setState(() {
-      _genderController.text = value!;
-      userDetails!['user']['gender'] = value;
       
-    });
-  },
-  formKey: _formKey,
-),
-
-                    //  buildTextField('Gender',controller: _genderController,validator: FormValidator.GenderValidator,formKey: _formKey,dropdownItems: ['Male', 'Female']),
-                     buildTextField('Place', controller: _placeController,validator: FormValidator.PlaceValidator,formKey: _formKey, ),
-                      buildTextField('Phone Number', controller: _phoneNumberController,keyboardType:TextInputType.number, validator:FormValidator.PhoneValidator,formKey: _formKey, ),
-                      buildTextField('Address', controller: _addressController, validator:FormValidator.AddressValidator,formKey: _formKey, ),
-                      buildTextField('Guardian Name', controller: _guardianNameController,validator:FormValidator.GuardianValidator,formKey: _formKey, ),
-                      buildTextField('Education Qualification', controller: _educationQualificationController,validator:FormValidator.EducationValidator,formKey: _formKey, ),
-                      SizedBox(height: 24),
-                      Container(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: _handleSubmit,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: kselfstackGreen,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
+                      //  buildTextField('Gender',controller: _genderController,validator: FormValidator.GenderValidator,formKey: _formKey,dropdownItems: ['Male', 'Female']),
+                       buildTextField('Place', controller: _placeController,validator: FormValidator.PlaceValidator,formKey: _formKey, ),
+                        buildTextField('Phone Number', controller: _phoneNumberController,keyboardType:TextInputType.number, validator:FormValidator.PhoneValidator,formKey: _formKey, ),
+                        buildTextField('Address', controller: _addressController, validator:FormValidator.AddressValidator,formKey: _formKey, ),
+                        buildTextField('Guardian Name', controller: _guardianNameController,validator:FormValidator.GuardianValidator,formKey: _formKey, ),
+                        buildTextField('Education Qualification', controller: _educationQualificationController,validator:FormValidator.EducationValidator,formKey: _formKey, ),
+                        SizedBox(height: 24),
+                        Container(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: _handleSubmit,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: kselfstackGreen,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
                             ),
-                            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                            child: Text('Submit', style: TextStyle(color: Colors.black)),
                           ),
-                          child: Text('Submit', style: TextStyle(color: Colors.black)),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
+          ),
         ),
       ),
     );

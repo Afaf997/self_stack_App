@@ -17,6 +17,7 @@ import 'package:self_stack/user/pages/dashboard_screen/home/screen/review_schedu
 import 'package:self_stack/user/pages/dashboard_screen/home/screen/todo.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/widget/card.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/widget/enum.dart';
+import 'package:self_stack/user/pages/dashboard_screen/profile/profile_screen.dart';
 import 'package:self_stack/user/pages/dashboard_screen/profile/widgets/alert.dart';
 import 'package:self_stack/user/pages/dashboard_screen/schedule/schedule_screen.dart';
 import 'package:self_stack/user/response/dashboard_model.dart'; 
@@ -40,7 +41,6 @@ class _HomeViewState extends State<HomeView> {
     @override
   void initState() {
     super.initState();
-
     NotificationService.registerNotification();
   }
 
@@ -160,66 +160,75 @@ if (dashboard.attendance != null && dashboard.attendance!.isNotEmpty) {
                         },
                       ),
                       SizedBox(width: screenWidth * 0.03),
-                      CircleAvatar(
-                        radius: 14,
-                        child: ClipOval(
-                          child: Image.network(
-                            dashboard.user.image.toString(),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    PopupMenuButton<String>(
-  color: kbackgroundmodel,
-  icon: Icon(
-    Icons.more_vert,
-    color: kwhiteModel,
+                   CircleAvatar(
+  radius: 14,
+  child: GestureDetector(
+    onTap: () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+    },
+    child: ClipOval(
+      child: Image.network(
+        dashboard.user.image.toString(),
+        fit: BoxFit.cover,
+      ),
+    ),
   ),
-  offset: Offset(0, 50),
-  onSelected: (String value) async{
-    if (value == 'Item 1') {
-      dashBoardbloc.add(TodoNavigationEvent());
-    } else if (value == 'Item 2') {
-      dashBoardbloc.add(AboutNavigationEvent());
-    } else if (value == 'Item 3') {
-      bool? confirmed = await showLogoutConfirmationDialog(context);
-      if (confirmed != null && confirmed) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.clear();
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
-        );
-      }
-    }
-  },
-  itemBuilder: (BuildContext context) {
-    return [
-      PopupMenuItem<String>(
-        value: 'Item 1',
-        child: Text(
-          'ToDo',
-          style: TextStyle(color: kselfstackGreen),
-        ),
-      ),
-      PopupMenuItem<String>(
-        value: 'Item 2',
-        child: Text(
-          'About Us',
-          style: TextStyle(color: kselfstackGreen),
-        ),
-      ),
-      PopupMenuItem<String>(
-        value: 'Item 3',
-        child: Text(
-          'Logout',
-          style: TextStyle(color: kselfstackGreen),
-        ),
-      ),
-    ];
-  },
 ),
 
+                      PopupMenuButton<String>(
+                        color: kbackgroundmodel,
+                        icon: Icon(
+                          Icons.more_vert,
+                          color: kwhiteModel,
+                        ),
+                        offset: Offset(0, 50),
+                        onSelected: (String value)async {
+                          if (value == 'Item 1') {
+                            dashBoardbloc.add(TodoNavigationEvent());
+                          } else if (value == 'Item 2') {
+                            dashBoardbloc.add(AboutNavigationEvent());
+                          } else if (value == 'Item 3')  {
+                            log('logout'); bool? confirmed =
+                                  await showLogoutConfirmationDialog(context);
+                              if (confirmed != null && confirmed) {
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                await prefs.clear();
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()),
+                                );
+                              }
+                         
+                          }
+                        },
+                        itemBuilder: (BuildContext context) {
+                          return [
+                            PopupMenuItem<String>(
+                              value: 'Item 1',
+                              child: Text(
+                                'ToDo',
+                                style: TextStyle(color: kselfstackGreen),
+                              ),
+                            ),
+                            PopupMenuItem<String>(
+                              value: 'Item 2',
+                              child: Text(
+                                'About Us',
+                                style: TextStyle(color: kselfstackGreen),
+                              ),
+                            ),
+                            PopupMenuItem<String>(
+                              value: 'Item 3',
+                              child: Text(
+                                'Logout',
+                                style: TextStyle(color: kselfstackGreen),
+                              ),
+                            ),
+                          ];
+                        },
+                      ),
                     ],
                   ),
                   Row(
@@ -317,10 +326,25 @@ Widget buildChartSection(double screenWidth, DashBoardState state) {
         ],
       );
     } else {
-      return Center(child: Lottie.asset('assets/lottie/box.json'));
+   return Padding(
+  padding: const EdgeInsets.only(top: 100),
+  child: Column(
+    children: [
+      Text("Your task has not started", style: TextStyle(color: kwhiteModel),),
+      SizedBox(
+        height: 200, 
+        width: 200, 
+        child: Center(
+          child: Lottie.asset('assets/lottie/pie.json'),
+        ),
+      ),
+    ],
+  ),
+);
+
     }
   } else {
-    return CircularProgressIndicator();
+    return CircularProgressIndicator(color: kselfstackGreen,);
   }
 }
 

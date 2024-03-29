@@ -64,9 +64,9 @@ dependencies:
   path_provider: ^2.1.2
   url_launcher: ^6.2.2
   url_launcher_android: ^6.2.0
-  connectivity_plus: ^6.0.1
   percent_indicator: ^4.2.3
-  internet_connection_checker: ^1.0.0+1
+  internet_connection_checker_plus: ^2.2.0
+
 
   
 
@@ -121,6 +121,7 @@ flutter:
     - assets/image/unlock.png
     - assets/lottie/task.json
     - assets/lottie/box.json
+    - assets/lottie/pie.json
     - assets/lottie/notification.json
     - assets/image/feedback.png
     - assets/image/domain.png

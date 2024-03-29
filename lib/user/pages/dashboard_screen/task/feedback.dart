@@ -31,7 +31,7 @@ class FeedbackScreen extends StatelessWidget {
               Row(
                 children: [
                   IconButton(onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailOfTask( taskId: tasksId,courseId:'',)));
+                   Navigator.pop(context);
                   }, icon:Icon(Icons.arrow_back,color: kwhiteModel,)),
                   SizedBox(width: 50,),
                   Text(
