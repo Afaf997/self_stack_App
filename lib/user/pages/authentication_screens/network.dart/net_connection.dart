@@ -38,9 +38,7 @@ class InternetConnectionWidget extends StatelessWidget {
         return child; 
       }
     } else {
-      return Center(
-        child: CircularProgressIndicator(), 
-      );
+       return child; 
     }
   }
 }

@@ -11,6 +11,7 @@ import 'package:self_stack/user/blocs/task_bloc/bloc/task_bloc.dart';
 import 'package:self_stack/user/blocs/task_details/bloc/score_bloc.dart';
 import 'package:self_stack/user/blocs/to_do/bloc/todo_bloc.dart';
 import 'package:self_stack/user/pages/authentication_screens/home_screen/splash.dart';
+import 'package:self_stack/user/pages/authentication_screens/network.dart/net_connection.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/screen/navigation_bar.dart';
 import 'package:self_stack/user/pages/dashboard_screen/profile/profile_screen.dart';
 import 'package:self_stack/user/pages/dashboard_screen/schedule/schedule_screen.dart';
@@ -98,7 +99,9 @@ class MyApp extends StatelessWidget {
             darkTheme: ThemeData.dark(),
             debugShowCheckedModeBanner: false,
             title: 'Self Stack',
-            home: SplashScreen(),
+             home: InternetConnectivitySystem(
+        child: SplashScreen(), // This will be the default screen to show when there's internet connectivity.
+      ),
             routes: {
               '/home': (context) => BottomNavbarScreen(),
               '/task': (context) => TaskScreen(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:self_stack/user/pages/authentication_screens/network.dart/net_connection.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class FeedbackDetailsScreen extends StatelessWidget {
@@ -17,42 +18,44 @@ class FeedbackDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kbackgroundmodel,
-      appBar: AppBar(
-        backgroundColor: kselfstackGreen,
-        iconTheme: IconThemeData(color: kwhiteModel),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Spacer(), // Add Spacer widget
-                  Text(
-                    date.split('T')[0],
-                    style: TextStyle(fontSize: 13, color: kyellow),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Text(
-                taskHeading,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: kselfstackGreen,
+    return InternetConnectivitySystem(
+      child: Scaffold(
+        backgroundColor: kbackgroundmodel,
+        appBar: AppBar(
+          backgroundColor: kselfstackGreen,
+          iconTheme: IconThemeData(color: kwhiteModel),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Spacer(), // Add Spacer widget
+                    Text(
+                      date.split('T')[0],
+                      style: TextStyle(fontSize: 13, color: kyellow),
+                    ),
+                  ],
                 ),
-              ),
-              SizedBox(height: 20),
-              Text(
-                '$description',
-                style: TextStyle(fontSize: 16, color: kwhiteModel),
-              ),
-            ],
+                SizedBox(height: 20),
+                Text(
+                  taskHeading,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: kselfstackGreen,
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  '$description',
+                  style: TextStyle(fontSize: 16, color: kwhiteModel),
+                ),
+              ],
+            ),
           ),
         ),
       ),

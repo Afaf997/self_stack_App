@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/feedback_details.dart';
 import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/functions/feedback_function.dart';
 import 'package:self_stack/advisor/services/feedback/get_feedback.dart';
+import 'package:self_stack/user/pages/authentication_screens/network.dart/net_connection.dart';
 import 'package:self_stack/utils/constans.dart';
 
 class FeedbackScreen extends StatefulWidget {
@@ -37,71 +38,73 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kbackgroundmodel,
-      appBar: AppBar(
-        toolbarHeight: 100,
-        title: Text("Feedback Fusion", style: TextStyle(color: kwhiteModel)),
-        centerTitle: true,
-        backgroundColor: kselfstackGreen,
-        iconTheme: IconThemeData(color: kwhiteModel),
-      ),
-      body: SingleChildScrollView(
-        child: isLoading
-            ? Center(
-                child: CircularProgressIndicator(color: kselfstackGreen,), 
-              )
-            : feedbackData != null
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: feedbackData.map<Widget>((data) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => FeedbackDetailsScreen(
-                                userName: data['userId'].toString(),
-                                taskHeading: data['taskId'].toString(),
-                                description: data['content'].toString(),
-                                date: data['date'].toString(),
-                              ),
-                            ),
-                          );
-                        },
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ListTile(
-                              title: Text(
-                                data['userId'].toString(),
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                  color: kselfstackGreen,
+    return InternetConnectivitySystem(
+      child: Scaffold(
+        backgroundColor: kbackgroundmodel,
+        appBar: AppBar(
+          toolbarHeight: 100,
+          title: Text("Feedback Fusion", style: TextStyle(color: kwhiteModel)),
+          centerTitle: true,
+          backgroundColor: kselfstackGreen,
+          iconTheme: IconThemeData(color: kwhiteModel),
+        ),
+        body: SingleChildScrollView(
+          child: isLoading
+              ? Center(
+                  child: CircularProgressIndicator(color: kselfstackGreen,), 
+                )
+              : feedbackData != null
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: feedbackData.map<Widget>((data) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FeedbackDetailsScreen(
+                                  userName: data['userId'].toString(),
+                                  taskHeading: data['taskId'].toString(),
+                                  description: data['content'].toString(),
+                                  date: data['date'].toString(),
                                 ),
                               ),
-                              subtitle: Padding(
-                                padding: const EdgeInsets.only(top: 7),
-                                child: Text(
-                                  data['content'].toString(),
+                            );
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ListTile(
+                                title: Text(
+                                  data['userId'].toString(),
                                   style: TextStyle(
-                                      fontSize: 14, color: kwhiteModel),
-                                  maxLines: 2,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    color: kselfstackGreen,
+                                  ),
+                                ),
+                                subtitle: Padding(
+                                  padding: const EdgeInsets.only(top: 7),
+                                  child: Text(
+                                    data['content'].toString(),
+                                    style: TextStyle(
+                                        fontSize: 14, color: kwhiteModel),
+                                    maxLines: 2,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Divider(
-                              color: kblackLight,
-                            ),
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                  )
-                : Center(
-                    child: Lottie.asset('assets/lottie/box.json'),
-                  ),
+                              Divider(
+                                color: kblackLight,
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    )
+                  : Center(
+                      child: Lottie.asset('assets/lottie/box.json'),
+                    ),
+        ),
       ),
     );
   }

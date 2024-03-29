@@ -50,57 +50,6 @@ class _Notification_ScreenState extends State<Notification_Screen> {
 
     super.initState();
   }
-
-  // void registerNotification() async {
-  //   await Firebase.initializeApp();
-  //   _messaging = FirebaseMessaging.instance;
-
-  //   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
-  //   NotificationSettings settings = await _messaging.requestPermission(
-  //     alert: true,
-  //     badge: true,
-  //     provisional: false,
-  //     sound: true,
-  //   );
-
-  //   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-  //     print('User granted permission');
-
-  //     FirebaseMessaging.onMessage.listen((RemoteMessage message)async {
-  //       print(
-  //         'Message title: ${message.notification?.title}, body: ${message.notification?.body}, data: ${message.data},',
-  //       );
-
-  //       PushNotification notification = PushNotification(
-  //         title: message.notification!.title ?? "",
-  //         body: message.notification?.body ?? "",
-  //         dataTitle: message.data['title'] ?? '',
-  //         dataBody: message.data['body'] ?? '',
-  //       );
-
-  //       if (mounted) {
-  //         setState(() {
-  //           totalNotifications++;
-  //         });
-  //       }
-
-  //       if (notification != null) {
-  //         showSimpleNotification(
-  //           Text(notification.title,maxLines: 1,
-  //           style: TextStyle(color: kselfstackGreen),),
-  //           subtitle: Text(notification.body,maxLines: 2,),
-          
-  //           background: kblackDark,
-  //           duration: Duration(seconds: 5),
-  //         );
-  //       }
-  //     });
-  //   } else {
-  //     print('User declined or has not accepted permission');
-  //   }
-  // }
-
   checkForInitialMessage() async {
     await Firebase.initializeApp();
     RemoteMessage? initialMessage =
