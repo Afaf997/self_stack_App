@@ -18,8 +18,10 @@ class NotificationScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
+          toolbarHeight: 100,
           backgroundColor: Colors.green,
-          title: Text('Notification Screen', style: TextStyle(color: Colors.white)),
+          title: Text('send Notification', style: TextStyle(color: Colors.white)),
+          iconTheme: IconThemeData(color: Colors.white), 
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -27,6 +29,13 @@ class NotificationScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Center(
+                  child: Text(
+                    'Enter the title and discription for the Notification ',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                ),
+                SizedBox(height: 20),
                 Center(
                   child: Container(
                     height: 200,

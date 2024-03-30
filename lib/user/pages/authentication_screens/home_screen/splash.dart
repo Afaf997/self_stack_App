@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:self_stack/advisor/screens/navigation_screen.dart/navigation_admin.dart';
 import 'package:self_stack/user/pages/authentication_screens/home_screen/home_screen.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/screen/domain_not_fixed.dart';
@@ -23,6 +24,28 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     _timer = Timer(Duration(seconds: widget.delaySeconds), navigateToNextScreen);
+     checkForUpdate();
+  }
+    Future<void> checkForUpdate() async {
+    print('checking for Update');
+    InAppUpdate.checkForUpdate().then((info) {
+      setState(() {
+        if (info.updateAvailability == UpdateAvailability.updateAvailable) {
+          print('update available');
+          update();
+        }
+      });
+    }).catchError((e) {
+      print(e.toString());
+    });
+  }
+
+  void update() async {
+    print('Updating');
+    await InAppUpdate.startFlexibleUpdate();
+    InAppUpdate.completeFlexibleUpdate().then((_) {}).catchError((e) {
+      print(e.toString());
+    });
   }
 
   @override
