@@ -73,7 +73,7 @@ class _StatusOfStudentState extends State<StatusOfStudent> with SingleTickerProv
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.of(context).popUntil(ModalRoute.withName('/StudentsBatchScreen'));
+        Navigator.pop(context);
         return false;
       },
       child: InternetConnectivitySystem(

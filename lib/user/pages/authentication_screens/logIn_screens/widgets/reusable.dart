@@ -1,6 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:self_stack/utils/constans.dart';
 
+// Move the validation functions to the same file where ReusableTextField is defined
+String? validateEmail(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter your email';
+  } else if (!_isValidEmail(value)) {
+    return 'Please enter a valid email address';
+  }
+  return null;
+}
+
+bool _isValidEmail(String value) {
+  return RegExp(r'^[\w-]+(\.[\w-]+)*@([a-z\d-]+\.)+[a-z]{2,}$').hasMatch(value);
+}
+
+String? validatePassword(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter your password';
+  }
+  return null;
+}
 
 class ReusableTextField extends StatefulWidget {
   final String label;

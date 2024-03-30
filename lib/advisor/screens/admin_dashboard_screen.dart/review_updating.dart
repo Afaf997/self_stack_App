@@ -38,7 +38,7 @@ class _ReviewUpdatingPageState extends State<ReviewUpdatingPage> {
   }
 
   Future<void> _fetchTasks() async {
-    List<Task> fetchedTasks = await TaskServiceFunction().fetchTasks();
+    List<Task> fetchedTasks = await TaskServiceFunction().fetchTasks(widget.id.toString());
     setState(() {
       tasksList = fetchedTasks;
       selectedTask = tasksList.isNotEmpty ? tasksList.first.taskName : 'hello';
@@ -422,7 +422,8 @@ void _initializeFields() {
         widget.id,
       );
         }
-        Navigator.push(context, MaterialPageRoute(builder: (context) => StatusOfStudent(id: widget.id)));
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => StatusOfStudent(id: widget.id)));
+        Navigator.pop(context);
       },
       
       child: Container(

@@ -124,10 +124,10 @@ bool _isValidEmail(String value) {
                   height: 5,
                 ),
                 ReusableTextField(
-                  label: 'Email',
-                  controller: _emailController,
-                  validator: _validateEmail,
-                ),
+                 label: 'Email',
+                 controller: _emailController,
+                 validator: validateEmail, 
+               ),
                 const SizedBox(height: 15),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -142,13 +142,12 @@ bool _isValidEmail(String value) {
                 const SizedBox(
                   height: 5,
                 ),
-                ReusableTextField(
-                  label: 'Password',
-                  controller: _passwordController,
-                  obscureText: true,
-                  validator: _validatePassword,
-                  
-                ),
+               ReusableTextField(
+                label: 'Password',
+                controller: _passwordController,
+                obscureText: true,
+                validator: validatePassword, 
+              ),
                 const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
