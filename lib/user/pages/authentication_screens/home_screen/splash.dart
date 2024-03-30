@@ -22,9 +22,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    checkForUpdate();
     super.initState();
     _timer = Timer(Duration(seconds: widget.delaySeconds), navigateToNextScreen);
-     checkForUpdate();
+
   }
     Future<void> checkForUpdate() async {
     print('checking for Update');
