@@ -100,7 +100,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Self Stack',
              home: InternetConnectivitySystem(
-        child: SplashScreen(), // This will be the default screen to show when there's internet connectivity.
+        child: SplashScreen(),
       ),
             routes: {
               '/home': (context) => BottomNavbarScreen(),

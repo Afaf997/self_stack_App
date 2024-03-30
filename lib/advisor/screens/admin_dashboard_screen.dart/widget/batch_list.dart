@@ -56,7 +56,7 @@ class BatchList extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 30),
             child: Text(
-              'Batch  ${batch.batch.name}',
+              '${batch.batch.name} ',
               style: const TextStyle(
                 color:kwhiteModel,
                 fontSize: 22,

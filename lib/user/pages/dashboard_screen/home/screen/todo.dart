@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:self_stack/user/blocs/to_do/bloc/todo_bloc.dart';
 import 'package:self_stack/user/pages/authentication_screens/network.dart/net_connection.dart';
-import 'package:self_stack/user/pages/dashboard_screen/home/screen/custom_progress_bar.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/screen/navigation_bar.dart';
 import 'package:self_stack/user/pages/dashboard_screen/home/screen/todo_details_screen.dart';
 import 'package:self_stack/user/response/todo_model.dart';
@@ -46,7 +45,7 @@ class _TodoScreenState extends State<TodoScreen> {
         backgroundColor: kselfstackGreen,
         toolbarHeight: 80, 
         title: Text(
-      "WorkTrack",
+      "Notations",
       style: TextStyle(
           color: kwhiteModel, fontSize: 22, fontWeight: FontWeight.bold),
         ),
@@ -109,7 +108,8 @@ class _TodoScreenState extends State<TodoScreen> {
                                       margin: EdgeInsets.symmetric(vertical: 7),
                                       padding: EdgeInsets.all(13),
                                       decoration: BoxDecoration(
-                                        border: Border.all(color: kwhiteModel),                                    
+                                        border: Border.all(color: kwhiteModel),  
+                                        borderRadius: BorderRadius.circular(7)                                  
                                       ),
                                       child: Row(
                                         crossAxisAlignment:
@@ -136,14 +136,6 @@ class _TodoScreenState extends State<TodoScreen> {
                                           ),
                                           SizedBox(
                                             width: 10,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(top: 10),
-                                            child: CustomRoundProgressBar(
-                                              percentage: todo.percentage,
-                                              status: todo.status,
-                                              todo: todo,
-                                            ),
                                           ),
                                         ],
                                       ),
@@ -189,7 +181,7 @@ class _TodoScreenState extends State<TodoScreen> {
                   return AlertDialog(
                     backgroundColor: kblackDark,
                     title: Text(
-                      'Create Task',
+                      'Create Notes',
                       style: TextStyle(color: kwhiteModel),
                     ),
                     content: SingleChildScrollView(

@@ -14,7 +14,7 @@ class ReviewService {
       Response response = await dio.get(apiUrl);
 
       if (response.statusCode == 200) {
-        // log(response.data.toString());
+        log(response.data.toString());
         return TaskModel.fromJson(response.data);
       } else {
         throw Exception("Failed to retrieve data. Status code: ${response.statusCode}");

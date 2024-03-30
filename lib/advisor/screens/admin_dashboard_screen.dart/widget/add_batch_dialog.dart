@@ -27,7 +27,7 @@ class _AddBatchDialogState extends State<AddBatchDialog> {
         children: [
           TextField(
             decoration: InputDecoration(
-              labelText: 'Batch Number',
+              labelText: 'Batch Name',
               labelStyle: TextStyle(color: Colors.white),
             ),
             style: TextStyle(color: Colors.white),

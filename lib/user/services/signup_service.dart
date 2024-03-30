@@ -21,7 +21,8 @@ class SignupService {
           headers: {'Content-Type': 'application/json'},
         ),
       );
-    if (response.statusCode == 401) {
+    
+      if (response.statusCode == 409) {
         String error = 'Something went wrong';
         if (response.data != null &&
             response.data['error'] == 'Invalid username or password') {

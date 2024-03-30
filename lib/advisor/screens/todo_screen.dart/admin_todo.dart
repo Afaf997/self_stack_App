@@ -45,7 +45,8 @@ class _TodoAdminState extends State<TodoAdmin> {
     "work log management",
     style: TextStyle(
         color: kwhiteModel, fontSize: 22, fontWeight: FontWeight.bold),
-  ),
+  ),centerTitle: true,
+   automaticallyImplyLeading: false,
 ),
 
       body: BlocProvider(

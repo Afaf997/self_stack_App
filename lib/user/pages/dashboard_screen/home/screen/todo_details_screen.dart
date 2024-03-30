@@ -26,7 +26,7 @@ class TodoDetailScreen extends StatelessWidget {
             icon: Icon(Icons.arrow_back, color: kwhiteModel),
           ),
           title: Text(
-            'Todo Details',
+            'Notes Details',
             style: TextStyle(color: kwhiteModel, fontWeight: FontWeight.bold),
           ),
           actions: [

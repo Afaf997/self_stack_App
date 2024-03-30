@@ -51,6 +51,34 @@ class DomainDesidePage extends StatelessWidget {
                   ),
                 ],
               ),
+            Container(
+  decoration: BoxDecoration(
+    border: Border.all(
+      color:kyellow, 
+    ),
+    borderRadius: BorderRadius.circular(8.0), 
+  ),
+  child: Row(
+    children: [
+      Padding(
+        padding: const EdgeInsets.all(8.0), 
+        child: Icon(Icons.warning, color: kyellow),
+      ),
+      Flexible( 
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+          child: Text(
+            "Your Domain Is Not Decided. Please Wait Until It Is Decided",
+            style: TextStyle(color: kyellow),
+            maxLines: 2,
+          ),
+        ),
+      ),
+    ],
+  ),
+),
+SizedBox(height: 30,),
+
       
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
@@ -91,7 +119,7 @@ class DomainDesidePage extends StatelessWidget {
                     courseName: "Cyber Security",
                   ),
                   CourseItem(
-                    courseName: "Gyming",
+                    courseName: "Gaming",
                   ),
                 ],
               ),
@@ -117,14 +145,18 @@ class DomainDesidePage extends StatelessWidget {
                       style: TextStyle(fontSize: screenWidth * 0.04, color: kwhiteModel),
                     ),
                     SizedBox(height: screenHeight * 0.01),
-                    Text(
-                      "connect@selfstack.com",
-                      style: TextStyle(fontSize: screenWidth * 0.04, color: kwhiteModel),
+                    Center(
+                      child: Text(
+                        "connect@selfstack.com",
+                        style: TextStyle(fontSize: screenWidth * 0.04, color: kblueTheme),
+                      ),
                     ),
                     SizedBox(height: screenHeight * 0.01),
-                    Text(
-                      "+91 773-606-7147",
-                      style: TextStyle(fontSize: screenWidth * 0.04, color: kwhiteModel),
+                    Center(
+                      child: Text(
+                        "+91 773-606-7147",
+                        style: TextStyle(fontSize: screenWidth * 0.04, color: kblueTheme),
+                      ),
                     ),
                   ],
                 ),

@@ -55,7 +55,6 @@ void _initializeFields() {
     pendingTopicsController.text = widget.reviewDetails['pendingTopics'] ?? '';
     remarksController.text = widget.reviewDetails['remarks'] ?? '';
     markController.text = widget.reviewDetails['points'] != null ? widget.reviewDetails['points'].toString() : '';
-    
     int selectedIndex = tasksList.indexWhere((task) => task.taskName == selectedTask);
     if (selectedIndex != -1) {
       setState(() {

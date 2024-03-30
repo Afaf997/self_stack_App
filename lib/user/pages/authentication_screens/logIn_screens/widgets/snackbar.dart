@@ -12,9 +12,11 @@ class SnackbarUtils {
           children: [
             Center(child: Text(mainMessage,style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold,color:kselfstackGreen),)),
            ksizedboxA,
-            Text(
-              subMessages!,
-              style:const TextStyle(fontSize: 12, color:kwhiteModel),
+            Center(
+              child: Text(
+                subMessages!,
+                style:const TextStyle(fontSize: 12, color:kwhiteModel),
+              ),
             ),
           ],
         ),
@@ -22,7 +24,6 @@ class SnackbarUtils {
       ),
     );
   }
-
   static void showErrorSnackbar(BuildContext context, String mainMessage, {String? subMessage}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

@@ -208,7 +208,7 @@ if (dashboard.attendance != null && dashboard.attendance!.isNotEmpty) {
                             PopupMenuItem<String>(
                               value: 'Item 1',
                               child: Text(
-                                'ToDo',
+                                'Notes',
                                 style: TextStyle(color: kselfstackGreen),
                               ),
                             ),
