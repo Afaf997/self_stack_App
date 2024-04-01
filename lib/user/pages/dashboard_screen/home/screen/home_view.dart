@@ -134,153 +134,159 @@ if (dashboard.attendance != null && dashboard.attendance!.isNotEmpty) {
         }
       },
       builder: (context, state) {
-        return Scaffold(
-          backgroundColor: kbackgroundmodel,
-          body: Padding(
-            padding: EdgeInsets.only(
-              top: screenHeight * 0.05,
-              left: screenWidth * 0.05,
-              right: screenWidth * 0.05,
+        // ignore: deprecated_member_use
+        return WillPopScope(
+          onWillPop: () async {
+            return true; 
+          },
+          child: Scaffold(
+            backgroundColor: kbackgroundmodel,
+            body: Padding(
+              padding: EdgeInsets.only(
+                top: screenHeight * 0.05,
+                left: screenWidth * 0.05,
+                right: screenWidth * 0.05,
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.notifications_active_outlined,
+                            color: kwhiteModel,
+                            size: screenWidth * 0.07,
+                          ),
+                          onPressed: () {
+                            dashBoardbloc.add(NotificationEvent());
+                          },
+                        ),
+                        SizedBox(width: screenWidth * 0.03),
+                     CircleAvatar(
+            radius: 14,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+              },
+              child: ClipOval(
+                child: Image.network(
+          dashboard.user.image.toString(),
+          fit: BoxFit.cover,
+                ),
+              ),
             ),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.notifications_active_outlined,
-                          color: kwhiteModel,
-                          size: screenWidth * 0.07,
-                        ),
-                        onPressed: () {
-                          dashBoardbloc.add(NotificationEvent());
-                        },
-                      ),
-                      SizedBox(width: screenWidth * 0.03),
-                   CircleAvatar(
-  radius: 14,
-  child: GestureDetector(
-    onTap: () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
-    },
-    child: ClipOval(
-      child: Image.network(
-        dashboard.user.image.toString(),
-        fit: BoxFit.cover,
-      ),
-    ),
-  ),
-),
-
-                      PopupMenuButton<String>(
-                        color: kbackgroundmodel,
-                        icon: Icon(
-                          Icons.more_vert,
-                          color: kwhiteModel,
-                        ),
-                        offset: Offset(0, 50),
-                        onSelected: (String value)async {
-                          if (value == 'Item 1') {
-                            dashBoardbloc.add(TodoNavigationEvent());
-                          } else if (value == 'Item 2') {
-                            dashBoardbloc.add(AboutNavigationEvent());
-                          } else if (value == 'Item 3')  {
-                            log('logout'); bool? confirmed =
-                                  await showLogoutConfirmationDialog(context);
-                              if (confirmed != null && confirmed) {
-                                SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                await prefs.clear();
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginPage()),
-                                );
-                              }
-                         
-                          }
-                        },
-                        itemBuilder: (BuildContext context) {
-                          return [
-                            PopupMenuItem<String>(
-                              value: 'Item 1',
-                              child: Text(
-                                'Notes',
-                                style: TextStyle(color: kselfstackGreen),
-                              ),
-                            ),
-                            PopupMenuItem<String>(
-                              value: 'Item 2',
-                              child: Text(
-                                'About Us',
-                                style: TextStyle(color: kselfstackGreen),
-                              ),
-                            ),
-                            PopupMenuItem<String>(
-                              value: 'Item 3',
-                              child: Text(
-                                'Logout',
-                                style: TextStyle(color: kselfstackGreen),
-                              ),
-                            ),
-                          ];
-                        },
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text('Today',
-                          style: TextStyle(
-                              color: kwhiteModel,
-                              fontWeight: FontWeight.bold,
-                              fontSize: screenWidth * 0.06)),
-                      SizedBox(width: screenWidth * 0.04),
-                      GestureDetector(
-                        onTap: () =>
-                            dashBoardbloc.add(AttendanceNavigationEvent()),
-                        child: Container(
-                          width: screenWidth * 0.28,
-                          height: screenHeight * 0.05,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: onlineColor,
+          ),
+          
+                        PopupMenuButton<String>(
+                          color: kbackgroundmodel,
+                          icon: Icon(
+                            Icons.more_vert,
+                            color: kwhiteModel,
                           ),
-                          child: Center(
-                            child: Text(
-                              onlineText,
-                              style: TextStyle(
-                                  color: kwhiteModel,
-                                  fontSize: screenWidth * 0.04,
-                                  fontWeight: FontWeight.w600),
+                          offset: Offset(0, 50),
+                          onSelected: (String value)async {
+                            if (value == 'Item 1') {
+                              dashBoardbloc.add(TodoNavigationEvent());
+                            } else if (value == 'Item 2') {
+                              dashBoardbloc.add(AboutNavigationEvent());
+                            } else if (value == 'Item 3')  {
+                              log('logout'); bool? confirmed =
+                                    await showLogoutConfirmationDialog(context);
+                                if (confirmed != null && confirmed) {
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  await prefs.clear();
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginPage()),
+                                  );
+                                }
+                           
+                            }
+                          },
+                          itemBuilder: (BuildContext context) {
+                            return [
+                              PopupMenuItem<String>(
+                                value: 'Item 1',
+                                child: Text(
+                                  'Notes',
+                                  style: TextStyle(color: kselfstackGreen),
+                                ),
+                              ),
+                              PopupMenuItem<String>(
+                                value: 'Item 2',
+                                child: Text(
+                                  'About Us',
+                                  style: TextStyle(color: kselfstackGreen),
+                                ),
+                              ),
+                              PopupMenuItem<String>(
+                                value: 'Item 3',
+                                child: Text(
+                                  'Logout',
+                                  style: TextStyle(color: kselfstackGreen),
+                                ),
+                              ),
+                            ];
+                          },
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text('Today',
+                            style: TextStyle(
+                                color: kwhiteModel,
+                                fontWeight: FontWeight.bold,
+                                fontSize: screenWidth * 0.06)),
+                        SizedBox(width: screenWidth * 0.04),
+                        GestureDetector(
+                          onTap: () =>
+                              dashBoardbloc.add(AttendanceNavigationEvent()),
+                          child: Container(
+                            width: screenWidth * 0.28,
+                            height: screenHeight * 0.05,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: onlineColor,
+                            ),
+                            child: Center(
+                              child: Text(
+                                onlineText,
+                                style: TextStyle(
+                                    color: kwhiteModel,
+                                    fontSize: screenWidth * 0.04,
+                                    fontWeight: FontWeight.w600),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: screenHeight * 0.04),
-                  CardScreen(dashboard: dashboard),
-                  SizedBox(height: screenHeight * 0.02),
-                  EvaluationWidget(),
-                  BlocBuilder<DashBoardBloc, DashBoardState>(
-                    bloc: dashBoardbloc,
-                    buildWhen: (previous, current) =>
-                        current is InitaialState,
-                    builder: (context, state) {
-                      if (state is InitaialState) {
-                        List<GDPData> chatdata = state.chatdata;
-                        print(state.chatdata);
-                        return buildChartSection( screenWidth,state);
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                    },
-                  ),
-                ],
+                      ],
+                    ),
+                    SizedBox(height: screenHeight * 0.04),
+                    CardScreen(dashboard: dashboard),
+                    SizedBox(height: screenHeight * 0.02),
+                    EvaluationWidget(),
+                    BlocBuilder<DashBoardBloc, DashBoardState>(
+                      bloc: dashBoardbloc,
+                      buildWhen: (previous, current) =>
+                          current is InitaialState,
+                      builder: (context, state) {
+                        if (state is InitaialState) {
+                          List<GDPData> chatdata = state.chatdata;
+                          print(state.chatdata);
+                          return buildChartSection( screenWidth,state);
+                        } else {
+                          return CircularProgressIndicator();
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

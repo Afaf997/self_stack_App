@@ -72,12 +72,12 @@ class _SplashScreenState extends State<SplashScreen> {
         MaterialPageRoute(builder: (context) => BottomNavbarAdmin()),
       );
     } else if (userDomain == 'No') {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => DomainDesidePage()),
       );
     } else {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => HomeScreen()),
       );

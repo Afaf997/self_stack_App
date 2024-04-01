@@ -13,7 +13,7 @@ class InitialEvent extends DashBoardEvent{}
 
 class AttendanceRecordEvent extends DashBoardEvent{
 
-   CalendarFormat format;
+  final  CalendarFormat format;
   AttendanceRecordEvent({required this.format});
 }
 
@@ -22,4 +22,5 @@ class NotificationEvent extends  DashBoardEvent{}
 class AttendanceNavigationEvent extends DashBoardEvent{}
 
 class TodoNavigationEvent extends DashBoardEvent{}
+
 class AboutNavigationEvent extends DashBoardEvent{}

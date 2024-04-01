@@ -26,7 +26,7 @@ class _TodoScreenState extends State<TodoScreen> {
   @override
   void initState() {
     super.initState();
-    todoBloc = TodoBloc()..add(RefreshEvent());
+    // todoBloc = TodoBloc()..add(RefreshEvent());
   }
 
   @override

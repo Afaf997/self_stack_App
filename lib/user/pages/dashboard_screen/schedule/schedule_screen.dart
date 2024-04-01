@@ -1,4 +1,6 @@
 
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -38,115 +40,120 @@ class ScheduleScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return Scaffold(
-          backgroundColor: kbackgroundmodel,
-          body: Padding(
-            padding: const EdgeInsets.only(top: 50),
-            child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-                    child: Text(
-                      'Hello, ${userDetails['student']['name']}',
-                      style: TextStyle(
-                        color: kwhiteModel,
-                        fontSize: screenWidth * 0.08,
-                        fontWeight: FontWeight.bold,
+        return WillPopScope(
+            onWillPop: () async {
+            return true; 
+          },
+          child: Scaffold(
+            backgroundColor: kbackgroundmodel,
+            body: Padding(
+              padding: const EdgeInsets.only(top: 50),
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+                      child: Text(
+                        'Hello, ${userDetails['student']['name']}',
+                        style: TextStyle(
+                          color: kwhiteModel,
+                          fontSize: screenWidth * 0.08,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.05, vertical: 15),
+                      width: double.infinity,
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: kblackDark,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(  countTime >0 ? userDetails['reviews'][countTime - 1]['scheduleDate'] != null && userDetails['reviews'][countTime - 1]['completedDate'] == null
+                            ?'Next Review Date ${userDetails['reviews'][countTime - 1]['scheduleDate']}'
+                            : 'Next Review Not Scheduled': 'Your Task is not Started',
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.040,
+                          color: countTime >0 ? 
+                              userDetails['reviews'][countTime - 1]['scheduleDate'] != null && userDetails['reviews'][countTime - 1]['completedDate'] == null
+                              ? kselfstackGreen
+                              : kyellow :kblueTheme,
+                        ), 
+                      ),
+                    ),
+                    SizedBox(height: screenWidth * 0.04),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+                      child: Text(               
+                        '"Track Your Progress"',
+                        style: TextStyle(
+                          color: kwhiteModel,
+                          fontSize:    countTime >0 ? userDetails['reviews'] != null &&
+                     userDetails['reviews'][0]['completedDate'] == null  &&
+                         userDetails['reviews'][0]['scheduleDate'] != null &&
+                         countTime < 2
+          
+                           ? 0 : screenWidth *0.05 :  0 ,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+          Expanded(
+            child:countTime >0 && userDetails['reviews'][0]['completedDate'] != null 
+                ? ListView.builder(
+            itemCount: userDetails['reviews'].length,
+            itemBuilder: (context, index) {
+              if (index < countTime &&
+                  userDetails['reviews'][index]['scheduleDate'] != null &&
+                  userDetails['reviews'][index]['completedDate'] != null
+                  ) {
+                return GestureDetector(
+                  onTap: () {
+                    scorebloc.add(NavigationscoreEvent(index: index));
+                  },
+                  child: Container(
                     margin: EdgeInsets.symmetric(
-                        horizontal: screenWidth * 0.05, vertical: 15),
+                        horizontal: screenWidth * 0.05, vertical: 10),
                     width: double.infinity,
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: kblackDark,
+                      border: Border.all(color: kwhiteModel),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Text(  countTime >0 ? userDetails['reviews'][countTime - 1]['scheduleDate'] != null && userDetails['reviews'][countTime - 1]['completedDate'] == null
-                          ?'Next Review Date ${userDetails['reviews'][countTime - 1]['scheduleDate']}'
-                          : 'Next Review Not Scheduled': 'Your Task is not Started',
-                      style: TextStyle(
-                        fontSize: screenWidth * 0.040,
-                        color: countTime >0 ? 
-                            userDetails['reviews'][countTime - 1]['scheduleDate'] != null && userDetails['reviews'][countTime - 1]['completedDate'] == null
-                            ? kselfstackGreen
-                            : kyellow :kblueTheme,
-                      ), 
-                    ),
-                  ),
-                  SizedBox(height: screenWidth * 0.04),
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-                    child: Text(               
-                      '"Track Your Progress"',
-                      style: TextStyle(
-                        color: kwhiteModel,
-                        fontSize:    countTime >0 ? userDetails['reviews'] != null &&
-                   userDetails['reviews'][0]['completedDate'] == null  &&
-                       userDetails['reviews'][0]['scheduleDate'] != null &&
-                       countTime < 2
-
-                         ? 0 : screenWidth *0.05 :  0 ,
-                        fontWeight: FontWeight.bold,
+                    child: Center(
+                      child: Text(
+                        'Week ${index + 1}',
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.040,
+                          color: kwhiteModel,
+                        ),
                       ),
                     ),
                   ),
-Expanded(
-  child:countTime >0 && userDetails['reviews'][0]['completedDate'] != null 
-      ? ListView.builder(
-          itemCount: userDetails['reviews'].length,
-          itemBuilder: (context, index) {
-            if (index < countTime &&
-                userDetails['reviews'][index]['scheduleDate'] != null &&
-                userDetails['reviews'][index]['completedDate'] != null
-                ) {
-              return GestureDetector(
-                onTap: () {
-                  scorebloc.add(NavigationscoreEvent(index: index));
-                },
-                child: Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: screenWidth * 0.05, vertical: 10),
-                  width: double.infinity,
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: kwhiteModel),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Week ${index + 1}',
-                      style: TextStyle(
-                        fontSize: screenWidth * 0.040,
-                        color: kwhiteModel,
-                      ),
-                    ),
-                  ),
+                );
+              } else {
+                return Container(
+                  
+                );
+              }
+            },
+          )
+                : Center(
+          child: Lottie.asset(
+            'assets/lottie/box.json',
+            width: screenWidth * 0.60,
+            height: screenWidth * 0.60,
+            fit: BoxFit.cover,
+          ),
                 ),
-              );
-            } else {
-              return Container(
-                
-              );
-            }
-          },
-        )
-      : Center(
-        child: Lottie.asset(
-          'assets/lottie/box.json',
-          width: screenWidth * 0.60,
-          height: screenWidth * 0.60,
-          fit: BoxFit.cover,
-        ),
-      ),
-),
-],
+          ),
+          ],
+                ),
               ),
             ),
           ),

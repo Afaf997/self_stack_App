@@ -39,7 +39,6 @@ class DomainStudent extends StatelessWidget {
                 for (var student in domain.students!) {
                   ids.add(student?.id ?? 'self-stack-user-ba8301d1-c91e-4e40-901b-9aa5c7660dce');
                 }}
-                log(ids.toString());
                Navigator.push(
       context,
       MaterialPageRoute(

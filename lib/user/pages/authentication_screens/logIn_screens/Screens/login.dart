@@ -59,7 +59,7 @@ bool _isValidEmail(String value) {
             MaterialPageRoute(builder: (context) => ForgotScreen()),
           );
         } else if (state is SignScreenActionState) {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => SignUp()),
           );
@@ -250,10 +250,11 @@ bool _isValidEmail(String value) {
                         log(e.toString());
                       }
 
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SplashScreen(delaySeconds:0)));
+                      Navigator.pushReplacement(
+  context,
+  MaterialPageRoute(builder: (context) => SplashScreen(delaySeconds: 0)),
+);
+
                     } else {}
                   },
                   child: Container(

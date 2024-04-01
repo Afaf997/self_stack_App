@@ -9,10 +9,8 @@ class TaskServiceFunction {
     String? userId = id;
     try {
       TaskModel tasksData = await ReviewService().ReviewfetchData(userId);
-      log(tasksData.userTasks.toString());
       List<Task> allTasks = [];
       tasksData.userTasks.forEach((userTask) {
-        // log(userTask.toString());
         allTasks.addAll(userTask.tasks);
       });
       return allTasks;

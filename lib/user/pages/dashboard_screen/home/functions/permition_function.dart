@@ -28,9 +28,6 @@ class NotificationService {
       print('User granted permission');
 
       FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-        print(
-          'Message title: ${message.notification?.title}, body: ${message.notification?.body}, data: ${message.data},',
-        );
 
         PushNotification notification = PushNotification(
           title: message.notification!.title ?? "",
@@ -39,6 +36,7 @@ class NotificationService {
           dataBody: message.data['body'] ?? '',
         );
 
+        // ignore: unnecessary_null_comparison
         if (notification != null) {
           showSimpleNotification(
             Text(notification.title, maxLines: 1, style: TextStyle(color: kselfstackGreen)),
