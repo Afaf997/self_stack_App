@@ -8,7 +8,7 @@ Widget buildTextField(String labelText,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(labelText, style: TextStyle(fontSize: 15, color: Colors.white)),
-        SizedBox(height: 5),
+        SizedBox(height: 9),
         TextFormField(
           autovalidateMode: AutovalidateMode.always,
           style: TextStyle(color: Colors.white),

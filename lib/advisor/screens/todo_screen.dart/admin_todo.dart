@@ -25,7 +25,7 @@ class _TodoAdminState extends State<TodoAdmin> {
   @override
   void initState() {
     super.initState();
-    // todoBloc = TodoBloc()..add(RefreshEvent());
+    todoBloc = TodoBloc()..add(RefreshEvent());
   }
 
   @override
