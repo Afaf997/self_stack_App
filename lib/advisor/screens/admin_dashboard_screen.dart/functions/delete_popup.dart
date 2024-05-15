@@ -1,23 +1,33 @@
-  import 'package:flutter/material.dart';
-import 'package:self_stack/advisor/screens/admin_dashboard_screen.dart/edit_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:self_stack/utils/constans.dart';
+
 class DeleteConfirmationDialog extends StatelessWidget {
   final VoidCallback onConfirm;
 
-  const DeleteConfirmationDialog({Key? key, required this.onConfirm}) : super(key: key);
+  const DeleteConfirmationDialog({Key? key, required this.onConfirm})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: kblackDark,
-      title: Text('Confirm Deletion',style: TextStyle(color: kwhiteModel),),
-      content: Text('Are you sure you want to delete this user?',style: TextStyle(color: kwhiteModel),),
+      title: Text(
+        'Confirm Deletion',
+        style: TextStyle(color: kwhiteModel),
+      ),
+      content: Text(
+        'Are you sure you want to delete this user?',
+        style: TextStyle(color: kwhiteModel),
+      ),
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop(); 
+            Navigator.of(context).pop();
           },
-          child: Text('Cancel',style: TextStyle(color: kwhiteModel),),
+          child: Text(
+            'Cancel',
+            style: TextStyle(color: kwhiteModel),
+          ),
         ),
         TextButton(
           onPressed: onConfirm,
@@ -27,16 +37,16 @@ class DeleteConfirmationDialog extends StatelessWidget {
     );
   }
 }
-void showDeleteConfirmationDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return DeleteConfirmationDialog(
-          onConfirm: () {
 
-            Navigator.of(context).pop();
-          },
-        );
-      },
-    );
-  }
+void showDeleteConfirmationDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return DeleteConfirmationDialog(
+        onConfirm: () {
+          Navigator.of(context).pop();
+        },
+      );
+    },
+  );
+}
