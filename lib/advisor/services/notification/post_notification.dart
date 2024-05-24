@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:ffi';
+// import 'dart:ffi';
 import 'package:dio/dio.dart';
 import 'package:self_stack/user/core/links.dart';
 
@@ -13,6 +13,7 @@ class NotificationPostService {
       "body":discription,
       "userIds":Ids
     };
+
 
     try {
       final response = await dio.post(
